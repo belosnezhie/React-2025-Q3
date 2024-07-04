@@ -76,6 +76,7 @@ module.exports = {
       ],
       "@typescript-eslint/no-unsafe-member-access": "error",
       "@typescript-eslint/no-unsafe-call": "error",
+    // "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/lines-between-class-members": [
         "error",
         "always",
@@ -84,7 +85,10 @@ module.exports = {
       "import/extensions": [
         "error",
         "ignorePackages",
-        { "ts": "never" }
+        {
+          "tsx": "never",
+          "ts": "never",
+        }
       ],
       "typescript-sort-keys/interface": "off",
       "typescript-sort-keys/string-enum": "error"

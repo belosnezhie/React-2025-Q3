@@ -13,7 +13,7 @@ class Header extends Component {
     return (
       <>
         <header className="header">
-          <h1 className="header_title">Star Trek</h1>
+          <h1 className="header_title">Star Trek Astronomy</h1>
           <SearchForm></SearchForm>
           <button className="throw_error_button" type="button">
             Generate error

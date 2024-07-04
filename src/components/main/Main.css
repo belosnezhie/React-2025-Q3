@@ -1,0 +1,15 @@
+.cards_wrapper {
+  min-height: 85vh;
+  padding: 2%;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 250px;
+  padding: 2%;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+}
