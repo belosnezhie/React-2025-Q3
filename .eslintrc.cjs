@@ -33,7 +33,7 @@ module.exports = {
       "no-console": "warn",
       "no-restricted-syntax": ["off", "ForOfStatement"],
       "lines-between-class-members": "off",
-      "class-methods-use-this": "error",
+      // "class-methods-use-this": "error",
       "quotes": ["error", "single"],
       "semi": ["error", "always"],
       "object-curly-spacing": ["error", "always"],
