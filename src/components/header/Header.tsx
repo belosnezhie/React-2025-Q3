@@ -15,6 +15,9 @@ class Header extends Component {
         <header className="header">
           <h1 className="header_title">Star Trek</h1>
           <SearchForm></SearchForm>
+          <button className="throw_error_button" type="button">
+            Generate error
+          </button>
         </header>
       </>
     );

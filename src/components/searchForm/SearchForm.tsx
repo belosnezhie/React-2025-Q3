@@ -1,5 +1,7 @@
 import { Component, ReactNode } from 'react';
 
+import './SearchForm.css';
+
 class SearchForm extends Component {
   handleSubmit() {}
 
@@ -13,7 +15,7 @@ class SearchForm extends Component {
           }}
         >
           <input className="search_input" type="text"></input>
-          <input className="submit_input" type="submit"></input>
+          <input className="submit_input" type="submit" value="Search"></input>
         </form>
       </>
     );

@@ -1,7 +1,9 @@
 @import '../node_modules/modern-normalize/modern-normalize.css';
 
 :root {
-  --border: #204ecf
+  --border: #204ecf;
+  --background: #83a5f2;
+  --error: #f26749
 }
 
 body {
