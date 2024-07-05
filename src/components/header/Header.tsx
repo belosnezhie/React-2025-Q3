@@ -4,17 +4,21 @@ import './Header.css';
 
 import SearchForm from '../searchForm/SearchForm.tsx';
 
-// interface HeaderProps {
-//   classes: string;
-// }
+interface HeaderProps {
+  updateCartsCallback: (searchQuery: string) => Promise<void>;
+}
 
-class Header extends Component {
+class Header extends Component<HeaderProps> {
   render(): ReactNode {
     return (
       <>
         <header className="header">
           <h1 className="header_title">Star Trek Astronomy</h1>
-          <SearchForm></SearchForm>
+          <SearchForm
+            updateCartsCallback={async (searchQuery: string): Promise<void> => {
+              await this.props.updateCartsCallback(searchQuery);
+            }}
+          ></SearchForm>
           <button className="throw_error_button" type="button">
             Generate error
           </button>

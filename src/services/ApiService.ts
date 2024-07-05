@@ -1,4 +1,4 @@
-import { AstroResp } from '../model/Types.tsx';
+import { DefaultAstroResr, SingleAstroResp } from '../model/Types.tsx';
 
 export class ApiService {
   // return all
@@ -13,7 +13,7 @@ export class ApiService {
 
   async getDefaultData() {
     const defaultUrl =
-      'https://stapi.co/api/v2/rest/astronomicalObject/search?pageNumber=1&pageSize=10';
+      'https://stapi.co/api/v2/rest/astronomicalObject/search?pageNumber=1&pageSize=1000';
 
     const resp: Response = await fetch(defaultUrl);
 
@@ -21,11 +21,26 @@ export class ApiService {
       throw new Error('Request faild!');
     }
 
-    console.log(resp);
-
-    const data: AstroResp = <AstroResp>await resp.json();
+    const data: DefaultAstroResr = <DefaultAstroResr>await resp.json();
 
     return data.astronomicalObjects;
+  }
+
+  async getSeachedData(searchQuery: string) {
+    const url = `http://stapi.co/api/v2/rest/astronomicalObject?uid=${searchQuery}`;
+
+    const resp: Response = await fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+    });
+
+    if (resp.status !== 200) {
+      throw new Error('Request faild!');
+    }
+
+    const data: SingleAstroResp = <SingleAstroResp>await resp.json();
+
+    return data;
   }
 }
 

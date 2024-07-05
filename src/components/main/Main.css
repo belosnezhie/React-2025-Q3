@@ -12,4 +12,12 @@
   padding: 2%;
   border: 2px solid var(--border);
   border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+@media (hover: hover) {
+  .card:hover {
+    transform: scale(0.98);
+  }
 }

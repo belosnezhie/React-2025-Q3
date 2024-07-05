@@ -1,4 +1,4 @@
-export interface AstroResp {
+export interface DefaultAstroResr {
   page: {
     pageNumber: number;
     pageSize: number;
@@ -11,6 +11,11 @@ export interface AstroResp {
   sort: {
     clauses: [];
   };
+  astronomicalObjects: SingleAstroObjectResp[];
+}
+
+export interface SingleAstroResp {
+  astronomicalObject: SingleAstroObjectResp;
   astronomicalObjects: SingleAstroObjectResp[];
 }
 
