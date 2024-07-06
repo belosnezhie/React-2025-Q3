@@ -12,6 +12,7 @@ class MainPage extends Component {
 
   state = {
     peopleData: [],
+    isLoading: false,
   };
 
   // constructor() {
@@ -33,12 +34,18 @@ class MainPage extends Component {
   async componentDidMount(): Promise<void> {
     const searchQuery = this.storage.getSearchQuery();
 
+    this.setState({ isLoading: true });
+
     if (searchQuery) {
       await this.searchData(searchQuery);
+
+      this.setState({ isLoading: false });
     } else {
       const res: SearchResp = await this.service.getDefaultData(1);
 
       this.setState({ peopleData: res.results });
+
+      this.setState({ isLoading: false });
     }
   }
 
@@ -50,7 +57,14 @@ class MainPage extends Component {
             await this.searchData(searchQuery);
           }}
         />
-        <CardsWrapper cardPeopleData={this.state.peopleData} />
+        <main className="cards_wrapper">
+          {this.state.isLoading ? (
+            <div className="spinner" />
+          ) : (
+            <CardsWrapper cardPeopleData={this.state.peopleData} />
+          )}
+          <div className="yoda" />
+        </main>
       </>
     );
   }
