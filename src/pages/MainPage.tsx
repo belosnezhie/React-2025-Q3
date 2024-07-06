@@ -2,14 +2,14 @@ import { Component, ReactNode } from 'react';
 
 import Header from '../components/header/Header.tsx';
 import CardsWrapper from '../components/main/CardsWrapper.tsx';
-import { SingleAstroObjectResp, SingleAstroResp } from '../model/Types.tsx';
+import { SearchResp } from '../model/TypesStarWars';
 import { ApiService, apiService } from '../services/ApiService';
 
 class MainPage extends Component {
   private service: ApiService = apiService;
 
   state = {
-    astroData: [],
+    peopleData: [],
   };
 
   // constructor() {
@@ -18,25 +18,27 @@ class MainPage extends Component {
   //   this.state = { astroData: [] };
   // }
 
-  async searchData(searchQuery: string): Promise<SingleAstroResp> {
-    const res: SingleAstroResp = await this.service.getSeachedData(searchQuery);
+  async searchData(searchQuery: string): Promise<SearchResp> {
+    const res: SearchResp = await this.service.getSeachedData(searchQuery);
 
-    if (res.astronomicalObjects.length === 0) {
-      const singleAstroObjArr = [];
+    // if (res.results.length === 0) {
+    //   const singleAstroObjArr = [];
 
-      singleAstroObjArr.push(res.astronomicalObject);
-      this.setState({ astroData: singleAstroObjArr });
-    } else {
-      this.setState({ astroData: res.astronomicalObjects });
-    }
+    //   singleAstroObjArr.push(res.astronomicalObject);
+    //   this.setState({ peopleData: singleAstroObjArr });
+    // } else {
+    //   this.setState({ peopleData: res.astronomicalObjects });
+    // }
+
+    this.setState({ peopleData: res.results });
 
     return res;
   }
 
   async componentDidMount(): Promise<void> {
-    const res: SingleAstroObjectResp[] = await this.service.getDefaultData();
+    const res: SearchResp = await this.service.getDefaultData(1);
 
-    this.setState({ astroData: res });
+    this.setState({ peopleData: res.results });
   }
 
   render(): ReactNode {
@@ -47,7 +49,7 @@ class MainPage extends Component {
             await this.searchData(searchQuery);
           }}
         />
-        <CardsWrapper cardAstroData={this.state.astroData} />
+        <CardsWrapper cardPeopleData={this.state.peopleData} />
       </>
     );
   }

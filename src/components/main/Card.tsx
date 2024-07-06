@@ -1,9 +1,9 @@
 import { Component } from 'react';
 
-import { SingleAstroObjectResp } from '../../model/Types.tsx';
+import { PeopleSearchResp } from '../../model/TypesStarWars';
 
 interface CardProps {
-  cardData: SingleAstroObjectResp;
+  cardData: PeopleSearchResp;
 }
 
 class Card extends Component<CardProps> {
@@ -12,16 +12,11 @@ class Card extends Component<CardProps> {
       <>
         <div className="card">
           <p>Name: {this.props.cardData.name}</p>
-          <p>
-            Astronomical object type:{' '}
-            {this.props.cardData.astronomicalObjectType}
-          </p>
-          <p>
-            Location:{' '}
-            {this.props.cardData.location
-              ? this.props.cardData.location.name
-              : 'Unknown'}
-          </p>
+          <p>Birth year: {this.props.cardData.birth_year}</p>
+          <p>Hair color: {this.props.cardData.hair_color}</p>
+          <p>Skin color: {this.props.cardData.skin_color}</p>
+          <p>Eye color: {this.props.cardData.eye_color}</p>
+          <p>Gender: {this.props.cardData.gender}</p>
         </div>
       </>
     );
