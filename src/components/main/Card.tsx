@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React from 'react';
 
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 
@@ -6,7 +6,7 @@ interface CardProps {
   cardData: PeopleSearchResp;
 }
 
-class Card extends Component<CardProps> {
+class Card extends React.Component<CardProps> {
   render() {
     return (
       <>

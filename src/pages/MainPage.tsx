@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import Header from '../components/header/Header.tsx';
 import CardsWrapper from '../components/main/CardsWrapper.tsx';
@@ -6,7 +6,7 @@ import { SearchResp } from '../model/TypesStarWars';
 import { ApiService, apiService } from '../services/ApiService';
 import { searchQueryStorage } from '../services/LocalStorage';
 
-class MainPage extends Component {
+class MainPage extends React.Component {
   private service: ApiService = apiService;
   private storage = searchQueryStorage;
 

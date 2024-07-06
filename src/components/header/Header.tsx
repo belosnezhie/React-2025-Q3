@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import './Header.css';
 
@@ -8,7 +8,7 @@ interface HeaderProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;
 }
 
-class Header extends Component<HeaderProps> {
+class Header extends React.Component<HeaderProps> {
   render(): ReactNode {
     return (
       <>

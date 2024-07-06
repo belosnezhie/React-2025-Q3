@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 
@@ -10,7 +10,7 @@ interface CardsWrapperProps {
   cardPeopleData: PeopleSearchResp[];
 }
 
-class CardsWrapper extends Component<CardsWrapperProps> {
+class CardsWrapper extends React.Component<CardsWrapperProps> {
   render(): ReactNode {
     return (
       <>
