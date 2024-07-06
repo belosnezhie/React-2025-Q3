@@ -9,11 +9,11 @@ class SearchQueryStorage {
     return true;
   }
 
-  public getSearchQuery(): string | undefined {
+  public getSearchQuery(): string {
     const searchQuery = localStorage.getItem(this.key);
 
     if (!searchQuery) {
-      return undefined;
+      return '';
     } else {
       return searchQuery;
     }

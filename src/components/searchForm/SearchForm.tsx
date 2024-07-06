@@ -1,12 +1,17 @@
-import { Component, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import './SearchForm.css';
+import { searchQueryStorage } from '../../services/LocalStorage';
 
 interface SearchFormProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;
 }
 
-class SearchForm extends Component<SearchFormProps> {
+class SearchForm extends React.Component<SearchFormProps> {
+  state = {
+    currentInputValue: searchQueryStorage.getSearchQuery(),
+  };
+
   async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -15,6 +20,10 @@ class SearchForm extends Component<SearchFormProps> {
     const searchQuery: string = input.value.trim();
 
     await this.props.updateCartsCallback(searchQuery);
+  }
+
+  handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({ currentInputValue: event.target.value });
   }
 
   render(): ReactNode {
@@ -26,7 +35,14 @@ class SearchForm extends Component<SearchFormProps> {
             await this.handleSubmit(event);
           }}
         >
-          <input className="search_input" type="text"></input>
+          <input
+            className="search_input"
+            type="text"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              this.handleChange(event);
+            }}
+            value={this.state.currentInputValue}
+          ></input>
           <input className="submit_input" type="submit" value="Search"></input>
         </form>
       </>

@@ -22,11 +22,15 @@ class MainPage extends Component {
   // }
 
   async searchData(searchQuery: string): Promise<SearchResp> {
+    this.setState({ isLoading: true });
+
     this.storage.setSearchQuery(searchQuery);
 
     const res: SearchResp = await this.service.getSeachedData(searchQuery);
 
     this.setState({ peopleData: res.results });
+
+    this.setState({ isLoading: false });
 
     return res;
   }
