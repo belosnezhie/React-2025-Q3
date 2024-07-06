@@ -12,10 +12,6 @@ interface CardsWrapperProps {
 
 class CardsWrapper extends Component<CardsWrapperProps> {
   render(): ReactNode {
-    // if (this.props.cartSingleData instanceof SingleAstroObjectResp) {
-    //   return <main className="cards_wrapper"></main>;
-    // }
-
     return (
       <>
         <main className="cards_wrapper">
@@ -25,12 +21,6 @@ class CardsWrapper extends Component<CardsWrapperProps> {
         </main>
       </>
     );
-
-    // return (
-    //   <main className="cards_wrapper">
-    //     <Card cardData={this.props.cartSingleData}></Card>
-    //   </main>
-    // );
   }
 }
 

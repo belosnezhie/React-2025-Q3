@@ -1,16 +1,6 @@
 import { SearchResp } from '../model/TypesStarWars';
 
 export class ApiService {
-  // return all
-  private baseUrl: string;
-  // return searching
-  private searchUrl: string;
-
-  constructor() {
-    this.baseUrl = 'https://stapi.co/api/v2/rest/astronomicalObject/search';
-    this.searchUrl = 'https://stapi.co/api/v2/rest/astronomicalObject';
-  }
-
   async getDefaultData(pageNumber: number) {
     const defaultUrl = `https://swapi.dev/api/people/?page=${pageNumber}`;
 

@@ -14,8 +14,3 @@ export interface PeopleSearchResp {
   birth_year: string;
   gender: string;
 }
-
-// // Default
-// export interface DefaultResp {
-//   results:
-// }
