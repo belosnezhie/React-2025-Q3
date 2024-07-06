@@ -4,9 +4,11 @@ import Header from '../components/header/Header.tsx';
 import CardsWrapper from '../components/main/CardsWrapper.tsx';
 import { SearchResp } from '../model/TypesStarWars';
 import { ApiService, apiService } from '../services/ApiService';
+import { searchQueryStorage } from '../services/LocalStorage';
 
 class MainPage extends Component {
   private service: ApiService = apiService;
+  private storage = searchQueryStorage;
 
   state = {
     peopleData: [],
@@ -19,16 +21,9 @@ class MainPage extends Component {
   // }
 
   async searchData(searchQuery: string): Promise<SearchResp> {
+    this.storage.setSearchQuery(searchQuery);
+
     const res: SearchResp = await this.service.getSeachedData(searchQuery);
-
-    // if (res.results.length === 0) {
-    //   const singleAstroObjArr = [];
-
-    //   singleAstroObjArr.push(res.astronomicalObject);
-    //   this.setState({ peopleData: singleAstroObjArr });
-    // } else {
-    //   this.setState({ peopleData: res.astronomicalObjects });
-    // }
 
     this.setState({ peopleData: res.results });
 
@@ -36,9 +31,15 @@ class MainPage extends Component {
   }
 
   async componentDidMount(): Promise<void> {
-    const res: SearchResp = await this.service.getDefaultData(1);
+    const searchQuery = this.storage.getSearchQuery();
 
-    this.setState({ peopleData: res.results });
+    if (searchQuery) {
+      await this.searchData(searchQuery);
+    } else {
+      const res: SearchResp = await this.service.getDefaultData(1);
+
+      this.setState({ peopleData: res.results });
+    }
   }
 
   render(): ReactNode {

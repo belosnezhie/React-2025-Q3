@@ -12,7 +12,7 @@ class SearchForm extends Component<SearchFormProps> {
 
     const target: HTMLFormElement = event.target as HTMLFormElement;
     const input = target.elements[0] as HTMLInputElement;
-    const searchQuery: string = input.value;
+    const searchQuery: string = input.value.trim();
 
     await this.props.updateCartsCallback(searchQuery);
   }
