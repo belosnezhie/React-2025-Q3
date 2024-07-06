@@ -6,11 +6,13 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 4px solid var(--border);
+  background-color: var(--header-background);
 }
 
 .header_title {
   margin: 0;
   font-size: 24px;
+  color: var(--background-color);
 }
 
 .throw_error_button {

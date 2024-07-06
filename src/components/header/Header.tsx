@@ -13,7 +13,7 @@ class Header extends Component<HeaderProps> {
     return (
       <>
         <header className="header">
-          <h1 className="header_title">Star Trek Astronomy</h1>
+          <h1 className="header_title">The Star Wars Сharacters</h1>
           <SearchForm
             updateCartsCallback={async (searchQuery: string): Promise<void> => {
               await this.props.updateCartsCallback(searchQuery);

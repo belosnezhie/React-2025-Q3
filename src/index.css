@@ -3,7 +3,10 @@
 :root {
   --border: #204ecf;
   --background: #83a5f2;
-  --error: #f26749
+  --error: #f26749;
+  --main-background: #fcded6;
+  --header-background: #f9a197;
+  --card-background: rgba(131,165,242,0.6)
 }
 
 body {

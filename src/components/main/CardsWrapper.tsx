@@ -18,6 +18,7 @@ class CardsWrapper extends Component<CardsWrapperProps> {
           {this.props.cardPeopleData.map((obj, index) => {
             return <Card cardData={obj} key={index} />;
           })}
+          <div className="yoda" />
         </main>
       </>
     );

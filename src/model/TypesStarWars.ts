@@ -1,5 +1,3 @@
-// Search
-
 export interface SearchResp {
   results: PeopleSearchResp[];
 }
