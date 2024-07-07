@@ -12,7 +12,7 @@
 .header_title {
   margin: 0;
   font-size: 24px;
-  color: var(--background-color);
+  color: var(--title);
 }
 
 .throw_error_button {

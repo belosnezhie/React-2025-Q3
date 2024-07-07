@@ -4,6 +4,8 @@ import './Header.css';
 
 import SearchForm from '../searchForm/SearchForm.tsx';
 
+import ErrorButton from './ErrorButton.tsx';
+
 interface HeaderProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;
 }
@@ -19,9 +21,7 @@ class Header extends React.Component<HeaderProps> {
               await this.props.updateCartsCallback(searchQuery);
             }}
           ></SearchForm>
-          <button className="throw_error_button" type="button">
-            Generate error
-          </button>
+          <ErrorButton />
         </header>
       </>
     );

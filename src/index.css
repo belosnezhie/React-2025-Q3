@@ -6,7 +6,8 @@
   --error: #f26749;
   --main-background: #fcded6;
   --header-background: #f9a197;
-  --card-background: rgba(131,165,242,0.6)
+  --card-background: rgba(131,165,242,0.6);
+  --title: rgba(248, 249, 244, 0.8);
 }
 
 body {

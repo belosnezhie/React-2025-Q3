@@ -15,12 +15,6 @@ class MainPage extends React.Component {
     isLoading: false,
   };
 
-  // constructor() {
-  //   super();
-  //   this.service = apiService;
-  //   this.state = { astroData: [] };
-  // }
-
   async searchData(searchQuery: string): Promise<SearchResp> {
     this.setState({ isLoading: true });
 

@@ -30,10 +30,8 @@ module.exports = {
     "no-return-await": "error",
       "no-var": "error",
       "no-debugger": "error",
-      "no-console": "warn",
       "no-restricted-syntax": ["off", "ForOfStatement"],
       "lines-between-class-members": "off",
-      // "class-methods-use-this": "error",
       "quotes": ["error", "single"],
       "semi": ["error", "always"],
       "object-curly-spacing": ["error", "always"],
@@ -76,7 +74,6 @@ module.exports = {
       ],
       "@typescript-eslint/no-unsafe-member-access": "error",
       "@typescript-eslint/no-unsafe-call": "error",
-    // "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/lines-between-class-members": [
         "error",
         "always",
