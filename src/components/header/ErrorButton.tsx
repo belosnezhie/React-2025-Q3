@@ -11,7 +11,7 @@ class ErrorButton extends React.Component {
 
   render(): React.ReactNode {
     if (this.state.wasClicked) {
-      console.error('Error button was clicked.');
+      throw new Error('Error button was clicked.');
     } else {
       return (
         <button
