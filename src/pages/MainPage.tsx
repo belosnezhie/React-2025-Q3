@@ -1,71 +1,76 @@
-import React, { ReactNode } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Header from '../components/header/Header.tsx';
 import CardsWrapper from '../components/main/CardsWrapper.tsx';
-import { SearchResp } from '../model/TypesStarWars';
+import { PeopleSearchResp, SearchResp } from '../model/TypesStarWars';
 import { ApiService, apiService } from '../services/ApiService';
 import { searchQueryStorage } from '../services/LocalStorage';
 
-class MainPage extends React.Component {
-  private service: ApiService = apiService;
-  private storage = searchQueryStorage;
+const MainPage = () => {
+  const service: ApiService = apiService;
+  const storage = searchQueryStorage;
 
-  state = {
-    peopleData: [],
-    isLoading: false,
-  };
+  const [charactersData, setCharactersData] = useState<PeopleSearchResp[] | []>(
+    [],
+  );
+  const [isLoading, setLoading] = useState<boolean>(false);
 
-  async searchData(searchQuery: string): Promise<SearchResp> {
-    this.setState({ isLoading: true });
+  const searchData = useCallback(
+    async (searchQuery: string): Promise<SearchResp> => {
+      setLoading(true);
 
-    this.storage.setSearchQuery(searchQuery);
+      storage.setSearchQuery(searchQuery);
 
-    const res: SearchResp = await this.service.getSeachedData(searchQuery);
+      const res: SearchResp = await service.getSeachedData(searchQuery);
 
-    this.setState({ peopleData: res.results });
+      setCharactersData(res.results);
 
-    this.setState({ isLoading: false });
+      setLoading(false);
 
-    return res;
-  }
+      return res;
+    },
+    [service, storage],
+  );
 
-  async componentDidMount(): Promise<void> {
-    const searchQuery = this.storage.getSearchQuery();
+  const getDefaultData = useCallback(async () => {
+    const searchQuery = storage.getSearchQuery();
 
-    this.setState({ isLoading: true });
+    setLoading(true);
 
     if (searchQuery) {
-      await this.searchData(searchQuery);
+      await searchData(searchQuery);
 
-      this.setState({ isLoading: false });
+      setLoading(false);
     } else {
-      const res: SearchResp = await this.service.getDefaultData(1);
+      const res: SearchResp = await service.getDefaultData(1);
 
-      this.setState({ peopleData: res.results });
+      setCharactersData(res.results);
 
-      this.setState({ isLoading: false });
+      setLoading(false);
     }
-  }
+  }, [searchData, service, storage]);
 
-  render(): ReactNode {
-    return (
-      <>
-        <Header
-          updateCartsCallback={async (searchQuery: string): Promise<void> => {
-            await this.searchData(searchQuery);
-          }}
-        />
-        <main className="cards_wrapper">
-          {this.state.isLoading ? (
-            <div className="spinner" />
-          ) : (
-            <CardsWrapper cardPeopleData={this.state.peopleData} />
-          )}
-          <div className="yoda" />
-        </main>
-      </>
-    );
-  }
-}
+  useEffect(() => {
+    void getDefaultData();
+  }, [getDefaultData]);
+
+  return (
+    <>
+      <Header
+        updateCartsCallback={async (searchQuery: string): Promise<void> => {
+          await searchData(searchQuery);
+        }}
+      />
+      <main className="cards_wrapper">
+        {isLoading ? (
+          <div className="spinner" />
+        ) : (
+          <CardsWrapper cardCharactersData={charactersData} />
+        )}
+        <div className="yoda" />
+      </main>
+    </>
+  );
+};
 
 export default MainPage;
