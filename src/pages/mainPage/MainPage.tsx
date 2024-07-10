@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import Header from '../../components/header/Header.tsx';
 import CardsWrapper from '../../components/main/CardsWrapper.tsx';
@@ -15,6 +16,8 @@ const MainPage = () => {
     [],
   );
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [activePage, setActivePage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const searchData = useCallback(
     async (searchQuery: string): Promise<SearchResp> => {
@@ -40,15 +43,16 @@ const MainPage = () => {
       const res: SearchResp = await service.getDefaultData(pageNumber);
 
       setCharactersData(res.results);
-
       setLoading(false);
+      setSearchParams({ page: String(pageNumber) });
+      setActivePage(pageNumber);
 
       return res;
     },
     [service],
   );
 
-  const getDefaultData = useCallback(async () => {
+  const getData = useCallback(async () => {
     const searchQuery = storage.getSearchQuery();
 
     setLoading(true);
@@ -58,17 +62,22 @@ const MainPage = () => {
 
       setLoading(false);
     } else {
-      const res: SearchResp = await service.getDefaultData(1);
+      const currentPage: number =
+        Number(searchParams.get('page')) === 0
+          ? 1
+          : Number(searchParams.get('page'));
+
+      const res: SearchResp = await service.getDefaultData(currentPage);
 
       setCharactersData(res.results);
-
+      setActivePage(currentPage);
       setLoading(false);
     }
-  }, [searchData, service, storage]);
+  }, [searchData, service, storage, activePage]);
 
   useEffect(() => {
-    void getDefaultData();
-  }, [getDefaultData]);
+    void getData();
+  }, [getData]);
 
   return (
     <>
@@ -81,13 +90,15 @@ const MainPage = () => {
         {isLoading ? (
           <div className="spinner" />
         ) : (
-          <CardsWrapper cardCharactersData={charactersData} />
+          <>
+            <CardsWrapper cardCharactersData={charactersData} />
+            <Pagination
+              updatePageCallback={handlePageChange}
+              currentPage={activePage}
+              pagesUmmount={9}
+            />
+          </>
         )}
-        <Pagination
-          updatePageCallback={handlePageChange}
-          currentPage={0}
-          pagesUmmount={9}
-        />
         <div className="yoda" />
       </main>
     </>

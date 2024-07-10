@@ -1,6 +1,7 @@
 .pagination {
   display: flex;
   gap: 1em;
+  z-index: 20000;
 }
 
 .pagination_button {

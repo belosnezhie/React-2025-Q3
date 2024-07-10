@@ -2,7 +2,9 @@
   min-height: 85vh;
   padding: 2%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   gap: 1em;
   flex-wrap: wrap;
   background-color: var(--main-background);
