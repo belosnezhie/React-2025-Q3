@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import Header from '../components/header/Header.tsx';
-import CardsWrapper from '../components/main/CardsWrapper.tsx';
-import { PeopleSearchResp, SearchResp } from '../model/TypesStarWars';
-import { ApiService, apiService } from '../services/ApiService';
-import { searchQueryStorage } from '../services/LocalStorage';
+import Header from '../../components/header/Header.tsx';
+import CardsWrapper from '../../components/main/CardsWrapper.tsx';
+import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
+import { ApiService, apiService } from '../../services/ApiService';
+import { searchQueryStorage } from '../../services/LocalStorage';
 
 const MainPage = () => {
   const service: ApiService = apiService;
