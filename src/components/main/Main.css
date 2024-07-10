@@ -1,4 +1,4 @@
-.cards_wrapper {
+.page {
   min-height: 85vh;
   padding: 2%;
   display: flex;
@@ -6,6 +6,13 @@
   gap: 1em;
   flex-wrap: wrap;
   background-color: var(--main-background);
+}
+
+.cards_wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  flex-wrap: wrap;
 }
 
 .card {

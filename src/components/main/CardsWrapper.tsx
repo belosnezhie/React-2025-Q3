@@ -11,9 +11,11 @@ interface CardsWrapperProps {
 const CardsWrapper = (props: CardsWrapperProps) => {
   return (
     <>
-      {props.cardCharactersData.map((obj, index) => {
-        return <Card cardData={obj} key={index} />;
-      })}
+      <div className="cards_wrapper">
+        {props.cardCharactersData.map((obj, index) => {
+          return <Card cardData={obj} key={index} />;
+        })}
+      </div>
     </>
   );
 };

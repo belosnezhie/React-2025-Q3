@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import Header from '../../components/header/Header.tsx';
 import CardsWrapper from '../../components/main/CardsWrapper.tsx';
-import Pagination from '../../components/main/Pagination.tsx';
+import Pagination from '../../components/pagination/Pagination.tsx';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 import { ApiService, apiService } from '../../services/ApiService';
 import { searchQueryStorage } from '../../services/LocalStorage';
@@ -77,7 +77,7 @@ const MainPage = () => {
           await searchData(searchQuery);
         }}
       />
-      <main className="cards_wrapper">
+      <main className="page">
         {isLoading ? (
           <div className="spinner" />
         ) : (

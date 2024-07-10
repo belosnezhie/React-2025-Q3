@@ -1,3 +1,5 @@
+import './Pagination.css';
+
 interface PaginationProps {
   currentPage: number;
   pagesUmmount: number;
@@ -18,7 +20,7 @@ const Pagination = ({
             onClick={() => {
               updatePageCallback(index + 1);
             }}
-            className={`pagination-button ${currentPage === index + 1 ? 'active' : ''}`}
+            className={`pagination_button ${currentPage === index + 1 ? 'active' : ''}`}
           >
             {index + 1}
           </button>
