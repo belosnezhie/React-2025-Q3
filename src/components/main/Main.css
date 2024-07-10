@@ -10,15 +10,36 @@
   background-color: var(--main-background);
 }
 
-.cards_wrapper {
+.results_section {
+  width: 100%;
   display: flex;
-  justify-content: center;
+  gap: 1em;
+}
+
+.results_list {
+  width: 40%;
+  display: flex;
   gap: 1em;
   flex-wrap: wrap;
 }
 
-.card {
-  width: 250px;
+.results_list * {
+  margin: 0px;
+  padding: 0px;
+  padding-left: 5%;
+  list-style: none;
+  color: var(--border);
+}
+
+.results_item {
+  text-decoration: none;
+  margin-top: 2em;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.detailed_results {
+  width: 80%;
   padding: 2%;
   border: 2px solid var(--border);
   background-color: var(--card-background);
@@ -59,5 +80,9 @@
 @media (hover: hover) {
   .card:hover {
     transform: scale(0.98);
+  }
+
+  .results_item:hover {
+    transform: scale(0.95);
   }
 }

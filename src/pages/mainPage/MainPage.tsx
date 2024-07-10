@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 
 import Header from '../../components/header/Header.tsx';
-import CardsWrapper from '../../components/main/CardsWrapper.tsx';
+import ResultsList from '../../components/main/ResultsList.tsx';
 import Pagination from '../../components/pagination/Pagination.tsx';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 import { ApiService, apiService } from '../../services/ApiService';
@@ -49,7 +49,7 @@ const MainPage = () => {
 
       return res;
     },
-    [service],
+    [service, setSearchParams],
   );
 
   const getData = useCallback(async () => {
@@ -73,7 +73,7 @@ const MainPage = () => {
       setActivePage(currentPage);
       setLoading(false);
     }
-  }, [searchData, service, storage, activePage]);
+  }, [searchData, service, storage, searchParams]);
 
   useEffect(() => {
     void getData();
@@ -91,7 +91,10 @@ const MainPage = () => {
           <div className="spinner" />
         ) : (
           <>
-            <CardsWrapper cardCharactersData={charactersData} />
+            <section className="results_section">
+              <ResultsList cardCharactersData={charactersData} />
+              <Outlet />
+            </section>
             <Pagination
               updatePageCallback={handlePageChange}
               currentPage={activePage}
