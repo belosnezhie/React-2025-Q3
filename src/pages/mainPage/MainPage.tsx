@@ -52,6 +52,15 @@ const MainPage = () => {
     [service, setSearchParams],
   );
 
+  const checkCurrentPage = useCallback(() => {
+    const currentPage: number =
+      Number(searchParams.get('page')) === 0
+        ? 1
+        : Number(searchParams.get('page'));
+
+    return currentPage;
+  }, [searchParams]);
+
   const getData = useCallback(async () => {
     const searchQuery = storage.getSearchQuery();
 
@@ -62,10 +71,7 @@ const MainPage = () => {
 
       setLoading(false);
     } else {
-      const currentPage: number =
-        Number(searchParams.get('page')) === 0
-          ? 1
-          : Number(searchParams.get('page'));
+      const currentPage = checkCurrentPage();
 
       const res: SearchResp = await service.getDefaultData(currentPage);
 
@@ -74,7 +80,7 @@ const MainPage = () => {
       setActivePage(currentPage);
       setLoading(false);
     }
-  }, [searchData, service, storage, searchParams]);
+  }, [searchData, service, storage, checkCurrentPage]);
 
   useEffect(() => {
     void getData();

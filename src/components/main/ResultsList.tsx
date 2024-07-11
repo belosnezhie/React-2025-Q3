@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 
@@ -13,15 +13,13 @@ interface CardsWrapperProps {
 const ResultsList = (props: CardsWrapperProps) => {
   const [searchParams] = useSearchParams();
   const [pageSearchParam] = useState<number>(Number(searchParams.get('page')));
-  const [isDetailedShown, setDetailedShow] = useState<boolean>(false);
-
-  const handleClick = () => {
-    setDetailedShow(true);
-  };
+  const location = useLocation();
 
   return (
     <>
-      <section className={`results_list ${isDetailedShown ? 'list' : 'table'}`}>
+      <section
+        className={`results_list ${location.pathname.includes('detailed') ? 'list' : 'table'}`}
+      >
         {props.cardCharactersData.map((obj, index) => {
           return (
             <Card
@@ -29,7 +27,6 @@ const ResultsList = (props: CardsWrapperProps) => {
               key={index}
               pageData={pageSearchParam}
               searchData={obj.name}
-              clickCallback={handleClick}
             />
           );
         })}

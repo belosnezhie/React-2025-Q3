@@ -13,7 +13,7 @@ const DetailedSection = () => {
   const [pageParams] = useState(Number(searchParams.get('page')));
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   const getCharacterData = useCallback(async (): Promise<SearchResp> => {
     setLoading(true);
@@ -33,7 +33,7 @@ const DetailedSection = () => {
 
   const handleClick = () => {
     setSearchParams({ page: String(pageParams) });
-    navigation('/');
+    navigate('/');
     setDestroyed(true);
   };
 

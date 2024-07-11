@@ -17,10 +17,13 @@
 }
 
 .results_list {
-  width: 40%;
   display: flex;
   gap: 1em;
   flex-wrap: wrap;
+}
+
+.results_list.list {
+  width: 20%;
 }
 
 .results_list.table {
@@ -29,36 +32,17 @@
 }
 
 .card {
-  padding: 2%;
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-  z-index: 1000;
-}
-
-.results_list.table .card {
   width: 250px;
   padding: 2%;
   border: 2px solid var(--border);
   background-color: var(--card-background);
   border-radius: 10px;
+  color: white;
   cursor: pointer;
   transition: 0.3s;
   z-index: 1000;
-}
-
-.results_list.table * {
-  color: white;
-}
-
-.results_list * {
-  margin: 0px;
-  padding: 0px;
-  padding-left: 5%;
-  list-style: none;
   text-decoration: none;
-  color: var(--border);
+  text-align: center;
 }
 
 .close_detailed {
