@@ -70,6 +70,7 @@ const MainPage = () => {
       const res: SearchResp = await service.getDefaultData(currentPage);
 
       setCharactersData(res.results);
+      // setSearchParams({ page: String(currentPage) });
       setActivePage(currentPage);
       setLoading(false);
     }

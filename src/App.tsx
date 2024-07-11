@@ -14,9 +14,9 @@ class App extends Component {
         <ErrorBoundary>
           <BrowserRouter>
             <Routes>
-              <Route path="/main" element={<MainPage />}>
-                <Route path="/main/detailed" element={<DetailedSection />} />
-              </Route>{' '}
+              <Route path="/" element={<MainPage />}>
+                <Route path="/detailed" element={<DetailedSection />} />
+              </Route>
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </BrowserRouter>
