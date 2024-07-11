@@ -28,12 +28,12 @@ const MainPage = () => {
       const res: SearchResp = await service.getSeachedData(searchQuery);
 
       setCharactersData(res.results);
-
+      setSearchParams({ search: searchQuery });
       setLoading(false);
 
       return res;
     },
-    [service, storage],
+    [service, storage, setSearchParams],
   );
 
   const handlePageChange = useCallback(
@@ -76,7 +76,6 @@ const MainPage = () => {
       const res: SearchResp = await service.getDefaultData(currentPage);
 
       setCharactersData(res.results);
-      // setSearchParams({ page: String(currentPage) });
       setActivePage(currentPage);
       setLoading(false);
     }
@@ -99,7 +98,10 @@ const MainPage = () => {
         ) : (
           <>
             <section className="results_section">
-              <ResultsList cardCharactersData={charactersData} />
+              <ResultsList
+                cardCharactersData={charactersData}
+                pageSearchParam={activePage}
+              />
               <Outlet />
             </section>
             <Pagination

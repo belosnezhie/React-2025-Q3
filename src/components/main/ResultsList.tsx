@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 
@@ -8,11 +7,10 @@ import Card from './Card.tsx';
 
 interface CardsWrapperProps {
   cardCharactersData: PeopleSearchResp[] | [];
+  pageSearchParam: number;
 }
 
 const ResultsList = (props: CardsWrapperProps) => {
-  const [searchParams] = useSearchParams();
-  const [pageSearchParam] = useState<number>(Number(searchParams.get('page')));
   const location = useLocation();
 
   return (
@@ -25,7 +23,7 @@ const ResultsList = (props: CardsWrapperProps) => {
             <Card
               cardData={obj}
               key={index}
-              pageData={pageSearchParam}
+              pageData={props.pageSearchParam}
               searchData={obj.name}
             />
           );

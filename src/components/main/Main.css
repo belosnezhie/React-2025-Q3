@@ -45,6 +45,20 @@
   text-align: center;
 }
 
+.results_list.list .card {
+  width: auto;
+  padding: 0;
+  border: none;
+  background-color: inherit;
+  border-radius: 0;
+  color: var(--border);
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 1000;
+  text-decoration: none;
+  text-align: left;
+}
+
 .close_detailed {
   position: absolute;
   top: 10px;

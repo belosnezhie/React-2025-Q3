@@ -12,8 +12,10 @@ const Card = (props: CardProps) => {
   return (
     <>
       <NavLink
-        className="card"
         to={`/detailed?page=${props.pageData}&search=${props.searchData}`}
+        className={({ isActive, isPending }) =>
+          isActive ? 'card active' : isPending ? 'card pending' : 'card'
+        }
       >
         <p>Name: {props.cardData.name}</p>
       </NavLink>
