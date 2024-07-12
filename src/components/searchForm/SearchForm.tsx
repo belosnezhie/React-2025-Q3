@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 
 import './SearchForm.css';
-import { searchQueryStorage } from '../../services/LocalStorage';
+import useLocalStorage from '../../hooks/UseLocalStorage';
 
 interface SearchFormProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;
 }
 
 const SearchForm = (props: SearchFormProps) => {
-  const [currentInputValue, setCurrentInputValue] = useState<string>(
-    searchQueryStorage.getSearchQuery(),
-  );
+  const { query } = useLocalStorage();
+
+  const [currentInputValue, setCurrentInputValue] = useState<string>(query);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

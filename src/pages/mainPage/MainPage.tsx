@@ -4,13 +4,13 @@ import { Outlet, useSearchParams } from 'react-router-dom';
 import Header from '../../components/header/Header.tsx';
 import ResultsList from '../../components/main/ResultsList.tsx';
 import Pagination from '../../components/pagination/Pagination.tsx';
+import useLocalStorage from '../../hooks/UseLocalStorage';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 import { ApiService, apiService } from '../../services/ApiService';
-import { searchQueryStorage } from '../../services/LocalStorage';
 
 const MainPage = () => {
   const service: ApiService = apiService;
-  const storage = searchQueryStorage;
+  const { setItemToLS, query } = useLocalStorage();
 
   const [charactersData, setCharactersData] = useState<PeopleSearchResp[] | []>(
     [],
@@ -23,17 +23,17 @@ const MainPage = () => {
     async (searchQuery: string): Promise<SearchResp> => {
       setLoading(true);
 
-      storage.setSearchQuery(searchQuery);
+      setItemToLS(searchQuery);
 
       const res: SearchResp = await service.getSeachedData(searchQuery);
 
       setCharactersData(res.results);
-
+      setSearchParams({ search: searchQuery });
       setLoading(false);
 
       return res;
     },
-    [service, storage],
+    [service, setSearchParams],
   );
 
   const handlePageChange = useCallback(
@@ -52,20 +52,24 @@ const MainPage = () => {
     [service, setSearchParams],
   );
 
-  const getData = useCallback(async () => {
-    const searchQuery = storage.getSearchQuery();
+  const checkCurrentPage = useCallback(() => {
+    const currentPage: number =
+      Number(searchParams.get('page')) === 0
+        ? 1
+        : Number(searchParams.get('page'));
 
+    return currentPage;
+  }, [searchParams]);
+
+  const getData = useCallback(async () => {
     setLoading(true);
 
-    if (searchQuery) {
-      await searchData(searchQuery);
+    if (query) {
+      await searchData(query);
 
       setLoading(false);
     } else {
-      const currentPage: number =
-        Number(searchParams.get('page')) === 0
-          ? 1
-          : Number(searchParams.get('page'));
+      const currentPage = checkCurrentPage();
 
       const res: SearchResp = await service.getDefaultData(currentPage);
 
@@ -73,7 +77,7 @@ const MainPage = () => {
       setActivePage(currentPage);
       setLoading(false);
     }
-  }, [searchData, service, storage, searchParams]);
+  }, [searchData, service, checkCurrentPage, query]);
 
   useEffect(() => {
     void getData();
@@ -92,7 +96,10 @@ const MainPage = () => {
         ) : (
           <>
             <section className="results_section">
-              <ResultsList cardCharactersData={charactersData} />
+              <ResultsList
+                cardCharactersData={charactersData}
+                pageSearchParam={activePage}
+              />
               <Outlet />
             </section>
             <Pagination
