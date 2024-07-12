@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { searchQueryStorage } from '../../services/LocalStorage';
 import './Pagination.css';
+import useLocalStorage from '../../hooks/UseLocalStorage';
 
 interface PaginationProps {
   currentPage: number;
@@ -14,7 +14,8 @@ const Pagination = ({
   pagesUmmount,
   currentPage,
 }: PaginationProps) => {
-  const [isSearched] = useState<boolean>(searchQueryStorage.checkSearchQuery());
+  const { checkSearchQuery } = useLocalStorage();
+  const [isSearched] = useState<boolean>(checkSearchQuery());
 
   return isSearched ? null : (
     <div className="pagination">

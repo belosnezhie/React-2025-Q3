@@ -4,26 +4,27 @@ import { Outlet, useSearchParams } from 'react-router-dom';
 import Header from '../../components/header/Header.tsx';
 import ResultsList from '../../components/main/ResultsList.tsx';
 import Pagination from '../../components/pagination/Pagination.tsx';
+import useLocalStorage from '../../hooks/UseLocalStorage';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 import { ApiService, apiService } from '../../services/ApiService';
-import { searchQueryStorage } from '../../services/LocalStorage';
 
 const MainPage = () => {
   const service: ApiService = apiService;
-  const storage = searchQueryStorage;
+  const { setItemToLS, query } = useLocalStorage();
 
   const [charactersData, setCharactersData] = useState<PeopleSearchResp[] | []>(
     [],
   );
   const [isLoading, setLoading] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<number>(1);
+  // const [savedSearchQuery] = useState(getItemFromLS());
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchData = useCallback(
     async (searchQuery: string): Promise<SearchResp> => {
       setLoading(true);
 
-      storage.setSearchQuery(searchQuery);
+      setItemToLS(searchQuery);
 
       const res: SearchResp = await service.getSeachedData(searchQuery);
 
@@ -33,7 +34,7 @@ const MainPage = () => {
 
       return res;
     },
-    [service, storage, setSearchParams],
+    [service, setSearchParams],
   );
 
   const handlePageChange = useCallback(
@@ -62,12 +63,10 @@ const MainPage = () => {
   }, [searchParams]);
 
   const getData = useCallback(async () => {
-    const searchQuery = storage.getSearchQuery();
-
     setLoading(true);
 
-    if (searchQuery) {
-      await searchData(searchQuery);
+    if (query) {
+      await searchData(query);
 
       setLoading(false);
     } else {
@@ -79,7 +78,7 @@ const MainPage = () => {
       setActivePage(currentPage);
       setLoading(false);
     }
-  }, [searchData, service, storage, checkCurrentPage]);
+  }, [searchData, service, checkCurrentPage, query]);
 
   useEffect(() => {
     void getData();
