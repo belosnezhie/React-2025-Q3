@@ -17,7 +17,6 @@ const MainPage = () => {
   );
   const [isLoading, setLoading] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<number>(1);
-  // const [savedSearchQuery] = useState(getItemFromLS());
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchData = useCallback(
