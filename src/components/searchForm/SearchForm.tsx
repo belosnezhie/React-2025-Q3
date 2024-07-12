@@ -28,12 +28,17 @@ const SearchForm = (props: SearchFormProps) => {
 
   return (
     <>
-      <form className="search_form" onSubmit={handleSubmit}>
+      <form
+        className="search_form"
+        onSubmit={handleSubmit}
+        data-testid="search_form"
+      >
         <input
           className="search_input"
           type="text"
           onChange={handleChange}
           value={currentInputValue}
+          data-testid="search_input"
         ></input>
         <input className="submit_input" type="submit" value="Search"></input>
       </form>

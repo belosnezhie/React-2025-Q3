@@ -10,6 +10,17 @@
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:5173",
             "webRoot": "${workspaceFolder}"
+        },
+        {
+          "name": "Debug ViTests",
+          "type": "node",
+          "request": "launch",
+          "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/vitest",
+          "args": ["run"],
+          "cwd": "${workspaceRoot}",
+          "console": "integratedTerminal",
+          "internalConsoleOptions": "neverOpen",
+          "env": { "CI": "true" },
         }
     ]
 }
