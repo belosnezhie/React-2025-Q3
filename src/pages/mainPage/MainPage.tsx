@@ -6,10 +6,13 @@ import ResultsList from '../../components/main/ResultsList.tsx';
 import Pagination from '../../components/pagination/Pagination.tsx';
 import useLocalStorage from '../../hooks/UseLocalStorage';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
-import { ApiService, apiService } from '../../services/ApiService';
+import { ApiService } from '../../services/ApiService';
 
-const MainPage = () => {
-  const service: ApiService = apiService;
+interface MainPageProps {
+  service: ApiService;
+}
+
+const MainPage = ({ service }: MainPageProps) => {
   const { setItemToLS, query } = useLocalStorage();
 
   const [charactersData, setCharactersData] = useState<PeopleSearchResp[] | []>(
@@ -93,7 +96,7 @@ const MainPage = () => {
         />
         <main className="page">
           {isLoading ? (
-            <div className="spinner" />
+            <div className="spinner" data-testid="spinner_test" />
           ) : (
             <>
               <section className="results_section">

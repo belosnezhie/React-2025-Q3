@@ -13,7 +13,7 @@ const App = () => {
       <ErrorBoundary>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<MainPage />}>
+            <Route path="/" element={<MainPage service={apiService} />}>
               <Route
                 path="/detailed"
                 element={<DetailedSection service={apiService} />}
