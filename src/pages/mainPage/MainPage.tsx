@@ -105,7 +105,7 @@ const MainPage = () => {
             <Pagination
               updatePageCallback={handlePageChange}
               currentPage={activePage}
-              pagesUmmount={9}
+              pagesCount={9}
             />
           </>
         )}
