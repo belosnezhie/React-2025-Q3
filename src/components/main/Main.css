@@ -59,6 +59,10 @@
   text-align: left;
 }
 
+.placeholder {
+  color: var(--border);
+}
+
 .close_detailed {
   position: absolute;
   top: 10px;

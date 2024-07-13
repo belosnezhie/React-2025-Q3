@@ -16,6 +16,7 @@ const Card = (props: CardProps) => {
         className={({ isActive, isPending }) =>
           isActive ? 'card active' : isPending ? 'card pending' : 'card'
         }
+        data-testid="results_card"
       >
         <p>Name: {props.cardData.name}</p>
       </NavLink>
