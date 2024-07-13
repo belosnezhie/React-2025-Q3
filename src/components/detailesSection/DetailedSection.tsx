@@ -2,12 +2,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
-import { ApiService, apiService } from '../../services/ApiService';
+import { ApiService } from '../../services/ApiService';
 
 import './DetailedSection.css';
 
-const DetailedSection = () => {
-  const service: ApiService = apiService;
+interface DetailedSectionProps {
+  service: ApiService;
+}
+
+const DetailedSection = ({ service }: DetailedSectionProps) => {
   const [characterData, setCharacterData] = useState<PeopleSearchResp>();
   const [searchParams, setSearchParams] = useSearchParams();
   const [pageParams] = useState(Number(searchParams.get('page')));
@@ -40,7 +43,7 @@ const DetailedSection = () => {
   return isDestroyed ? null : (
     <main className="detailed_results">
       {isLoading ? (
-        <div className="spinner" />
+        <div className="spinner" data-testid="spinner_test" />
       ) : (
         <>
           {characterData ? (
