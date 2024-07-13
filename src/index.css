@@ -24,3 +24,7 @@ code {
   min-width: 100%;
   min-height: 100vh;
 }
+
+#root:has(.detailed_results) {
+  display: flex;
+}

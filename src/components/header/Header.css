@@ -7,6 +7,7 @@
   justify-content: space-around;
   border-bottom: 4px solid var(--border);
   background-color: var(--header-background);
+  flex-wrap: wrap;
 }
 
 .header_title {

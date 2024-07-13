@@ -85,32 +85,34 @@ const MainPage = () => {
 
   return (
     <>
-      <Header
-        updateCartsCallback={async (searchQuery: string): Promise<void> => {
-          await searchData(searchQuery);
-        }}
-      />
-      <main className="page">
-        {isLoading ? (
-          <div className="spinner" />
-        ) : (
-          <>
-            <section className="results_section">
-              <ResultsList
-                cardCharactersData={charactersData}
-                pageSearchParam={activePage}
+      <div className="wrapper">
+        <Header
+          updateCartsCallback={async (searchQuery: string): Promise<void> => {
+            await searchData(searchQuery);
+          }}
+        />
+        <main className="page">
+          {isLoading ? (
+            <div className="spinner" />
+          ) : (
+            <>
+              <section className="results_section">
+                <ResultsList
+                  cardCharactersData={charactersData}
+                  pageSearchParam={activePage}
+                />
+              </section>
+              <Pagination
+                updatePageCallback={handlePageChange}
+                currentPage={activePage}
+                pagesCount={9}
               />
-              <Outlet />
-            </section>
-            <Pagination
-              updatePageCallback={handlePageChange}
-              currentPage={activePage}
-              pagesCount={9}
-            />
-          </>
-        )}
-        <div className="yoda" />
-      </main>
+            </>
+          )}
+          <div className="yoda" />
+        </main>
+      </div>
+      <Outlet />
     </>
   );
 };

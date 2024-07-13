@@ -38,7 +38,7 @@ const DetailedSection = () => {
   };
 
   return isDestroyed ? null : (
-    <section className="detailed_results">
+    <main className="detailed_results">
       {isLoading ? (
         <div className="spinner" />
       ) : (
@@ -58,7 +58,7 @@ const DetailedSection = () => {
           </button>
         </>
       )}
-    </section>
+    </main>
   );
 };
 
