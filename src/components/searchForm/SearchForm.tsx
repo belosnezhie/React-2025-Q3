@@ -9,7 +9,6 @@ interface SearchFormProps {
 
 const SearchForm = (props: SearchFormProps) => {
   const { query } = useLocalStorage();
-
   const [currentInputValue, setCurrentInputValue] = useState<string>(query);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
