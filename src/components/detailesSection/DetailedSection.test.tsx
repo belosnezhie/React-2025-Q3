@@ -21,7 +21,7 @@ test('Check that a loading indicator is displayed while fetching data', () => {
     }
   }
 
-  const mockApiService = new MockApiService();
+  const mockApiService = new MockApiService(fetch);
 
   render(
     <BrowserRouter>
