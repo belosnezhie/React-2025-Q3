@@ -18,7 +18,7 @@ interface MainPageProps {
 }
 
 const MainPage = ({ service }: MainPageProps) => {
-  const { setItemToLS, query } = useLocalStorage();
+  const { query } = useLocalStorage();
 
   const [charactersData, setCharactersData] = useState<PeopleSearchResp[] | []>(
     [],
@@ -41,9 +41,6 @@ const MainPage = ({ service }: MainPageProps) => {
   const searchData = useCallback(
     async (searchQuery: string): Promise<SearchResp> => {
       setLoading(true);
-
-      setItemToLS(searchQuery);
-
       const res: SearchResp = await service.getSeachedData(searchQuery);
 
       setCharactersData(res.results);
@@ -52,7 +49,7 @@ const MainPage = ({ service }: MainPageProps) => {
 
       return res;
     },
-    [service, setSearchParams, setItemToLS],
+    [service, setSearchParams],
   );
 
   const fetchDefaultData = useCallback(async (): Promise<SearchResp> => {
@@ -67,6 +64,19 @@ const MainPage = ({ service }: MainPageProps) => {
 
     return res;
   }, [service, checkCurrentPage]);
+
+  const handlePageChange = async (pageNumber: number): Promise<SearchResp> => {
+    setLoading(true);
+
+    const res: SearchResp = await service.getDefaultData(pageNumber);
+
+    setCharactersData(res.results);
+    setLoading(false);
+    navigate(`/?page=${pageNumber}`);
+    setActivePage(pageNumber);
+
+    return res;
+  };
 
   const handleMainClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
@@ -86,30 +96,13 @@ const MainPage = ({ service }: MainPageProps) => {
     }
   };
 
-  const handlePageChange = async (pageNumber: number): Promise<SearchResp> => {
-    setLoading(true);
-
-    const res: SearchResp = await service.getDefaultData(pageNumber);
-
-    setCharactersData(res.results);
-    setLoading(false);
-    navigate(`/?page=${pageNumber}`);
-    setActivePage(pageNumber);
-
-    return res;
-  };
-
-  // const getData = useCallback(async (): Promise<SearchResp> => {
-
-  // }, []);
-
   useEffect(() => {
-    if (query === '') {
-      void fetchDefaultData();
-    } else {
+    if (query) {
       void searchData(query);
+    } else {
+      void fetchDefaultData();
     }
-  }, [query, fetchDefaultData]);
+  }, [query, searchData, fetchDefaultData]);
 
   return (
     <>

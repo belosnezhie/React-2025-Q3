@@ -8,7 +8,7 @@ interface SearchFormProps {
 }
 
 const SearchForm = (props: SearchFormProps) => {
-  const { query } = useLocalStorage();
+  const { query, setItemToLS } = useLocalStorage();
   const [currentInputValue, setCurrentInputValue] = useState<string>(query);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -18,6 +18,7 @@ const SearchForm = (props: SearchFormProps) => {
     const input = target.elements[0] as HTMLInputElement;
     const searchQuery: string = input.value.trim();
 
+    setItemToLS(searchQuery);
     await props.updateCartsCallback(searchQuery);
   };
 

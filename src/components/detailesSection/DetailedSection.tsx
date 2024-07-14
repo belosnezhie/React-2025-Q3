@@ -30,14 +30,6 @@ const DetailedSection = ({ service }: DetailedSectionProps) => {
     return resp;
   }, [searchParams, service]);
 
-  // useEffect(() => {
-  //   if (searchParams.get('search') === null) {
-  //     setDestroyed(true);
-  //   } else {
-  //     void getCharacterData();
-  //   }
-  // }, [getCharacterData, searchParams]);
-
   useEffect(() => {
     void getCharacterData();
   }, [getCharacterData, searchParams]);
