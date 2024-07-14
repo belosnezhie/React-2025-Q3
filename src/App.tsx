@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import DetailedSection from './components/detailesSection/DetailedSection.tsx';
 import ErrorBoundary from './components/errorBoundary/ErrorBoundary.tsx';
-import NotFoundPage from './pages/404Page/fallbackUIPage/404Page.tsx';
+import NotFoundPage from './pages/404Page/404Page.tsx';
 import MainPage from './pages/mainPage/MainPage.tsx';
 import { apiService } from './services/ApiService';
 
