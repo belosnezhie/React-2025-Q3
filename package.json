@@ -12,7 +12,8 @@
     "format:fix": "prettier \"src/**/*.ts?(x)\" --write",
     "prepare": "husky",
     "preview": "vite preview",
-    "test": "npx vitest run --coverage"
+    "test": "vitest run --coverage",
+    "pre_test": "vitest run"
   },
   "dependencies": {
     "modern-normalize": "^2.0.0",
