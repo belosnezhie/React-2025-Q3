@@ -4,32 +4,14 @@
   padding: 1%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   border-bottom: 4px solid var(--border);
   background-color: var(--header-background);
+  flex-wrap: wrap;
 }
 
 .header_title {
   margin: 0;
   font-size: 24px;
   color: var(--title);
-}
-
-.throw_error_button {
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--error);
-  cursor: pointer;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  transition: 0.3s;
-}
-
-@media (hover: hover) {
-  .throw_error_button:hover {
-    transform: scale(0.95);
-  }
 }

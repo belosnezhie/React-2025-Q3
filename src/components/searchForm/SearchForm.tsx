@@ -1,53 +1,49 @@
-import React, { ReactNode } from 'react';
+import React, { useState } from 'react';
 
 import './SearchForm.css';
-import { searchQueryStorage } from '../../services/LocalStorage';
+import useLocalStorage from '../../hooks/UseLocalStorage';
 
 interface SearchFormProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;
 }
 
-class SearchForm extends React.Component<SearchFormProps> {
-  state = {
-    currentInputValue: searchQueryStorage.getSearchQuery(),
-  };
+const SearchForm = (props: SearchFormProps) => {
+  const { query, setItemToLS } = useLocalStorage();
+  const [currentInputValue, setCurrentInputValue] = useState<string>(query);
 
-  async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const target: HTMLFormElement = event.target as HTMLFormElement;
     const input = target.elements[0] as HTMLInputElement;
     const searchQuery: string = input.value.trim();
 
-    await this.props.updateCartsCallback(searchQuery);
-  }
+    setItemToLS(searchQuery);
+    await props.updateCartsCallback(searchQuery);
+  };
 
-  handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ currentInputValue: event.target.value });
-  }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentInputValue(event.target.value);
+  };
 
-  render(): ReactNode {
-    return (
-      <>
-        <form
-          className="search_form"
-          onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
-            await this.handleSubmit(event);
-          }}
-        >
-          <input
-            className="search_input"
-            type="text"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              this.handleChange(event);
-            }}
-            value={this.state.currentInputValue}
-          ></input>
-          <input className="submit_input" type="submit" value="Search"></input>
-        </form>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <form
+        className="search_form"
+        onSubmit={handleSubmit}
+        data-testid="search_form"
+      >
+        <input
+          className="search_input"
+          type="text"
+          onChange={handleChange}
+          value={currentInputValue}
+          data-testid="search_input"
+        ></input>
+        <input className="submit_input" type="submit" value="Search"></input>
+      </form>
+    </>
+  );
+};
 
 export default SearchForm;

@@ -1,11 +1,35 @@
-.cards_wrapper {
+.page {
   min-height: 85vh;
   padding: 2%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   gap: 1em;
   flex-wrap: wrap;
   background-color: var(--main-background);
+}
+
+.results_section {
+  width: 100%;
+  display: flex;
+  gap: 1em;
+}
+
+.results_list {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+.results_list.list {
+  padding-left: 2em;
+  flex-direction: column;
+}
+
+.results_list.table {
+  width: 100%;
+  justify-content: center;
 }
 
 .card {
@@ -17,7 +41,47 @@
   color: white;
   cursor: pointer;
   transition: 0.3s;
+  z-index: 2000;
+  text-decoration: none;
+  text-align: center;
+}
+
+.results_list.list .card {
+  width: auto;
+  padding: 0;
+  border: none;
+  background-color: inherit;
+  border-radius: 0;
+  color: var(--border);
+  cursor: pointer;
+  transition: 0.3s;
   z-index: 1000;
+  text-decoration: none;
+  text-align: left;
+}
+
+.results_list.list * {
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.placeholder {
+  color: var(--border);
+}
+
+.close_detailed {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border-radius: 50px;
+  border: none;
+  background-color: var(--background);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .yoda {
@@ -50,5 +114,10 @@
 @media (hover: hover) {
   .card:hover {
     transform: scale(0.98);
+  }
+
+  .results_item:hover,
+  .close_detailed:hover {
+    transform: scale(0.95);
   }
 }

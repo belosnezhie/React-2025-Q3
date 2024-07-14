@@ -1,10 +1,16 @@
 import { SearchResp } from '../model/TypesStarWars';
 
 export class ApiService {
+  fetchFunction: (param: string) => Promise<Response>;
+
+  constructor(callback: (param: string) => Promise<Response>) {
+    this.fetchFunction = callback;
+  }
+
   async getDefaultData(pageNumber: number) {
     const defaultUrl = `https://swapi.dev/api/people/?page=${pageNumber}`;
 
-    const resp: Response = await fetch(defaultUrl);
+    const resp: Response = await this.fetchFunction.call(null, defaultUrl);
 
     if (resp.status !== 200) {
       throw new Error('Request faild!');
@@ -18,7 +24,7 @@ export class ApiService {
   async getSeachedData(searchQuery: string) {
     const url = `https://swapi.dev/api/people/?search=${searchQuery}&format=json`;
 
-    const resp: Response = await fetch(url);
+    const resp: Response = await this.fetchFunction.call(null, url);
 
     if (resp.status !== 200) {
       throw new Error('Request faild!');
@@ -30,4 +36,4 @@ export class ApiService {
   }
 }
 
-export const apiService = new ApiService();
+export const apiService = new ApiService(fetch);
