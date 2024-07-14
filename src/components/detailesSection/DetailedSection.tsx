@@ -43,7 +43,7 @@ const DetailedSection = ({ service }: DetailedSectionProps) => {
   return isDestroyed ? null : (
     <main className="detailed_results" data-testid="detailed_page">
       {isLoading ? (
-        <div className="spinner" data-testid="spinner_test" />
+        <div className="spinner detailed" data-testid="spinner_test" />
       ) : (
         <>
           {characterData ? (
