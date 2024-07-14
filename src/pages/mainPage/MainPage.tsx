@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 
 import Header from '../../components/header/Header.tsx';
 import ResultsList from '../../components/main/ResultsList.tsx';
@@ -21,6 +26,17 @@ const MainPage = ({ service }: MainPageProps) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [activePage, setActivePage] = useState<number>(1);
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const checkCurrentPage = useCallback(() => {
+    const currentPage: number =
+      Number(searchParams.get('page')) === 0
+        ? 1
+        : Number(searchParams.get('page'));
+
+    return currentPage;
+  }, [searchParams]);
 
   const searchData = useCallback(
     async (searchQuery: string): Promise<SearchResp> => {
@@ -36,59 +52,73 @@ const MainPage = ({ service }: MainPageProps) => {
 
       return res;
     },
-    [service, setSearchParams],
+    [service, setSearchParams, setItemToLS],
   );
 
-  const handlePageChange = useCallback(
-    async (pageNumber: number): Promise<SearchResp> => {
-      setLoading(true);
+  const fetchDefaultData = useCallback(async (): Promise<SearchResp> => {
+    setLoading(true);
+    const currentPage = checkCurrentPage();
 
-      const res: SearchResp = await service.getDefaultData(pageNumber);
+    const res: SearchResp = await service.getDefaultData(currentPage);
 
-      setCharactersData(res.results);
-      setLoading(false);
-      setSearchParams({ page: String(pageNumber) });
-      setActivePage(pageNumber);
+    setCharactersData(res.results);
+    setActivePage(currentPage);
+    setLoading(false);
 
-      return res;
-    },
-    [service, setSearchParams],
-  );
+    return res;
+  }, [service, checkCurrentPage]);
 
-  const checkCurrentPage = useCallback(() => {
-    const currentPage: number =
-      Number(searchParams.get('page')) === 0
-        ? 1
-        : Number(searchParams.get('page'));
+  const handleMainClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement;
 
-    return currentPage;
-  }, [searchParams]);
+    let isCard = false;
 
-  const getData = useCallback(async () => {
+    if (
+      (target.parentElement &&
+        target.parentElement.classList.contains('card')) ||
+      target.classList.contains('card')
+    ) {
+      isCard = true;
+    }
+
+    if (location.pathname.includes('detailed') && !isCard) {
+      navigate(`/?page=${activePage}`);
+    }
+  };
+
+  const handlePageChange = async (pageNumber: number): Promise<SearchResp> => {
     setLoading(true);
 
-    if (query) {
-      await searchData(query);
+    const res: SearchResp = await service.getDefaultData(pageNumber);
 
-      setLoading(false);
-    } else {
-      const currentPage = checkCurrentPage();
+    setCharactersData(res.results);
+    setLoading(false);
+    navigate(`/?page=${pageNumber}`);
+    setActivePage(pageNumber);
 
-      const res: SearchResp = await service.getDefaultData(currentPage);
+    return res;
+  };
 
-      setCharactersData(res.results);
-      setActivePage(currentPage);
-      setLoading(false);
-    }
-  }, [searchData, service, checkCurrentPage, query]);
+  // const getData = useCallback(async (): Promise<SearchResp> => {
+
+  // }, []);
 
   useEffect(() => {
-    void getData();
-  }, [getData]);
+    if (query === '') {
+      void fetchDefaultData();
+    } else {
+      void searchData(query);
+    }
+  }, [query, fetchDefaultData]);
 
   return (
     <>
-      <div className="wrapper">
+      <div
+        className="wrapper"
+        onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+          handleMainClick(event);
+        }}
+      >
         <Header
           updateCartsCallback={async (searchQuery: string): Promise<void> => {
             await searchData(searchQuery);

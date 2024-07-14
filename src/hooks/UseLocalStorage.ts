@@ -1,7 +1,7 @@
 export default function useLocalStorage() {
   const key = 'User_JSFE2023Q4';
 
-  const setItemToLS = (query: string) => {
+  const setItemToLS = (query: string): void => {
     localStorage.setItem(key, query);
   };
 
@@ -13,7 +13,7 @@ export default function useLocalStorage() {
     }
   };
 
-  const query = getItemFromLS();
+  const query: string = getItemFromLS();
 
   const checkSearchQuery = (): boolean => {
     if (!localStorage.getItem(key)) {

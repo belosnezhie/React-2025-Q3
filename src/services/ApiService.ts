@@ -10,7 +10,7 @@ export class ApiService {
   async getDefaultData(pageNumber: number) {
     const defaultUrl = `https://swapi.dev/api/people/?page=${pageNumber}`;
 
-    const resp: Response = await this.fetchFunction(defaultUrl);
+    const resp: Response = await this.fetchFunction.call(null, defaultUrl);
 
     if (resp.status !== 200) {
       throw new Error('Request faild!');
@@ -24,7 +24,7 @@ export class ApiService {
   async getSeachedData(searchQuery: string) {
     const url = `https://swapi.dev/api/people/?search=${searchQuery}&format=json`;
 
-    const resp: Response = await this.fetchFunction(url);
+    const resp: Response = await this.fetchFunction.call(null, url);
 
     if (resp.status !== 200) {
       throw new Error('Request faild!');
