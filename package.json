@@ -12,8 +12,7 @@
     "format:fix": "prettier \"src/**/*.ts?(x)\" --write",
     "prepare": "husky",
     "preview": "vite preview",
-    "test": "vitest run --coverage",
-    "pre_test": "vitest run"
+    "test": "vitest run --coverage"
   },
   "dependencies": {
     "modern-normalize": "^2.0.0",
