@@ -4,6 +4,7 @@ import SearchForm from '../searchForm/SearchForm.tsx';
 
 interface HeaderProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;
+  changeThemeCallback: () => void;
 }
 
 const Header = (props: HeaderProps) => {
@@ -16,6 +17,9 @@ const Header = (props: HeaderProps) => {
             await props.updateCartsCallback(searchQuery);
           }}
         ></SearchForm>
+        <button className="theme_button" onClick={props.changeThemeCallback}>
+          Theme change
+        </button>
       </header>
     </>
   );

@@ -9,6 +9,7 @@ import {
 import Header from '../../components/header/Header.tsx';
 import ResultsList from '../../components/main/ResultsList.tsx';
 import Pagination from '../../components/pagination/Pagination.tsx';
+import { useTheme, useThemeSwitcher } from '../../context/ThemeContext.tsx';
 import useLocalStorage from '../../hooks/UseLocalStorage';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 import { ApiService } from '../../services/ApiService';
@@ -19,10 +20,11 @@ interface MainPageProps {
 
 const MainPage = ({ service }: MainPageProps) => {
   const { query, checkSearchQuery } = useLocalStorage();
-
   const [charactersData, setCharactersData] = useState<PeopleSearchResp[] | []>(
     [],
   );
+  const theme = useTheme();
+  const handleThemeChange = useThemeSwitcher();
   const [isLoading, setLoading] = useState<boolean>(false);
   const MAX_PER_PAGE: number = 10;
   const [maxPagesCount, setMaxPagesCount] = useState<number>(1);
@@ -102,6 +104,7 @@ const MainPage = ({ service }: MainPageProps) => {
     }
 
     if (location.pathname.includes('detailed') && !isCard) {
+      // возможно, здесь тоже нужно поправить на setSearchParams({ search: query, page: activePage });
       navigate(`/?page=${activePage}`);
     }
   };
@@ -117,7 +120,7 @@ const MainPage = ({ service }: MainPageProps) => {
   return (
     <>
       <div
-        className="wrapper"
+        className={theme + ' wrapper'}
         onClick={(event: React.MouseEvent<HTMLDivElement>) => {
           handleMainClick(event);
         }}
@@ -126,6 +129,7 @@ const MainPage = ({ service }: MainPageProps) => {
           updateCartsCallback={async (searchQuery: string): Promise<void> => {
             await searchData(searchQuery);
           }}
+          changeThemeCallback={handleThemeChange}
         />
         <main className="page">
           {isLoading ? (
