@@ -21,8 +21,8 @@ export class ApiService {
     return data;
   }
 
-  async getSeachedData(searchQuery: string) {
-    const url = `https://swapi.dev/api/people/?search=${searchQuery}&format=json`;
+  async getSeachedData(searchQuery: string, pageNumber: number = 1) {
+    const url = `https://swapi.dev/api/people/?search=${searchQuery}&format=json&page=${pageNumber}`;
 
     const resp: Response = await this.fetchFunction.call(null, url);
 

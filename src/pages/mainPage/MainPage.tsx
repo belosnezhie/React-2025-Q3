@@ -18,16 +18,21 @@ interface MainPageProps {
 }
 
 const MainPage = ({ service }: MainPageProps) => {
-  const { query } = useLocalStorage();
+  const { query, checkSearchQuery } = useLocalStorage();
 
   const [charactersData, setCharactersData] = useState<PeopleSearchResp[] | []>(
     [],
   );
   const [isLoading, setLoading] = useState<boolean>(false);
+  const MAX_PER_PAGE: number = 10;
+  const [maxPagesCount, setMaxPagesCount] = useState<number>(1);
   const [activePage, setActivePage] = useState<number>(1);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const countPages = (resultsCount: number) =>
+    setMaxPagesCount(Math.ceil(resultsCount / MAX_PER_PAGE));
 
   const checkCurrentPage = useCallback(() => {
     const currentPage: number =
@@ -36,7 +41,7 @@ const MainPage = ({ service }: MainPageProps) => {
         : Number(searchParams.get('page'));
 
     return currentPage;
-  }, [searchParams]);
+  }, []);
 
   const searchData = useCallback(
     async (searchQuery: string): Promise<SearchResp> => {
@@ -45,11 +50,13 @@ const MainPage = ({ service }: MainPageProps) => {
 
       setCharactersData(res.results);
       setSearchParams({ search: searchQuery });
+      countPages(res.count);
+      setActivePage(1);
       setLoading(false);
 
       return res;
     },
-    [service, setSearchParams],
+    [service],
   );
 
   const fetchDefaultData = useCallback(async (): Promise<SearchResp> => {
@@ -59,20 +66,23 @@ const MainPage = ({ service }: MainPageProps) => {
     const res: SearchResp = await service.getDefaultData(currentPage);
 
     setCharactersData(res.results);
+    countPages(res.count);
     setActivePage(currentPage);
     setLoading(false);
 
     return res;
-  }, [service, checkCurrentPage]);
+  }, [service]);
 
   const handlePageChange = async (pageNumber: number): Promise<SearchResp> => {
     setLoading(true);
 
-    const res: SearchResp = await service.getDefaultData(pageNumber);
+    const res: SearchResp = checkSearchQuery()
+      ? await service.getSeachedData(query, pageNumber)
+      : await service.getDefaultData(pageNumber);
 
     setCharactersData(res.results);
     setLoading(false);
-    navigate(`/?page=${pageNumber}`);
+    setSearchParams({ search: query, page: String(pageNumber) });
     setActivePage(pageNumber);
 
     return res;
@@ -102,7 +112,7 @@ const MainPage = ({ service }: MainPageProps) => {
     } else {
       void fetchDefaultData();
     }
-  }, [query, searchData, fetchDefaultData]);
+  }, [searchData, fetchDefaultData]);
 
   return (
     <>
@@ -131,7 +141,7 @@ const MainPage = ({ service }: MainPageProps) => {
               <Pagination
                 updatePageCallback={handlePageChange}
                 currentPage={activePage}
-                pagesCount={9}
+                pagesCount={maxPagesCount}
               />
             </>
           )}
