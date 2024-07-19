@@ -17,9 +17,7 @@ const Header = (props: HeaderProps) => {
             await props.updateCartsCallback(searchQuery);
           }}
         ></SearchForm>
-        <button className="theme_button" onClick={props.changeThemeCallback}>
-          Theme change
-        </button>
+        <button className="theme_button" onClick={props.changeThemeCallback} />
       </header>
     </>
   );

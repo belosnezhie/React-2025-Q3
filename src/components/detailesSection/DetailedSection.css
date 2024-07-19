@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   border: 2px solid var(--border);
-  background-color: var(--card-background);
+  background-color: var(--detailes-background);
   color: white;
   transition: 0.3s;
   z-index: 1000;

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import { useTheme } from '../../context/ThemeContext.tsx';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 import { ApiService } from '../../services/ApiService';
 
@@ -17,6 +18,7 @@ const DetailedSection = ({ service }: DetailedSectionProps) => {
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const getCharacterData = useCallback(async (): Promise<SearchResp> => {
     setLoading(true);
@@ -41,7 +43,7 @@ const DetailedSection = ({ service }: DetailedSectionProps) => {
   };
 
   return isDestroyed ? null : (
-    <main className="detailed_results" data-testid="detailed_page">
+    <main className={theme + ' detailed_results'} data-testid="detailed_page">
       {isLoading ? (
         <div className="spinner detailed" data-testid="spinner_test" />
       ) : (
