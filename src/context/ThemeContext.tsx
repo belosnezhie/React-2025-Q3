@@ -1,19 +1,11 @@
-import React, { useContext, useState } from 'react';
-
-const ThemeContext = React.createContext('light');
-const ThemeSwitcher = React.createContext(() => {});
+import React, { useState } from 'react';
 
 interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-export const useTheme = () => {
-  return useContext(ThemeContext);
-};
-
-export const useThemeSwitcher = () => {
-  return useContext(ThemeSwitcher);
-};
+export const ThemeContext = React.createContext('light');
+export const ThemeSwitcher = React.createContext(() => {});
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<string>('light');

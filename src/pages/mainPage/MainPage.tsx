@@ -9,7 +9,7 @@ import {
 import Header from '../../components/header/Header.tsx';
 import ResultsList from '../../components/main/ResultsList.tsx';
 import Pagination from '../../components/pagination/Pagination.tsx';
-import { useTheme, useThemeSwitcher } from '../../context/ThemeContext.tsx';
+import { useTheme, useThemeSwitcher } from '../../hooks/ContextHooks';
 import useLocalStorage from '../../hooks/UseLocalStorage';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 import { ApiService } from '../../services/ApiService';

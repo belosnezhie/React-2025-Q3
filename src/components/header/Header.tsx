@@ -1,6 +1,7 @@
 import './Header.css';
 
 import SearchForm from '../searchForm/SearchForm.tsx';
+import { Counter } from '../TestCounter.tsx';
 
 interface HeaderProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;
@@ -18,6 +19,7 @@ const Header = (props: HeaderProps) => {
           }}
         ></SearchForm>
         <button className="theme_button" onClick={props.changeThemeCallback} />
+        <Counter />
       </header>
     </>
   );

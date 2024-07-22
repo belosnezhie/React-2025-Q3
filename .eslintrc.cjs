@@ -52,7 +52,6 @@ module.exports = {
           }
         }
       ],
-      "import/exports-last": ["error"],
       "import/newline-after-import": ["error"],
       "padding-line-between-statements": [
         "error",

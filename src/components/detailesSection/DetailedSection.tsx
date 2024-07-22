@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { useTheme } from '../../context/ThemeContext.tsx';
+import { useTheme } from '../../hooks/ContextHooks';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 import { ApiService } from '../../services/ApiService';
 
