@@ -4,10 +4,12 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { starWarsApi } from '../services/StarWarsApi';
 
 import counterReducer from './counter/counterSlice';
+import favoriteCharactersReducer from './pageCharacters/PageCharactersSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    favoriteCharacters: favoriteCharactersReducer,
     [starWarsApi.reducerPath]: starWarsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

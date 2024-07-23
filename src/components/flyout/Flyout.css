@@ -1,0 +1,32 @@
+.flyout {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--header-background);
+  z-index: 60000;
+  padding: 2%;
+  color: white;
+}
+
+.unselect_button,
+.download_button {
+  height: 40px;
+  display: block;
+  padding: 2%;
+  background-color: var(--background);
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  transition: 0.3s;
+}
+
+@media (hover: hover) {
+  .unselect_button:hover,
+  .download_button:hover {
+    transform: scale(0.95);
+  }
+}

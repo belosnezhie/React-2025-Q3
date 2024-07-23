@@ -2,6 +2,14 @@
   margin: 0 auto;
 }
 
+#root:has(.flyout) {
+  position: relative;
+}
+
+#root:has(.detailed_results) .page_wrapper{
+  display: flex;
+}
+
 #root:has(.detailed_results) .wrapper{
   width: 50%;
 }

@@ -23,7 +23,7 @@ const Card = (props: CardProps) => {
         >
           <p>Name: {props.cardData.name}</p>
         </NavLink>
-        <FavoritesButton />
+        <FavoritesButton characterData={props.cardData} />
       </div>
     </>
   );

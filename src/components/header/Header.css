@@ -25,6 +25,7 @@
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .light .theme_button {
@@ -33,4 +34,10 @@
 
 .dark .theme_button {
   background-image: url('../../assets/sun.png');
+}
+
+@media (hover: hover) {
+  .theme_button:hover {
+    transform: scale(0.95);
+  }
 }

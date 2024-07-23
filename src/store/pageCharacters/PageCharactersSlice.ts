@@ -4,34 +4,46 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 import { RootState } from '../Store';
 
-export interface PageCharactersState {
-  characters: PeopleSearchResp[];
+export interface FavoritesCharactersState {
+  favCharacters: PeopleSearchResp[];
 }
 
-export const initialState: PageCharactersState = {
-  characters: [],
+export const initialState: FavoritesCharactersState = {
+  favCharacters: [],
 };
 
-export const pageCharacterSlice = createSlice({
-  name: 'counter',
+export const favoriteCharacterSlice = createSlice({
+  name: 'favoritesCharacters',
   initialState,
   reducers: {
-    fetchDefaultPageCharacters: (state) => {
-      state.value += 1;
+    addToFavorites: (state, action: PayloadAction<PeopleSearchResp>) => {
+      state.favCharacters.push(action.payload);
     },
-    fetchPageCharacters: (state) => {
-      state.value -= 1;
+    removeFromFavorites: (state, action: PayloadAction<PeopleSearchResp>) => {
+      return {
+        ...state,
+        favCharacters: state.favCharacters.filter(
+          (item) => item.name !== action.payload.name,
+        ),
+      };
     },
-    fetchSearchedCharacters: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
+    clearFavorites: (state) => {
+      return {
+        ...state,
+        favCharacters: [],
+      };
+    },
+    donloadFavorites: (state) => {
+      state.favCharacters.push();
     },
   },
 });
 
 export const {
-  getDefaultPageCharacters,
-  fetchPageCharacters,
-  fetchSearchedCharacters,
-} = pageCharacterSlice.actions;
+  addToFavorites,
+  removeFromFavorites,
+  clearFavorites,
+  donloadFavorites,
+} = favoriteCharacterSlice.actions;
 export const selectCount = (state: RootState) => state.counter.value;
-export default pageCharacterSlice.reducer;
+export default favoriteCharacterSlice.reducer;
