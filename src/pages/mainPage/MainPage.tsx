@@ -60,7 +60,7 @@ const MainPage = ({ service }: MainPageProps) => {
 
       setCharactersData(res.results);
       setSearchParams({ search: searchQuery });
-      countPages(res.count);
+      // countPages(res.count);
       setActivePage(1);
 
       return res;

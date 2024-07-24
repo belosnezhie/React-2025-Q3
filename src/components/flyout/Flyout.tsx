@@ -3,6 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
 import { clearFavorites } from '../../store/favoriteCharacter/FavoriteCharacterSlice';
 import type { RootState } from '../../store/Store';
 
+import { DownloadButton } from './DownloadButton.tsx';
+
 import './Flyout.css';
 
 export const Flyout = () => {
@@ -22,7 +24,7 @@ export const Flyout = () => {
           Unselect all
         </button>
         <p>{favCharactersCount} items are selected</p>
-        <a className="download_button">Download</a>
+        <DownloadButton />
       </div>
     </>
   );
