@@ -15,7 +15,7 @@ import { useAppSelector } from '../../hooks/StateHooks';
 import useLocalStorage from '../../hooks/UseLocalStorage';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 import { ApiService } from '../../services/ApiService';
-import { useFetchDefaultPageCharactersQuery } from '../../services/StarWarsApi';
+import { useFetchDefaultCharactersQuery } from '../../services/StarWarsApi';
 import type { RootState } from '../../store/Store';
 
 interface MainPageProps {
@@ -30,14 +30,13 @@ const MainPage = ({ service }: MainPageProps) => {
   const theme = useTheme();
   const handleThemeChange = useThemeSwitcher();
   const MAX_PER_PAGE: number = 10;
-  const [maxPagesCount, setMaxPagesCount] = useState<number>(1);
+  const [, setMaxPagesCount] = useState<number>(1);
   const [activePage, setActivePage] = useState<number>(1);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useFetchDefaultPageCharactersQuery(activePage);
-  const charactersData = data?.results;
+  const { data, isLoading } = useFetchDefaultCharactersQuery(activePage);
 
   const favCharactersCount = useAppSelector(
     (state: RootState) => state.favoriteCharacters.favCharacters.length,
@@ -143,18 +142,18 @@ const MainPage = ({ service }: MainPageProps) => {
           <main className="page">
             {isLoading ? (
               <div className="spinner" data-testid="spinner_test" />
-            ) : charactersData ? (
+            ) : data?.results ? (
               <>
                 <section className="results_section">
                   <ResultsList
-                    cardCharactersData={charactersData}
+                    cardCharactersData={data.results}
                     pageSearchParam={activePage}
                   />
                 </section>
                 <Pagination
                   updatePageCallback={handlePageChange}
                   currentPage={activePage}
-                  pagesCount={maxPagesCount}
+                  pagesCount={Math.ceil(data.count / MAX_PER_PAGE)}
                 />
               </>
             ) : null}

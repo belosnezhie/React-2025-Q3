@@ -1,11 +1,9 @@
-import { useState } from 'react';
-
 import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 import {
   addToFavorites,
   removeFromFavorites,
-} from '../../store/pageCharacters/PageCharactersSlice';
+} from '../../store/favoriteCharacter/FavoriteCharacterSlice';
 import { RootState } from '../../store/Store';
 
 interface FavoritesButtonProps {
@@ -18,24 +16,10 @@ export const FavoritesButton = ({ characterData }: FavoritesButtonProps) => {
     (state: RootState) => state.favoriteCharacters.favCharacters,
   );
 
-  const checkIsFavorite = (): boolean => {
-    const index = favoriteCharacters.indexOf(characterData);
-
-    if (index !== -1) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const [checked, setChecked] = useState<boolean>(checkIsFavorite);
-
   const handleChange = () => {
-    if (checked) {
-      setChecked(false);
+    if (favoriteCharacters.includes(characterData)) {
       dispatch(removeFromFavorites(characterData));
     } else {
-      setChecked(true);
       dispatch(addToFavorites(characterData));
     }
   };
@@ -45,7 +29,7 @@ export const FavoritesButton = ({ characterData }: FavoritesButtonProps) => {
       <input
         type="checkbox"
         className="fav_button"
-        checked={checked}
+        checked={favoriteCharacters.includes(characterData)}
         onChange={handleChange}
       ></input>
     </>

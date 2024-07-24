@@ -4,7 +4,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { starWarsApi } from '../services/StarWarsApi';
 
 import counterReducer from './counter/counterSlice';
-import favoriteCharactersReducer from './pageCharacters/PageCharactersSlice';
+import favoriteCharactersReducer from './favoriteCharacter/FavoriteCharacterSlice';
 
 export const store = configureStore({
   reducer: {

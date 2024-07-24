@@ -1,40 +1,43 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useTheme } from '../../hooks/ContextHooks';
-import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
-import { ApiService } from '../../services/ApiService';
-
 import './DetailedSection.css';
+import { useFetchSearchedCharactersQuery } from '../../services/StarWarsApi';
 
-interface DetailedSectionProps {
-  service: ApiService;
-}
+// interface DetailedSectionProps {
+//   service: ApiService;
+// }
 
-const DetailedSection = ({ service }: DetailedSectionProps) => {
-  const [characterData, setCharacterData] = useState<PeopleSearchResp>();
+const DetailedSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [pageParams] = useState(Number(searchParams.get('page')));
+  // const [searchQueryParams] = useState(String(searchParams.get('search')));
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
-  const [isLoading, setLoading] = useState<boolean>(false);
+  // const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+
   const theme = useTheme();
+  const { data, isFetching } = useFetchSearchedCharactersQuery({
+    searchQuery: String(searchParams.get('search')),
+    pageNumber: Number(searchParams.get('page')),
+  });
 
-  const getCharacterData = useCallback(async (): Promise<SearchResp> => {
-    setLoading(true);
-    const searchQuery: string = String(searchParams.get('search'));
+  // const getCharacterData = useCallback(async (): Promise<SearchResp> => {
+  //   setLoading(true);
+  //   const searchQuery: string = String(searchParams.get('search'));
 
-    const resp: SearchResp = await service.getSeachedData(searchQuery);
+  //   const resp: SearchResp = await service.getSeachedData(searchQuery);
 
-    setCharacterData(resp.results[0]);
-    setLoading(false);
+  //   setCharacterData(resp.results[0]);
+  //   setLoading(false);
 
-    return resp;
-  }, [searchParams, service]);
+  //   return resp;
+  // }, [searchParams, service]);
 
-  useEffect(() => {
-    void getCharacterData();
-  }, [getCharacterData, searchParams]);
+  // useEffect(() => {
+  //   void getCharacterData();
+  // }, [getCharacterData, searchParams]);
 
   const handleClick = () => {
     setSearchParams({ page: String(pageParams) });
@@ -44,18 +47,18 @@ const DetailedSection = ({ service }: DetailedSectionProps) => {
 
   return isDestroyed ? null : (
     <main className={theme + ' detailed_results'} data-testid="detailed_page">
-      {isLoading ? (
+      {isFetching ? (
         <div className="spinner detailed" data-testid="spinner_test" />
       ) : (
         <>
-          {characterData ? (
+          {data?.results ? (
             <>
-              <p>Name: {characterData.name}</p>
-              <p>Birth year: {characterData.birth_year}</p>
-              <p>Hair color: {characterData.hair_color}</p>
-              <p>Skin color: {characterData.skin_color}</p>
-              <p>Eye color: {characterData.eye_color}</p>
-              <p>Gender: {characterData.gender}</p>
+              <p>Name: {data.results[0].name}</p>
+              <p>Birth year: {data.results[0].birth_year}</p>
+              <p>Hair color: {data.results[0].hair_color}</p>
+              <p>Skin color: {data.results[0].skin_color}</p>
+              <p>Eye color: {data.results[0].eye_color}</p>
+              <p>Gender: {data.results[0].gender}</p>
             </>
           ) : null}
           <button className="close_detailed" onClick={handleClick}>

@@ -1,6 +1,6 @@
 import { useTheme } from '../../hooks/ContextHooks';
 import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
-import { clearFavorites } from '../../store/pageCharacters/PageCharactersSlice';
+import { clearFavorites } from '../../store/favoriteCharacter/FavoriteCharacterSlice';
 import type { RootState } from '../../store/Store';
 
 import './Flyout.css';
