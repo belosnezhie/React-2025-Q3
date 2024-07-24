@@ -23,7 +23,7 @@ interface MainPageProps {
 }
 
 const MainPage = ({ service }: MainPageProps) => {
-  const { query, checkSearchQuery } = useLocalStorage();
+  const { query } = useLocalStorage();
   const [charactersOLDData, setCharactersData] = useState<
     PeopleSearchResp[] | []
   >([]);
@@ -36,7 +36,7 @@ const MainPage = ({ service }: MainPageProps) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useFetchDefaultCharactersQuery(activePage);
+  const { data, isFetching } = useFetchDefaultCharactersQuery(activePage);
 
   const favCharactersCount = useAppSelector(
     (state: RootState) => state.favoriteCharacters.favCharacters.length,
@@ -80,16 +80,22 @@ const MainPage = ({ service }: MainPageProps) => {
     return res;
   }, [service]);
 
-  const handlePageChange = async (pageNumber: number): Promise<SearchResp> => {
-    const res: SearchResp = checkSearchQuery()
-      ? await service.getSeachedData(query, pageNumber)
-      : await service.getDefaultData(pageNumber);
+  // const handlePageChange = async (pageNumber: number): Promise<SearchResp> => {
+  //   const res: SearchResp = checkSearchQuery()
+  //     ? await service.getSeachedData(query, pageNumber)
+  //     : await service.getDefaultData(pageNumber);
 
-    setCharactersData(res.results);
-    setSearchParams({ search: query, page: String(pageNumber) });
+  //   setCharactersData(res.results);
+  //   setSearchParams({ search: query, page: String(pageNumber) });
+  //   setActivePage(pageNumber);
+
+  //   return res;
+  // };
+
+  const handlePageChange = (pageNumber: number) => {
     setActivePage(pageNumber);
 
-    return res;
+    setSearchParams({ search: query, page: String(pageNumber) });
   };
 
   const handleMainClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -140,7 +146,7 @@ const MainPage = ({ service }: MainPageProps) => {
             changeThemeCallback={handleThemeChange}
           />
           <main className="page">
-            {isLoading ? (
+            {isFetching ? (
               <div className="spinner" data-testid="spinner_test" />
             ) : data?.results ? (
               <>
@@ -152,6 +158,7 @@ const MainPage = ({ service }: MainPageProps) => {
                 </section>
                 <Pagination
                   updatePageCallback={handlePageChange}
+                  // newPagination={setActivePage(activePage)}
                   currentPage={activePage}
                   pagesCount={Math.ceil(data.count / MAX_PER_PAGE)}
                 />

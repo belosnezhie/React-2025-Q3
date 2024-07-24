@@ -5,7 +5,6 @@ import { SearchResp } from '../model/TypesStarWars';
 
 export interface SearchedParams {
   searchQuery: string;
-  pageNumber: number;
 }
 
 // import type { SearchResp } from './types';
@@ -19,9 +18,12 @@ export const starWarsApi = createApi({
       query: (pageNumber) => `/?page=${pageNumber}`,
     }),
     fetchSearchedCharacters: builder.query<SearchResp, SearchedParams>({
-      query: ({ searchQuery, pageNumber }) =>
-        `/?search=${searchQuery}&format=json&page=${pageNumber}`,
+      query: ({ searchQuery }) => `/?search=${searchQuery}&format=json`,
     }),
+    // fetchSearchedCharacters: builder.query<SearchResp, SearchedParams>({
+    //   query: ({ searchQuery, pageNumber }) =>
+    //     `/?search=${searchQuery}&format=json&page=${pageNumber}`,
+    // }),
   }),
 });
 
@@ -30,4 +32,5 @@ export const starWarsApi = createApi({
 export const {
   useFetchDefaultCharactersQuery,
   useFetchSearchedCharactersQuery,
+  useLazyFetchSearchedCharactersQuery,
 } = starWarsApi;

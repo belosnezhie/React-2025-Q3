@@ -22,7 +22,6 @@ const Pagination = ({
         <button
           key={index}
           onClick={() => {
-            console.log(item);
             updatePageCallback(index + 1);
           }}
           className={`pagination_button ${currentPage === index + 1 ? 'active' : ''}`}

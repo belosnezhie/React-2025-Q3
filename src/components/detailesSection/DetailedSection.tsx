@@ -12,32 +12,13 @@ import { useFetchSearchedCharactersQuery } from '../../services/StarWarsApi';
 const DetailedSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [pageParams] = useState(Number(searchParams.get('page')));
-  // const [searchQueryParams] = useState(String(searchParams.get('search')));
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
-  // const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const theme = useTheme();
   const { data, isFetching } = useFetchSearchedCharactersQuery({
     searchQuery: String(searchParams.get('search')),
-    pageNumber: Number(searchParams.get('page')),
   });
-
-  // const getCharacterData = useCallback(async (): Promise<SearchResp> => {
-  //   setLoading(true);
-  //   const searchQuery: string = String(searchParams.get('search'));
-
-  //   const resp: SearchResp = await service.getSeachedData(searchQuery);
-
-  //   setCharacterData(resp.results[0]);
-  //   setLoading(false);
-
-  //   return resp;
-  // }, [searchParams, service]);
-
-  // useEffect(() => {
-  //   void getCharacterData();
-  // }, [getCharacterData, searchParams]);
 
   const handleClick = () => {
     setSearchParams({ page: String(pageParams) });
