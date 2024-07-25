@@ -13,7 +13,7 @@ export const initialState: FavoritesCharactersState = {
 };
 
 export const favoriteCharacterSlice = createSlice({
-  name: 'favoritesCharacters',
+  name: 'favoriteCharacters',
   initialState,
   reducers: {
     addToFavorites: (state, action: PayloadAction<PeopleSearchResp>) => {
@@ -33,17 +33,11 @@ export const favoriteCharacterSlice = createSlice({
         favCharacters: [],
       };
     },
-    donloadFavorites: (state) => {
-      state.favCharacters.push();
-    },
   },
 });
 
-export const {
-  addToFavorites,
-  removeFromFavorites,
-  clearFavorites,
-  donloadFavorites,
-} = favoriteCharacterSlice.actions;
-export const selectCount = (state: RootState) => state.counter.value;
+export const { addToFavorites, removeFromFavorites, clearFavorites } =
+  favoriteCharacterSlice.actions;
+export const selectFavorite = (state: RootState) =>
+  state.favoriteCharacters.favCharacters;
 export default favoriteCharacterSlice.reducer;

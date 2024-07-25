@@ -4,7 +4,6 @@ import './SearchForm.css';
 import useLocalStorage from '../../hooks/UseLocalStorage';
 
 interface SearchFormProps {
-  // updateCartsCallback: (searchQuery: string) => Promise<void>;
   callback: (searchQuery: string) => Promise<void>;
 }
 

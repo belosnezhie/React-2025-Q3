@@ -5,10 +5,6 @@ import { useTheme } from '../../hooks/ContextHooks';
 import './DetailedSection.css';
 import { useFetchSearchedCharactersQuery } from '../../services/StarWarsApi';
 
-// interface DetailedSectionProps {
-//   service: ApiService;
-// }
-
 const DetailedSection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [pageParams] = useState(Number(searchParams.get('page')));

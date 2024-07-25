@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Outlet,
   useLocation,
@@ -13,32 +13,20 @@ import Pagination from '../../components/pagination/Pagination.tsx';
 import { useTheme, useThemeSwitcher } from '../../hooks/ContextHooks';
 import { useAppSelector } from '../../hooks/StateHooks';
 import useLocalStorage from '../../hooks/UseLocalStorage';
-import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
-import { ApiService } from '../../services/ApiService';
 import { useFetchCharactersQuery } from '../../services/StarWarsApi';
 import type { RootState } from '../../store/Store';
 
-interface MainPageProps {
-  service: ApiService;
-}
-
-const MainPage = ({ service }: MainPageProps) => {
+const MainPage = () => {
   const { query } = useLocalStorage();
-  const [charactersOLDData, setCharactersData] = useState<
-    PeopleSearchResp[] | []
-  >([]);
   const theme = useTheme();
   const handleThemeChange = useThemeSwitcher();
   const MAX_PER_PAGE: number = 10;
-  const [, setMaxPagesCount] = useState<number>(1);
   const [activePage, setActivePage] = useState<number>(1);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
 
-  // const { data, isFetching } = useFetchDefaultCharactersQuery(activePage);
   const { data, isFetching, refetch } = useFetchCharactersQuery({
-    // searchQuery: String(searchParams.get('search')),
     searchQuery: query,
     pageNumber: activePage,
   });
@@ -47,47 +35,11 @@ const MainPage = ({ service }: MainPageProps) => {
     (state: RootState) => state.favoriteCharacters.favCharacters.length,
   );
 
-  const countPages = (resultsCount: number) =>
-    setMaxPagesCount(Math.ceil(resultsCount / MAX_PER_PAGE));
-
-  const checkCurrentPage = useCallback(() => {
-    const currentPage: number =
-      Number(searchParams.get('page')) === 0
-        ? 1
-        : Number(searchParams.get('page'));
-
-    return currentPage;
-  }, []);
-
   const searchData = async (searchQuery: string): Promise<void> => {
-    console.log(searchQuery);
-
+    setActivePage(1);
     await refetch();
+    setSearchParams({ search: searchQuery, page: String(1) });
   };
-
-  const fetchDefaultData = useCallback(async (): Promise<SearchResp> => {
-    const currentPage = checkCurrentPage();
-
-    const res: SearchResp = await service.getDefaultData(currentPage);
-
-    setCharactersData(res.results);
-    countPages(res.count);
-    setActivePage(currentPage);
-
-    return res;
-  }, [service]);
-
-  // const handlePageChange = async (pageNumber: number): Promise<SearchResp> => {
-  //   const res: SearchResp = checkSearchQuery()
-  //     ? await service.getSeachedData(query, pageNumber)
-  //     : await service.getDefaultData(pageNumber);
-
-  //   setCharactersData(res.results);
-  //   setSearchParams({ search: query, page: String(pageNumber) });
-  //   setActivePage(pageNumber);
-
-  //   return res;
-  // };
 
   const handlePageChange = (pageNumber: number) => {
     setActivePage(pageNumber);
@@ -114,19 +66,6 @@ const MainPage = ({ service }: MainPageProps) => {
     }
   };
 
-  useEffect(() => {
-    if (searchParams.get('debug') === null) {
-      console.log(charactersOLDData);
-
-      return;
-    }
-    if (query) {
-      void searchData(query);
-    } else {
-      void fetchDefaultData();
-    }
-  }, [searchData, fetchDefaultData]);
-
   return (
     <>
       <div className="page_wrapper">
@@ -137,9 +76,6 @@ const MainPage = ({ service }: MainPageProps) => {
           }}
         >
           <Header
-            // updateCartsCallback={async (searchQuery: string): Promise<void> => {
-            //   await searchData(searchQuery);
-            // }}
             callback={searchData}
             changeThemeCallback={handleThemeChange}
           />
@@ -156,7 +92,6 @@ const MainPage = ({ service }: MainPageProps) => {
                 </section>
                 <Pagination
                   updatePageCallback={handlePageChange}
-                  // newPagination={setActivePage(activePage)}
                   currentPage={activePage}
                   pagesCount={Math.ceil(data.count / MAX_PER_PAGE)}
                 />
@@ -170,45 +105,6 @@ const MainPage = ({ service }: MainPageProps) => {
       {favCharactersCount ? <Flyout /> : null}
     </>
   );
-
-  // return (
-  //   <>
-  //     <div
-  //       className={theme + ' wrapper'}
-  //       onClick={(event: React.MouseEvent<HTMLDivElement>) => {
-  //         handleMainClick(event);
-  //       }}
-  //     >
-  //       <Header
-  //         updateCartsCallback={async (searchQuery: string): Promise<void> => {
-  //           await searchData(searchQuery);
-  //         }}
-  //         changeThemeCallback={handleThemeChange}
-  //       />
-  //       <main className="page">
-  //         {isODLAPILoading ? (
-  //           <div className="spinner" data-testid="spinner_test" />
-  //         ) : (
-  //           <>
-  //             <section className="results_section">
-  //               <ResultsList
-  //                 cardCharactersData={charactersData}
-  //                 pageSearchParam={activePage}
-  //               />
-  //             </section>
-  //             <Pagination
-  //               updatePageCallback={handlePageChange}
-  //               currentPage={activePage}
-  //               pagesCount={maxPagesCount}
-  //             />
-  //           </>
-  //         )}
-  //         <div className="yoda" />
-  //       </main>
-  //     </div>
-  //     <Outlet />
-  //   </>
-  // );
 };
 
 export default MainPage;
