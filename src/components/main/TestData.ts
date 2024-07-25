@@ -1,4 +1,4 @@
-import { PeopleSearchResp } from '../../model/TypesStarWars';
+import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 
 export const testPeopleSearchResp: PeopleSearchResp = {
   name: 'test',
@@ -15,3 +15,13 @@ export const testPeopleSearchArr: PeopleSearchResp[] = [
   testPeopleSearchResp,
   testPeopleSearchResp,
 ];
+
+export const testCharactersSearchArr: SearchResp = {
+  count: 2,
+  results: [testPeopleSearchResp, testPeopleSearchResp],
+};
+
+export const testCharactersSearch: SearchResp = {
+  count: 1,
+  results: [testPeopleSearchResp],
+};

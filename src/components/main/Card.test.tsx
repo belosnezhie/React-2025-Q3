@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { afterEach, expect, test } from 'vitest';
 
 import { testPeopleSearchResp } from '../../components/main/TestData';
+import { renderWithProviders } from '../../TestUtils.tsx';
 
 import Card from './Card.tsx';
 
@@ -13,7 +14,7 @@ afterEach(() => {
 });
 
 test('Should render the relevant card data', () => {
-  const renderObject = render(
+  const renderObject = renderWithProviders(
     <BrowserRouter>
       <Card cardData={testPeopleSearchResp} pageData={1} searchData="" />
     </BrowserRouter>,

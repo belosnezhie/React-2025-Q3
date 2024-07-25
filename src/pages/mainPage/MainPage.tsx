@@ -76,7 +76,7 @@ const MainPage = () => {
           }}
         >
           <Header
-            callback={handleSearchData}
+            updateCartsCallback={handleSearchData}
             changeThemeCallback={handleThemeChange}
           />
           <main className="page">

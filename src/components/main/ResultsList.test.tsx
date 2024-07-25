@@ -2,11 +2,13 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { expect, test } from 'vitest';
 
+import { renderWithProviders } from '../../TestUtils.tsx';
+
 import ResultsList from './ResultsList.tsx';
 import { testPeopleSearchArr } from './TestData';
 
 test('should Verify that the component renders the specified number of cards', () => {
-  render(
+  renderWithProviders(
     <BrowserRouter>
       <ResultsList
         cardCharactersData={testPeopleSearchArr}
