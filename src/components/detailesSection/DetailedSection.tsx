@@ -3,9 +3,11 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useTheme } from '../../hooks/ContextHooks';
 import './DetailedSection.css';
+import useLocalStorage from '../../hooks/UseLocalStorage';
 import { useFetchSearchedCharactersQuery } from '../../services/StarWarsApi';
 
 const DetailedSection = () => {
+  const { query } = useLocalStorage();
   const [searchParams, setSearchParams] = useSearchParams();
   const [pageParams] = useState(Number(searchParams.get('page')));
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
@@ -18,7 +20,7 @@ const DetailedSection = () => {
 
   const handleClick = () => {
     setSearchParams({ page: String(pageParams) });
-    navigate('/');
+    navigate(`/?search=${query}&page=${pageParams}`);
     setDestroyed(true);
   };
 

@@ -35,7 +35,7 @@ const MainPage = () => {
     (state: RootState) => state.favoriteCharacters.favCharacters.length,
   );
 
-  const searchData = async (searchQuery: string): Promise<void> => {
+  const handleSearchData = async (searchQuery: string): Promise<void> => {
     setActivePage(1);
     await refetch();
     setSearchParams({ search: searchQuery, page: String(1) });
@@ -76,7 +76,7 @@ const MainPage = () => {
           }}
         >
           <Header
-            callback={searchData}
+            callback={handleSearchData}
             changeThemeCallback={handleThemeChange}
           />
           <main className="page">
