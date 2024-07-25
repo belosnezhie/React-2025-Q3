@@ -15,7 +15,7 @@ import { useAppSelector } from '../../hooks/StateHooks';
 import useLocalStorage from '../../hooks/UseLocalStorage';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 import { ApiService } from '../../services/ApiService';
-import { useFetchDefaultCharactersQuery } from '../../services/StarWarsApi';
+import { useFetchCharactersQuery } from '../../services/StarWarsApi';
 import type { RootState } from '../../store/Store';
 
 interface MainPageProps {
@@ -36,7 +36,12 @@ const MainPage = ({ service }: MainPageProps) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { data, isFetching } = useFetchDefaultCharactersQuery(activePage);
+  // const { data, isFetching } = useFetchDefaultCharactersQuery(activePage);
+  const { data, isFetching, refetch } = useFetchCharactersQuery({
+    // searchQuery: String(searchParams.get('search')),
+    searchQuery: query,
+    pageNumber: activePage,
+  });
 
   const favCharactersCount = useAppSelector(
     (state: RootState) => state.favoriteCharacters.favCharacters.length,
@@ -54,19 +59,11 @@ const MainPage = ({ service }: MainPageProps) => {
     return currentPage;
   }, []);
 
-  const searchData = useCallback(
-    async (searchQuery: string): Promise<SearchResp> => {
-      const res: SearchResp = await service.getSeachedData(searchQuery);
+  const searchData = async (searchQuery: string): Promise<void> => {
+    console.log(searchQuery);
 
-      setCharactersData(res.results);
-      setSearchParams({ search: searchQuery });
-      // countPages(res.count);
-      setActivePage(1);
-
-      return res;
-    },
-    [service],
-  );
+    await refetch();
+  };
 
   const fetchDefaultData = useCallback(async (): Promise<SearchResp> => {
     const currentPage = checkCurrentPage();
@@ -140,9 +137,10 @@ const MainPage = ({ service }: MainPageProps) => {
           }}
         >
           <Header
-            updateCartsCallback={async (searchQuery: string): Promise<void> => {
-              await searchData(searchQuery);
-            }}
+            // updateCartsCallback={async (searchQuery: string): Promise<void> => {
+            //   await searchData(searchQuery);
+            // }}
+            callback={searchData}
             changeThemeCallback={handleThemeChange}
           />
           <main className="page">

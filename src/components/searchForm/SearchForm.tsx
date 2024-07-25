@@ -4,7 +4,8 @@ import './SearchForm.css';
 import useLocalStorage from '../../hooks/UseLocalStorage';
 
 interface SearchFormProps {
-  updateCartsCallback: (searchQuery: string) => Promise<void>;
+  // updateCartsCallback: (searchQuery: string) => Promise<void>;
+  callback: (searchQuery: string) => Promise<void>;
 }
 
 const SearchForm = (props: SearchFormProps) => {
@@ -19,7 +20,7 @@ const SearchForm = (props: SearchFormProps) => {
     const searchQuery: string = input.value.trim();
 
     setItemToLS(searchQuery);
-    await props.updateCartsCallback(searchQuery);
+    await props.callback(searchQuery);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

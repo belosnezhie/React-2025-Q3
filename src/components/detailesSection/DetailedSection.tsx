@@ -16,9 +16,9 @@ const DetailedSection = () => {
   const navigate = useNavigate();
 
   const theme = useTheme();
-  const { data, isFetching } = useFetchSearchedCharactersQuery({
-    searchQuery: String(searchParams.get('search')),
-  });
+  const { data, isFetching } = useFetchSearchedCharactersQuery(
+    String(searchParams.get('search')),
+  );
 
   const handleClick = () => {
     setSearchParams({ page: String(pageParams) });
