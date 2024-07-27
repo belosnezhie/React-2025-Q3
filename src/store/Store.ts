@@ -1,15 +1,17 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
 import { starWarsApi } from '../services/StarWarsApi';
 
 import favoriteCharactersReducer from './favoriteCharacter/FavoriteCharacterSlice';
 
+const rootReducer = combineReducers({
+  favoriteCharacters: favoriteCharactersReducer,
+  [starWarsApi.reducerPath]: starWarsApi.reducer,
+});
+
 export const store = configureStore({
-  reducer: {
-    favoriteCharacters: favoriteCharactersReducer,
-    [starWarsApi.reducerPath]: starWarsApi.reducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(starWarsApi.middleware),
 });

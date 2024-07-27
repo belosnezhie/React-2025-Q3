@@ -16,7 +16,7 @@ export const Flyout = () => {
 
   return (
     <>
-      <div className={theme + ' flyout'}>
+      <div className={theme + ' flyout'} data-testid="flyout">
         <button
           className="unselect_button"
           onClick={() => dispatch(clearFavorites())}

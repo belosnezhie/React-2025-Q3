@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest';
 
 import { testCharactersSearchArr } from '../../components/main/TestData';
+import { ThemeContext } from '../../context/ThemeContext.tsx';
 import { renderWithProviders } from '../../TestUtils.tsx';
 
 import DetailedSection from './DetailedSection.tsx';
@@ -21,16 +22,13 @@ export const handlers = [
 
 const server = setupServer(...handlers);
 
-// Enable API mocking before tests.
 beforeAll(() => server.listen());
 
-// Reset any runtime request handlers we may add during the tests.
 afterEach(() => {
   server.resetHandlers();
   unmount();
 });
 
-// Disable API mocking after the tests are done.
 afterAll(() => server.close());
 
 test('Check that a loading indicator is displayed while fetching data', () => {
@@ -80,5 +78,24 @@ test('Should correctly display the detailed card data', async () => {
     const page = screen.getByTestId('detailed_page');
 
     expect(page.children).lengthOf(7);
+  });
+});
+
+test('Should show theme according to context', async () => {
+  const renderObject = renderWithProviders(
+    <ThemeContext.Provider value={'light'}>
+      <BrowserRouter>
+        <DetailedSection />
+      </BrowserRouter>
+      ,
+    </ThemeContext.Provider>,
+  );
+
+  unmount = renderObject.unmount;
+
+  await waitFor(() => {
+    const page = screen.getByTestId('detailed_page');
+
+    expect(page.classList.contains('light')).toBeTruthy();
   });
 });

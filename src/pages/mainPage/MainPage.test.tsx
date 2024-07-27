@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { HttpResponse, delay, http } from 'msw';
 import { setupServer } from 'msw/node';
 import { BrowserRouter } from 'react-router-dom';
@@ -21,16 +21,13 @@ export const handlers = [
 
 const server = setupServer(...handlers);
 
-// Enable API mocking before tests.
 beforeAll(() => server.listen());
 
-// Reset any runtime request handlers we may add during the tests.
 afterEach(() => {
   server.resetHandlers();
   unmount();
 });
 
-// Disable API mocking after the tests are done.
 afterAll(() => server.close());
 
 test('Check that a loading indicator is displayed while fetching default data', () => {
@@ -63,4 +60,42 @@ test('Check that cards are displayed after fetching data', async () => {
   const cards = screen.getAllByTestId('results_card');
 
   expect(cards).lengthOf(2);
+});
+
+test.skip('Check that flyout is displayed after adding to favorites', async () => {
+  const renderObject = renderWithProviders(
+    <BrowserRouter>
+      <MainPage />
+    </BrowserRouter>,
+  );
+
+  unmount = renderObject.unmount;
+
+  await waitFor(() => {
+    expect(screen.getAllByTestId('results_card')).toBeDefined();
+
+    const favButtons = screen.getAllByTestId('fav_button');
+
+    favButtons.forEach((button) => {
+      fireEvent.click(button);
+    });
+
+    expect(screen.getByTestId('flyout')).toBeDefined();
+  });
+
+  // const favButtons = screen.getAllByTestId('fav_button');
+
+  // favButtons.forEach((button) => {
+  //   fireEvent.click(button);
+  // });
+
+  // await waitFor(() => {
+  //   const favButtons = screen.getAllByTestId('fav_button');
+
+  //   favButtons.forEach((button) => {
+  //     fireEvent.click(button);
+  //   });
+
+  //   expect(screen.getByTestId('flyout')).toBeDefined();
+  // });
 });

@@ -31,6 +31,7 @@ export const FavoritesButton = ({ characterData }: FavoritesButtonProps) => {
         className="fav_button"
         checked={favoriteCharacters.includes(characterData)}
         onChange={handleChange}
+        data-testid="fav_button"
       ></input>
     </>
   );
