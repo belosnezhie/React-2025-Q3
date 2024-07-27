@@ -74,6 +74,7 @@ const MainPage = () => {
           onClick={(event: React.MouseEvent<HTMLDivElement>) => {
             handleMainClick(event);
           }}
+          data-testid="wrapper"
         >
           <Header
             updateCartsCallback={handleSearchData}

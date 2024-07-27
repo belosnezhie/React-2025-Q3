@@ -15,7 +15,11 @@ const Header = (props: HeaderProps) => {
         <SearchForm
           updateCartsCallback={props.updateCartsCallback}
         ></SearchForm>
-        <button className="theme_button" onClick={props.changeThemeCallback} />
+        <button
+          className="theme_button"
+          onClick={props.changeThemeCallback}
+          data-testid="theme_switcher"
+        />
       </header>
     </>
   );
