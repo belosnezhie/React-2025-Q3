@@ -82,20 +82,4 @@ test.skip('Check that flyout is displayed after adding to favorites', async () =
 
     expect(screen.getByTestId('flyout')).toBeDefined();
   });
-
-  // const favButtons = screen.getAllByTestId('fav_button');
-
-  // favButtons.forEach((button) => {
-  //   fireEvent.click(button);
-  // });
-
-  // await waitFor(() => {
-  //   const favButtons = screen.getAllByTestId('fav_button');
-
-  //   favButtons.forEach((button) => {
-  //     fireEvent.click(button);
-  //   });
-
-  //   expect(screen.getByTestId('flyout')).toBeDefined();
-  // });
 });
