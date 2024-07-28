@@ -7,20 +7,35 @@ export const DownloadButton = () => {
   );
 
   const formData = () => {
-    const titles = Object.keys(favCharacters[0]);
+    const csvData: string[][] = [];
 
-    const csvData = [];
+    const titles = [
+      'name',
+      'hair_color',
+      'skin_color',
+      'eye_color',
+      'birth_year',
+      'gender',
+    ];
 
     csvData.push(titles);
 
     favCharacters.forEach((item) => {
-      csvData.push(Object.values(item));
+      const values: string[] = [];
+
+      for (const [key, value] of Object.entries(item)) {
+        if (titles.includes(key)) {
+          values.push(String(value));
+        }
+      }
+
+      csvData.push(values);
     });
 
     let content = '';
 
     csvData.forEach((row) => {
-      content += row.join(',') + '\n';
+      content += row.join(';') + '\n';
     });
 
     const blob = new Blob([content], { type: 'text/csv;charset=utf-8,' });
