@@ -14,13 +14,16 @@
 .unselect_button,
 .download_button {
   height: 40px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 2%;
   background-color: var(--background);
   cursor: pointer;
   border: none;
   border-radius: 10px;
   color: white;
+  text-decoration: none;
   transition: 0.3s;
 }
 
