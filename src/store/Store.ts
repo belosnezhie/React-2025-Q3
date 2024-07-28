@@ -3,10 +3,12 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 
 import { starWarsApi } from '../services/StarWarsApi';
 
-import favoriteCharactersReducer from './favoriteCharacter/FavoriteCharacterSlice';
+import favoriteCharactersReducer from './favoriteCharacterSlice/FavoriteCharacterSlice';
+import pageReducer from './pageSlice/PageSlice';
 
 const rootReducer = combineReducers({
   favoriteCharacters: favoriteCharactersReducer,
+  page: pageReducer,
   [starWarsApi.reducerPath]: starWarsApi.reducer,
 });
 

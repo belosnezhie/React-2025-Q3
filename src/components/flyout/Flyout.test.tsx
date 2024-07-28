@@ -2,8 +2,8 @@ import { screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { afterEach, expect, test, vi } from 'vitest';
 
-import { testPeopleSearchResp } from '../../components/main/TestData';
-import { addToFavorites } from '../../store/favoriteCharacter/FavoriteCharacterSlice';
+import { testDataJane } from '../../components/main/TestData';
+import { addToFavorites } from '../../store/favoriteCharacterSlice/FavoriteCharacterSlice';
 import { store } from '../../store/Store';
 import { renderWithProviders } from '../../TestUtils.tsx';
 
@@ -18,7 +18,7 @@ afterEach(() => {
 test('Showuld show flyout', () => {
   global.URL.createObjectURL = vi.fn();
 
-  store.dispatch(addToFavorites(testPeopleSearchResp));
+  store.dispatch(addToFavorites(testDataJane));
 
   const renderObject = renderWithProviders(
     <BrowserRouter>

@@ -1,51 +1,32 @@
-import { useState } from 'react';
-import {
-  Outlet,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import { Flyout } from '../../components/flyout/Flyout.tsx';
 import Header from '../../components/header/Header.tsx';
 import ResultsList from '../../components/main/ResultsList.tsx';
 import Pagination from '../../components/pagination/Pagination.tsx';
-import { useTheme, useThemeSwitcher } from '../../hooks/ContextHooks';
+import { useTheme } from '../../hooks/ContextHooks';
 import { useAppSelector } from '../../hooks/StateHooks';
 import useLocalStorage from '../../hooks/UseLocalStorage';
 import { useFetchCharactersQuery } from '../../services/StarWarsApi';
+import { selectPage } from '../../store/pageSlice/PageSlice';
 import type { RootState } from '../../store/Store';
 
 const MainPage = () => {
   const { query } = useLocalStorage();
   const theme = useTheme();
-  const handleThemeChange = useThemeSwitcher();
   const MAX_PER_PAGE: number = 10;
-  const [activePage, setActivePage] = useState<number>(1);
-  const [, setSearchParams] = useSearchParams();
+  const currentPage = useAppSelector(selectPage);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { data, isFetching, refetch } = useFetchCharactersQuery({
+  const { data, isFetching } = useFetchCharactersQuery({
     searchQuery: query,
-    pageNumber: activePage,
+    pageNumber: currentPage,
   });
 
   const favCharactersCount = useAppSelector(
     (state: RootState) => state.favoriteCharacters.favCharacters.length,
   );
-
-  const handleSearchData = async (searchQuery: string): Promise<void> => {
-    setActivePage(1);
-    await refetch();
-    setSearchParams({ search: searchQuery, page: String(1) });
-  };
-
-  const handlePageChange = (pageNumber: number) => {
-    setActivePage(pageNumber);
-
-    setSearchParams({ search: query, page: String(pageNumber) });
-  };
 
   const handleMainClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
@@ -61,8 +42,7 @@ const MainPage = () => {
     }
 
     if (location.pathname.includes('detailed') && !isCard) {
-      // возможно, здесь тоже нужно поправить на setSearchParams({ search: query, page: activePage });
-      navigate(`/?page=${activePage}`);
+      navigate(`/?search=${query}&page=${currentPage}`);
     }
   };
 
@@ -76,26 +56,16 @@ const MainPage = () => {
           }}
           data-testid="wrapper"
         >
-          <Header
-            updateCartsCallback={handleSearchData}
-            changeThemeCallback={handleThemeChange}
-          />
+          <Header />
           <main className="page">
             {isFetching ? (
               <div className="spinner" data-testid="spinner_test" />
             ) : data?.results ? (
               <>
                 <section className="results_section">
-                  <ResultsList
-                    cardCharactersData={data.results}
-                    pageSearchParam={activePage}
-                  />
+                  <ResultsList />
                 </section>
-                <Pagination
-                  updatePageCallback={handlePageChange}
-                  currentPage={activePage}
-                  pagesCount={Math.ceil(data.count / MAX_PER_PAGE)}
-                />
+                <Pagination pagesCount={Math.ceil(data.count / MAX_PER_PAGE)} />
               </>
             ) : null}
             <div className="yoda" />

@@ -1,35 +1,50 @@
-import { render, screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
+import { HttpResponse, delay, http } from 'msw';
+import { SetupServerApi, setupServer } from 'msw/node';
 import { BrowserRouter } from 'react-router-dom';
-import { expect, test } from 'vitest';
+import { afterAll, afterEach, expect, test } from 'vitest';
 
 import { renderWithProviders } from '../../TestUtils.tsx';
 
 import ResultsList from './ResultsList.tsx';
-import { testPeopleSearchArr } from './TestData';
+import { testCharactersSearchArr } from './TestData';
 
-test('should Verify that the component renders the specified number of cards', () => {
-  renderWithProviders(
-    <BrowserRouter>
-      <ResultsList
-        cardCharactersData={testPeopleSearchArr}
-        pageSearchParam={1}
-      />
-    </BrowserRouter>,
-  );
+let unmount = () => {};
 
-  const cards = screen.getAllByTestId('results_card');
+let server: SetupServerApi = setupServer();
 
-  expect(cards).lengthOf(2);
+afterEach(() => {
+  server.resetHandlers();
+  unmount();
+  server.close();
 });
 
-test('should check that an appropriate message is displayed if no cards are present', () => {
-  render(
+afterAll(() => server.close());
+
+test('should Verify that the component renders the specified number of cards', async () => {
+  const handlers = [
+    http.get('https://swapi.dev/api/people/?page=1', async () => {
+      await delay(150);
+
+      return HttpResponse.json(testCharactersSearchArr);
+    }),
+  ];
+
+  server = setupServer(...handlers);
+
+  server.listen();
+
+  const renderObject = renderWithProviders(
     <BrowserRouter>
-      <ResultsList cardCharactersData={[]} pageSearchParam={1} />
+      <ResultsList />
     </BrowserRouter>,
   );
 
-  const placeholder = screen.getByText('Oops! there is no such character.');
+  unmount = renderObject.unmount;
 
-  expect(placeholder).toBeDefined();
+  await waitFor(() => {
+    const cards = screen.getAllByTestId('results_card');
+
+    expect(cards).lengthOf(2);
+  });
 });

@@ -1,10 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { expect, test, vi } from 'vitest';
+import { expect, test } from 'vitest';
+
+import { store } from '../../store/Store';
+import { renderWithProviders } from '../../TestUtils.tsx';
 
 import Pagination from './Pagination.tsx';
-
-const asyncMock = vi.fn().mockResolvedValue('default');
 
 test('should updates URL query parameter when page changes', () => {
   Object.defineProperty(window, 'location', {
@@ -13,14 +14,9 @@ test('should updates URL query parameter when page changes', () => {
     },
   });
 
-  render(
+  renderWithProviders(
     <MemoryRouter initialEntries={[{ pathname: '/', search: '' }]}>
-      <Pagination
-        updatePageCallback={asyncMock}
-        pagesCount={2}
-        currentPage={1}
-        isTest={true}
-      />
+      <Pagination pagesCount={2} isTest={true} />
     </MemoryRouter>,
   );
 
@@ -28,6 +24,5 @@ test('should updates URL query parameter when page changes', () => {
 
   fireEvent.click(paginationButton);
 
-  expect(asyncMock.mock.calls).lengthOf(1);
-  expect(asyncMock.mock.calls[0]).toEqual([2]);
+  expect(store.getState().page.currentPage).equals(2);
 });

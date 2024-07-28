@@ -1,22 +1,47 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { HttpResponse, delay, http } from 'msw';
+import { setupServer } from 'msw/node';
 import { BrowserRouter } from 'react-router-dom';
-import { afterEach, expect, test, vi } from 'vitest';
+import { afterAll, afterEach, beforeAll, expect, test } from 'vitest';
 
 import useLocalStorage from '../../hooks/UseLocalStorage';
+import { renderWithProviders } from '../../TestUtils.tsx';
+import { testCharactersSearchArr } from '../main/TestData';
 
 import SearchForm from './SearchForm.tsx';
 
-const asyncMock = vi.fn().mockResolvedValue('default');
 let unmount = () => {};
 
+let callCounter = 0;
+
+export const handlers = [
+  http.get(
+    'https://swapi.dev/api/people/?search=Jane&format=json&page=1',
+    async () => {
+      await delay(150);
+
+      callCounter++;
+
+      return HttpResponse.json(testCharactersSearchArr);
+    },
+  ),
+];
+
+const server = setupServer(...handlers);
+
+beforeAll(() => server.listen());
+
 afterEach(() => {
+  server.resetHandlers();
   unmount();
 });
 
-test('should save the input value to the local storage after clicking search button', () => {
-  const renderObject = render(
+afterAll(() => server.close());
+
+test('should save the input value to the local storage after clicking search button', async () => {
+  const renderObject = renderWithProviders(
     <BrowserRouter>
-      <SearchForm updateCartsCallback={asyncMock} />
+      <SearchForm />
     </BrowserRouter>,
   );
 
@@ -25,11 +50,12 @@ test('should save the input value to the local storage after clicking search but
   const textInput = screen.getByTestId('search_input');
   const form = screen.getByTestId('search_form');
 
-  fireEvent.change(textInput, { target: { value: '1234' } });
+  fireEvent.change(textInput, { target: { value: 'Jane' } });
   fireEvent.submit(form);
 
-  expect(asyncMock.mock.calls).lengthOf(1);
-  expect(asyncMock.mock.calls[0]).toEqual(['1234']);
+  await waitFor(() => {
+    expect(callCounter).toEqual(1);
+  });
 });
 
 test('should retrieve the value from the local storage upon mounting', () => {
@@ -37,9 +63,9 @@ test('should retrieve the value from the local storage upon mounting', () => {
 
   setItemToLS('1234');
 
-  const renderObject = render(
+  const renderObject = renderWithProviders(
     <BrowserRouter>
-      <SearchForm updateCartsCallback={asyncMock} />
+      <SearchForm />
     </BrowserRouter>,
   );
 

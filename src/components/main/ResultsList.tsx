@@ -1,37 +1,42 @@
 import { useLocation } from 'react-router-dom';
 
-import { PeopleSearchResp } from '../../model/TypesStarWars';
+import { useAppSelector } from '../../hooks/StateHooks';
+import useLocalStorage from '../../hooks/UseLocalStorage';
+import { useFetchCharactersQuery } from '../../services/StarWarsApi';
+import { selectPage } from '../../store/pageSlice/PageSlice';
 
 import './Main.css';
 import Card from './Card.tsx';
 
-interface CardsWrapperProps {
-  cardCharactersData: PeopleSearchResp[] | [];
-  pageSearchParam: number;
-}
-
-const ResultsList = (props: CardsWrapperProps) => {
+const ResultsList = () => {
   const location = useLocation();
+  const { query } = useLocalStorage();
+  const currentPage = useAppSelector(selectPage);
+
+  const { data, error } = useFetchCharactersQuery({
+    searchQuery: query,
+    pageNumber: currentPage,
+  });
+
+  if (error || !data) {
+    return <p className="placeholder">Oops! there is no such character.</p>;
+  }
 
   return (
     <>
       <section
         className={`results_list ${location.pathname.includes('detailed') ? 'list' : 'table'}`}
       >
-        {props.cardCharactersData.length === 0 ? (
-          <p className="placeholder">Oops! there is no such character.</p>
-        ) : (
-          props.cardCharactersData.map((obj, index) => {
-            return (
-              <Card
-                cardData={obj}
-                key={index}
-                pageData={props.pageSearchParam}
-                searchData={obj.name}
-              />
-            );
-          })
-        )}
+        {data.results.map((obj, index) => {
+          return (
+            <Card
+              cardData={obj}
+              key={index}
+              pageData={currentPage}
+              searchData={obj.name}
+            />
+          );
+        })}
       </section>
     </>
   );

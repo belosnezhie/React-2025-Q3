@@ -3,7 +3,7 @@ import { PeopleSearchResp } from '../../model/TypesStarWars';
 import {
   addToFavorites,
   removeFromFavorites,
-} from '../../store/favoriteCharacter/FavoriteCharacterSlice';
+} from '../../store/favoriteCharacterSlice/FavoriteCharacterSlice';
 import { RootState } from '../../store/Store';
 
 interface FavoritesButtonProps {

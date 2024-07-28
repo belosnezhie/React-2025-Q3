@@ -2,7 +2,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { HttpResponse, delay, http } from 'msw';
 import { setupServer } from 'msw/node';
 import { BrowserRouter } from 'react-router-dom';
-import { afterAll, afterEach, beforeAll, expect, test } from 'vitest';
+import { afterAll, afterEach, beforeAll, expect, test, vi } from 'vitest';
 
 import { testCharactersSearchArr } from '../../components/main/TestData';
 import { renderWithProviders } from '../../TestUtils.tsx';
@@ -62,7 +62,9 @@ test('Check that cards are displayed after fetching data', async () => {
   expect(cards).lengthOf(2);
 });
 
-test.skip('Check that flyout is displayed after adding to favorites', async () => {
+test('Check that flyout is displayed after adding to favorites', async () => {
+  global.URL.createObjectURL = vi.fn();
+
   const renderObject = renderWithProviders(
     <BrowserRouter>
       <MainPage />

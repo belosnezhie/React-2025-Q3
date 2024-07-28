@@ -1,29 +1,37 @@
+import { connect } from 'react-redux';
+import { useLocation, useSearchParams } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
+import useLocalStorage from '../../hooks/UseLocalStorage';
+import { selectPage, setCurrentPage } from '../../store/pageSlice/PageSlice';
+import { RootState } from '../../store/Store';
+
 import './Pagination.css';
-import { useLocation } from 'react-router-dom';
 
 interface PaginationProps {
-  currentPage: number;
   pagesCount: number;
-  updatePageCallback: (pageNumber: number) => void;
   isTest?: boolean;
 }
 
-const Pagination = ({
-  updatePageCallback,
-  pagesCount,
-  currentPage,
-  isTest,
-}: PaginationProps) => {
+const PaginationRaw = ({ pagesCount, isTest }: PaginationProps) => {
   const location = useLocation().pathname;
+  const currentPage = useAppSelector(selectPage);
+  const dispatch = useAppDispatch();
+  const { query } = useLocalStorage();
+  const [, setSearchParams] = useSearchParams();
+
+  const handlePageChange = (pageNumber: number) => {
+    dispatch(setCurrentPage(pageNumber));
+
+    setSearchParams({ search: query, page: String(pageNumber) });
+  };
 
   return (
     <div className="pagination">
-      {Array.from({ length: pagesCount }, (item, index) => (
+      {Array.from({ length: pagesCount }, (_, index) => (
         <button
           key={index}
-          onClick={() => {
-            updatePageCallback(index + 1);
-          }}
+          onClick={() => handlePageChange(index + 1)}
           className={`pagination_button ${currentPage === index + 1 ? 'active' : ''}`}
           data-testid={`page_button_${index + 1}`}
         >
@@ -34,5 +42,13 @@ const Pagination = ({
     </div>
   );
 };
+
+const mapStateToProps = (state: RootState) => {
+  const { page } = state;
+
+  return { currentPage: page.currentPage };
+};
+
+const Pagination = connect(mapStateToProps)(PaginationRaw);
 
 export default Pagination;

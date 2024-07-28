@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
-
 import './SearchForm.css';
+import { useSearchParams } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
 import useLocalStorage from '../../hooks/UseLocalStorage';
+import { useFetchCharactersQuery } from '../../services/StarWarsApi';
+import { selectPage, setCurrentPage } from '../../store/pageSlice/PageSlice';
 
-interface SearchFormProps {
-  updateCartsCallback: (searchQuery: string) => Promise<void>;
-}
-
-const SearchForm = (props: SearchFormProps) => {
+const SearchForm = () => {
   const { query, setItemToLS } = useLocalStorage();
+  const currentPage = useAppSelector(selectPage);
+  const [, setSearchParams] = useSearchParams();
   const [currentInputValue, setCurrentInputValue] = useState<string>(query);
+  const dispatch = useAppDispatch();
+
+  const { refetch } = useFetchCharactersQuery({
+    searchQuery: query,
+    pageNumber: currentPage,
+  });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,7 +27,9 @@ const SearchForm = (props: SearchFormProps) => {
     const searchQuery: string = input.value.trim();
 
     setItemToLS(searchQuery);
-    await props.updateCartsCallback(searchQuery);
+    dispatch(setCurrentPage(1));
+    await refetch();
+    setSearchParams({ search: searchQuery, page: String(1) });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
