@@ -5,7 +5,6 @@ import DetailedSection from './components/detailesSection/DetailedSection.tsx';
 import ErrorBoundary from './components/errorBoundary/ErrorBoundary.tsx';
 import NotFoundPage from './pages/404Page/404Page.tsx';
 import MainPage from './pages/mainPage/MainPage.tsx';
-import { apiService } from './services/ApiService';
 
 const App = () => {
   return (
@@ -13,11 +12,8 @@ const App = () => {
       <ErrorBoundary>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<MainPage service={apiService} />}>
-              <Route
-                path="/detailed"
-                element={<DetailedSection service={apiService} />}
-              />
+            <Route path="/" element={<MainPage />}>
+              <Route path="/detailed" element={<DetailedSection />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

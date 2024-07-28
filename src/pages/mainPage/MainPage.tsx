@@ -1,82 +1,32 @@
-import { useCallback, useEffect, useState } from 'react';
-import {
-  Outlet,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
+import { Flyout } from '../../components/flyout/Flyout.tsx';
 import Header from '../../components/header/Header.tsx';
 import ResultsList from '../../components/main/ResultsList.tsx';
 import Pagination from '../../components/pagination/Pagination.tsx';
+import { useTheme } from '../../hooks/ContextHooks';
+import { useAppSelector } from '../../hooks/StateHooks';
 import useLocalStorage from '../../hooks/UseLocalStorage';
-import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
-import { ApiService } from '../../services/ApiService';
+import { useFetchCharactersQuery } from '../../services/StarWarsApi';
+import { selectPage } from '../../store/pageSlice/PageSlice';
+import type { RootState } from '../../store/Store';
 
-interface MainPageProps {
-  service: ApiService;
-}
-
-const MainPage = ({ service }: MainPageProps) => {
+const MainPage = () => {
   const { query } = useLocalStorage();
-
-  const [charactersData, setCharactersData] = useState<PeopleSearchResp[] | []>(
-    [],
-  );
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [activePage, setActivePage] = useState<number>(1);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const theme = useTheme();
+  const MAX_PER_PAGE: number = 10;
+  const currentPage = useAppSelector(selectPage);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const checkCurrentPage = useCallback(() => {
-    const currentPage: number =
-      Number(searchParams.get('page')) === 0
-        ? 1
-        : Number(searchParams.get('page'));
+  const { data, isFetching } = useFetchCharactersQuery({
+    searchQuery: query,
+    pageNumber: currentPage,
+  });
 
-    return currentPage;
-  }, [searchParams]);
-
-  const searchData = useCallback(
-    async (searchQuery: string): Promise<SearchResp> => {
-      setLoading(true);
-      const res: SearchResp = await service.getSeachedData(searchQuery);
-
-      setCharactersData(res.results);
-      setSearchParams({ search: searchQuery });
-      setLoading(false);
-
-      return res;
-    },
-    [service, setSearchParams],
+  const favCharactersCount = useAppSelector(
+    (state: RootState) => state.favoriteCharacters.favCharacters.length,
   );
-
-  const fetchDefaultData = useCallback(async (): Promise<SearchResp> => {
-    setLoading(true);
-    const currentPage = checkCurrentPage();
-
-    const res: SearchResp = await service.getDefaultData(currentPage);
-
-    setCharactersData(res.results);
-    setActivePage(currentPage);
-    setLoading(false);
-
-    return res;
-  }, [service, checkCurrentPage]);
-
-  const handlePageChange = async (pageNumber: number): Promise<SearchResp> => {
-    setLoading(true);
-
-    const res: SearchResp = await service.getDefaultData(pageNumber);
-
-    setCharactersData(res.results);
-    setLoading(false);
-    navigate(`/?page=${pageNumber}`);
-    setActivePage(pageNumber);
-
-    return res;
-  };
 
   const handleMainClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
@@ -92,53 +42,38 @@ const MainPage = ({ service }: MainPageProps) => {
     }
 
     if (location.pathname.includes('detailed') && !isCard) {
-      navigate(`/?page=${activePage}`);
+      navigate(`/?search=${query}&page=${currentPage}`);
     }
   };
 
-  useEffect(() => {
-    if (query) {
-      void searchData(query);
-    } else {
-      void fetchDefaultData();
-    }
-  }, [query, searchData, fetchDefaultData]);
-
   return (
     <>
-      <div
-        className="wrapper"
-        onClick={(event: React.MouseEvent<HTMLDivElement>) => {
-          handleMainClick(event);
-        }}
-      >
-        <Header
-          updateCartsCallback={async (searchQuery: string): Promise<void> => {
-            await searchData(searchQuery);
+      <div className="page_wrapper">
+        <div
+          className={theme + ' wrapper'}
+          onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+            handleMainClick(event);
           }}
-        />
-        <main className="page">
-          {isLoading ? (
-            <div className="spinner" data-testid="spinner_test" />
-          ) : (
-            <>
-              <section className="results_section">
-                <ResultsList
-                  cardCharactersData={charactersData}
-                  pageSearchParam={activePage}
-                />
-              </section>
-              <Pagination
-                updatePageCallback={handlePageChange}
-                currentPage={activePage}
-                pagesCount={9}
-              />
-            </>
-          )}
-          <div className="yoda" />
-        </main>
+          data-testid="wrapper"
+        >
+          <Header />
+          <main className="page">
+            {isFetching ? (
+              <div className="spinner" data-testid="spinner_test" />
+            ) : data?.results ? (
+              <>
+                <section className="results_section">
+                  <ResultsList />
+                </section>
+                <Pagination pagesCount={Math.ceil(data.count / MAX_PER_PAGE)} />
+              </>
+            ) : null}
+            <div className="yoda" />
+          </main>
+        </div>
+        <Outlet />
       </div>
-      <Outlet />
+      {favCharactersCount ? <Flyout /> : null}
     </>
   );
 };

@@ -2,12 +2,24 @@
 
 :root {
   --border: #204ecf;
-  --background: #83a5f2;
-  --error: #f26749;
-  --main-background: #fcded6;
-  --header-background: #f9a197;
   --card-background: rgba(131,165,242,0.6);
   --title: rgba(248, 249, 244, 0.8);
+}
+
+.light {
+  --main-background: #fcded6;
+  --header-background: #f9a197;
+  --detailes-background: rgba(131,165,242,0.6);
+  --background: #83a5f2;
+  --error: #f26749;
+}
+
+.dark {
+  --main-background: #0a1128;
+  --header-background: #001f54;
+  --detailes-background: rgba(3,64,120,0.6);
+  --background: #3772ff;
+  --error: #a51c30;
 }
 
 body {
@@ -23,8 +35,4 @@ code {
 #root {
   min-width: 100%;
   min-height: 100vh;
-}
-
-#root:has(.detailed_results) {
-  display: flex;
 }

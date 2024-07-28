@@ -1,37 +1,40 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { HttpResponse, delay, http } from 'msw';
+import { setupServer } from 'msw/node';
 import { BrowserRouter } from 'react-router-dom';
-import { afterEach, expect, test } from 'vitest';
+import { afterAll, afterEach, beforeAll, expect, test } from 'vitest';
 
-import { SearchResp } from '../../model/TypesStarWars';
-import { ApiService } from '../../services/ApiService';
-import { testPeopleSearchArr } from '../main/TestData';
+import { testCharactersSearchArr } from '../../components/main/TestData';
+import { ThemeContext } from '../../context/ThemeContext.tsx';
+import { renderWithProviders } from '../../TestUtils.tsx';
 
 import DetailedSection from './DetailedSection.tsx';
 
 let unmount = () => {};
 
+export const handlers = [
+  http.get('https://swapi.dev/api/people/?search=*&format=json', async () => {
+    await delay(150);
+
+    return HttpResponse.json(testCharactersSearchArr);
+  }),
+];
+
+const server = setupServer(...handlers);
+
+beforeAll(() => server.listen());
+
 afterEach(() => {
+  server.resetHandlers();
   unmount();
 });
 
+afterAll(() => server.close());
+
 test('Check that a loading indicator is displayed while fetching data', () => {
-  class MockApiService extends ApiService {
-    getSeachedData(searchQuery: string): Promise<SearchResp> {
-      const data = testPeopleSearchArr;
-
-      console.log(searchQuery);
-
-      return new Promise((resolve) => {
-        resolve({ results: data });
-      });
-    }
-  }
-
-  const mockApiService = new MockApiService(fetch);
-
-  const renderObject = render(
+  const renderObject = renderWithProviders(
     <BrowserRouter>
-      <DetailedSection service={mockApiService} />
+      <DetailedSection />
     </BrowserRouter>,
   );
 
@@ -43,23 +46,9 @@ test('Check that a loading indicator is displayed while fetching data', () => {
 });
 
 test('Should close component after click on button', async () => {
-  class MockApiService extends ApiService {
-    getSeachedData(searchQuery: string): Promise<SearchResp> {
-      const data = testPeopleSearchArr;
-
-      console.log(searchQuery);
-
-      return new Promise((resolve) => {
-        resolve({ results: data });
-      });
-    }
-  }
-
-  const mockApiService = new MockApiService(fetch);
-
-  const renderObject = render(
+  const renderObject = renderWithProviders(
     <BrowserRouter>
-      <DetailedSection service={mockApiService} />
+      <DetailedSection />
     </BrowserRouter>,
   );
 
@@ -77,33 +66,36 @@ test('Should close component after click on button', async () => {
 });
 
 test('Should correctly display the detailed card data', async () => {
-  class MockApiService extends ApiService {
-    getSeachedData(searchQuery: string): Promise<SearchResp> {
-      const data = testPeopleSearchArr;
-
-      console.log(searchQuery);
-
-      return new Promise((resolve) => {
-        resolve({ results: data });
-      });
-    }
-  }
-
-  const mockApiService = new MockApiService(fetch);
-
-  const renderObject = render(
+  const renderObject = renderWithProviders(
     <BrowserRouter>
-      <DetailedSection service={mockApiService} />
+      <DetailedSection />
     </BrowserRouter>,
   );
 
   unmount = renderObject.unmount;
 
   await waitFor(() => {
-    expect(screen.getByTestId('detailed_page')).toBeDefined();
+    const page = screen.getByTestId('detailed_page');
+
+    expect(page.children).lengthOf(7);
   });
+});
 
-  const page = screen.getByTestId('detailed_page');
+test('Should show theme according to context', async () => {
+  const renderObject = renderWithProviders(
+    <ThemeContext.Provider value={'light'}>
+      <BrowserRouter>
+        <DetailedSection />
+      </BrowserRouter>
+      ,
+    </ThemeContext.Provider>,
+  );
 
-  expect(page.children).length(7);
+  unmount = renderObject.unmount;
+
+  await waitFor(() => {
+    const page = screen.getByTestId('detailed_page');
+
+    expect(page.classList.contains('light')).toBeTruthy();
+  });
 });

@@ -15,3 +15,29 @@
   font-size: 24px;
   color: var(--title);
 }
+
+.theme_button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--background);
+  background-size: 84%, contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.light .theme_button {
+  background-image: url('../../assets/moon.png');
+}
+
+.dark .theme_button {
+  background-image: url('../../assets/sun.png');
+}
+
+@media (hover: hover) {
+  .theme_button:hover {
+    transform: scale(0.95);
+  }
+}

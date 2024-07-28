@@ -32,37 +32,64 @@
   justify-content: center;
 }
 
-.card {
+.card_wrapper {
   width: 250px;
   padding: 2%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2%;
   border: 2px solid var(--border);
   background-color: var(--card-background);
-  border-radius: 10px;
+  z-index: 2000;
+}
+
+.card {
   color: white;
   cursor: pointer;
   transition: 0.3s;
-  z-index: 2000;
   text-decoration: none;
   text-align: center;
-}
-
-.results_list.list .card {
-  width: auto;
-  padding: 0;
-  border: none;
-  background-color: inherit;
-  border-radius: 0;
-  color: var(--border);
-  cursor: pointer;
-  transition: 0.3s;
-  z-index: 1000;
-  text-decoration: none;
-  text-align: left;
+  flex-grow: 1;
 }
 
 .results_list.list * {
   margin-top: 5px;
   margin-bottom: 0px;
+  text-align: left;
+}
+
+.fav_button {
+  width: 35px;
+  height: 35px;
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.fav_button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35px;
+  height: 35px;
+  mask: url('../../assets/star.svg') no-repeat 50% 50%;
+  mask-size: cover;
+  background-color: var(--background);
+  transition: 0.3s;
+}
+
+.fav_button:hover:after {
+  transform: scale(0.88);
+}
+
+.fav_button:checked:after {
+  background-color: var(--border);
 }
 
 .placeholder {
@@ -110,6 +137,7 @@
   animation: l3 1s infinite linear;
 }
 @keyframes l3 {to{transform: rotate(1turn)}}
+
 
 @media (hover: hover) {
   .card:hover {
