@@ -5,9 +5,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { afterAll, afterEach, beforeAll, expect, test, vi } from 'vitest';
 
 import { testCharactersSearchArr } from '../../components/main/TestData';
-import { renderWithProviders } from '../../TestUtils.tsx';
+import { renderWithProviders } from '../../TestUtils';
 
-import MainPage from './MainPage.tsx';
+import MainPage from './MainPage';
 
 let unmount = () => {};
 

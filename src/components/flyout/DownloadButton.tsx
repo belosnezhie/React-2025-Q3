@@ -1,6 +1,8 @@
 import { useAppSelector } from '../../hooks/StateHooks';
 import type { RootState } from '../../store/Store';
 
+import styles from './Flyout.module.css';
+
 export const DownloadButton = () => {
   const favCharacters = useAppSelector(
     (state: RootState) => state.favoriteCharacters.favCharacters,
@@ -46,7 +48,7 @@ export const DownloadButton = () => {
 
   return (
     <a
-      className="download_button"
+      className={styles.downloadButton}
       href={formData()}
       download={`${favCharacters.length}_characters`}
     >

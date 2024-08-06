@@ -5,6 +5,7 @@ import {
   removeFromFavorites,
 } from '../../store/favoriteCharacterSlice/FavoriteCharacterSlice';
 import { RootState } from '../../store/Store';
+import styles from '../main/Main.module.css';
 
 interface FavoritesButtonProps {
   characterData: PeopleSearchResp;
@@ -28,7 +29,7 @@ export const FavoritesButton = ({ characterData }: FavoritesButtonProps) => {
     <>
       <input
         type="checkbox"
-        className="fav_button"
+        className={styles.favButton}
         checked={favoriteCharacters.includes(characterData)}
         onChange={handleChange}
         data-testid="fav_button"

@@ -4,9 +4,9 @@ import { SetupServerApi, setupServer } from 'msw/node';
 import { BrowserRouter } from 'react-router-dom';
 import { afterAll, afterEach, expect, test } from 'vitest';
 
-import { renderWithProviders } from '../../TestUtils.tsx';
+import { renderWithProviders } from '../../TestUtils';
 
-import ResultsList from './ResultsList.tsx';
+import ResultsList from './ResultsList';
 import { testCharactersSearchArr } from './TestData';
 
 let unmount = () => {};

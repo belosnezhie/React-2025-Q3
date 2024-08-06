@@ -6,10 +6,10 @@
   position: relative;
 }
 
-#root:has(.detailed_results) .page_wrapper{
+#root:has(.detailedResults) .pageWrapper{
   display: flex;
 }
 
-#root:has(.detailed_results) .wrapper{
+#root:has(.detailedResults) .wrapper{
   width: 50%;
 }

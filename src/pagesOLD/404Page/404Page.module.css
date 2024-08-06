@@ -1,4 +1,4 @@
-.not_found_page {
+.notFoundPage {
   min-width: 100%;
   min-height: 100vh;
   display: flex;
@@ -9,7 +9,7 @@
   color: white;
 }
 
-.nav_link {
+.navLink {
   margin-top: 20px;
   text-decoration: none;
   color: var(--border);
@@ -17,7 +17,7 @@
 }
 
 @media (hover: hover) {
-  .nav_link:hover {
+  .navLink:hover {
     transform: scale(1.08);
   }
 }

@@ -1,15 +1,16 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import DetailedSection from './components/detailesSection/DetailedSection.tsx';
-import ErrorBoundary from './components/errorBoundary/ErrorBoundary.tsx';
-import NotFoundPage from './pages/404Page/404Page.tsx';
-import MainPage from './pages/mainPage/MainPage.tsx';
+import DetailedSection from './components/detailesSection/DetailedSection';
+import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
+import NotFoundPage from './pagesOLD/404Page/404Page';
+import MainPage from './pagesOLD/mainPage/MainPage';
 
 const App = () => {
   return (
     <>
       <ErrorBoundary>
+        <MainPage />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MainPage />}>

@@ -11,8 +11,8 @@
   color: white;
 }
 
-.unselect_button,
-.download_button {
+.unselectButton,
+.downloadButton {
   height: 40px;
   display: flex;
   align-items: center;
@@ -28,8 +28,8 @@
 }
 
 @media (hover: hover) {
-  .unselect_button:hover,
-  .download_button:hover {
+  .unselectButton:hover,
+  .downloadButton:hover {
     transform: scale(0.95);
   }
 }

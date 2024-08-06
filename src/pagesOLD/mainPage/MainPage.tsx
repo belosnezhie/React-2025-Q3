@@ -1,9 +1,10 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-import { Flyout } from '../../components/flyout/Flyout.tsx';
-import Header from '../../components/header/Header.tsx';
-import ResultsList from '../../components/main/ResultsList.tsx';
-import Pagination from '../../components/pagination/Pagination.tsx';
+import styles from '../../App.module.css';
+import { Flyout } from '../../components/flyout/Flyout';
+import Header from '../../components/header/Header';
+import ResultsList from '../../components/main/ResultsList';
+import Pagination from '../../components/pagination/Pagination';
 import { useTheme } from '../../hooks/ContextHooks';
 import { useAppSelector } from '../../hooks/StateHooks';
 import useLocalStorage from '../../hooks/UseLocalStorage';
@@ -48,9 +49,9 @@ const MainPage = () => {
 
   return (
     <>
-      <div className="page_wrapper">
+      <div className={styles.pageWrapper}>
         <div
-          className={theme + ' wrapper'}
+          className={theme + styles.wrapper}
           onClick={(event: React.MouseEvent<HTMLDivElement>) => {
             handleMainClick(event);
           }}

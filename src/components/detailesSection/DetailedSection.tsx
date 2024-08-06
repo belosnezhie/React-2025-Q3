@@ -1,17 +1,18 @@
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { useTheme } from '../../hooks/ContextHooks';
-import './DetailedSection.css';
-import useLocalStorage from '../../hooks/UseLocalStorage';
 import { useFetchSearchedCharactersQuery } from '../../services/StarWarsApi';
 
+import styles from './DetailedSection.module.css';
+// import useLocalStorage from '../../hooks/UseLocalStorage';
+
 const DetailedSection = () => {
-  const { query } = useLocalStorage();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [pageParams] = useState(Number(searchParams.get('page')));
+  // const { query } = useLocalStorage();
+  const [searchParams /* setSearchParams */] = useSearchParams();
+  // const [pageParams] = useState(Number(searchParams.get('page')));
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const theme = useTheme();
   const { data, isFetching } = useFetchSearchedCharactersQuery(
@@ -19,13 +20,16 @@ const DetailedSection = () => {
   );
 
   const handleClick = () => {
-    setSearchParams({ page: String(pageParams) });
-    navigate(`/?search=${query}&page=${pageParams}`);
+    // setSearchParams({ page: String(pageParams) });
+    // navigate(`/?search=${query}&page=${pageParams}`);
     setDestroyed(true);
   };
 
   return isDestroyed ? null : (
-    <main className={theme + ' detailed_results'} data-testid="detailed_page">
+    <main
+      className={theme + ' ' + styles.detailedResults}
+      data-testid="detailed_page"
+    >
       {isFetching ? (
         <div className="spinner detailed" data-testid="spinner_test" />
       ) : (

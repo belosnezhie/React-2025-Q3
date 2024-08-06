@@ -1,15 +1,16 @@
-import { useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
+// import { useLocation } from 'react-router-dom';
 
 import { useAppSelector } from '../../hooks/StateHooks';
 import useLocalStorage from '../../hooks/UseLocalStorage';
 import { useFetchCharactersQuery } from '../../services/StarWarsApi';
 import { selectPage } from '../../store/pageSlice/PageSlice';
 
-import './Main.css';
-import Card from './Card.tsx';
+import Card from './Card';
+import styles from './Main.module.css';
 
 const ResultsList = () => {
-  const location = useLocation();
+  const pathname = usePathname();
   const { query } = useLocalStorage();
   const currentPage = useAppSelector(selectPage);
 
@@ -19,13 +20,15 @@ const ResultsList = () => {
   });
 
   if (error || !data) {
-    return <p className="placeholder">Oops! there is no such character.</p>;
+    return (
+      <p className={styles.placeholder}>Oops! there is no such character.</p>
+    );
   }
 
   return (
     <>
       <section
-        className={`results_list ${location.pathname.includes('detailed') ? 'list' : 'table'}`}
+        className={`${styles.resultsList} ${pathname.includes('detailed') ? styles.list : styles.table}`}
       >
         {data.results.map((obj, index) => {
           return (

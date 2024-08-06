@@ -3,9 +3,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { afterEach, expect, test } from 'vitest';
 
 import { testDataJane } from '../../components/main/TestData';
-import { renderWithProviders } from '../../TestUtils.tsx';
+import { renderWithProviders } from '../../TestUtils';
 
-import Card from './Card.tsx';
+import Card from './Card';
 
 let unmount = () => {};
 

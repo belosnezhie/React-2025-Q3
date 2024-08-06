@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import './SearchForm.css';
-import { useSearchParams } from 'react-router-dom';
+
+// import { useSearchParams } from 'react-router-dom';
+
+// import { useRouter } from 'next/router';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
 import useLocalStorage from '../../hooks/UseLocalStorage';
 import { useFetchCharactersQuery } from '../../services/StarWarsApi';
 import { selectPage, setCurrentPage } from '../../store/pageSlice/PageSlice';
 
+import styles from './SearchForm.module.css';
+
 const SearchForm = () => {
   const { query, setItemToLS } = useLocalStorage();
   const currentPage = useAppSelector(selectPage);
-  const [, setSearchParams] = useSearchParams();
+  // const [, setSearchParams] = useSearchParams();
   const [currentInputValue, setCurrentInputValue] = useState<string>(query);
   const dispatch = useAppDispatch();
 
@@ -29,7 +33,7 @@ const SearchForm = () => {
     setItemToLS(searchQuery);
     dispatch(setCurrentPage(1));
     await refetch();
-    setSearchParams({ search: searchQuery, page: String(1) });
+    // setSearchParams({ search: searchQuery, page: String(1) });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,18 +43,22 @@ const SearchForm = () => {
   return (
     <>
       <form
-        className="search_form"
+        className={styles.searchForm}
         onSubmit={handleSubmit}
         data-testid="search_form"
       >
         <input
-          className="search_input"
+          className={styles.searchInput}
           type="text"
           onChange={handleChange}
           value={currentInputValue}
           data-testid="search_input"
         ></input>
-        <input className="submit_input" type="submit" value="Search"></input>
+        <input
+          className={styles.submitInput}
+          type="submit"
+          value="Search"
+        ></input>
       </form>
     </>
   );

@@ -5,10 +5,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest';
 
 import { testCharactersSearchArr } from '../../components/main/TestData';
-import { ThemeContext } from '../../context/ThemeContext.tsx';
-import { renderWithProviders } from '../../TestUtils.tsx';
+import { ThemeContext } from '../../context/ThemeContext';
+import { renderWithProviders } from '../../TestUtils';
 
-import DetailedSection from './DetailedSection.tsx';
+import DetailedSection from './DetailedSection';
 
 let unmount = () => {};
 

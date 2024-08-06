@@ -2,10 +2,10 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { afterEach, expect, test } from 'vitest';
 
-import MainPage from '../pages/mainPage/MainPage.tsx';
-import { renderWithProviders } from '../TestUtils.tsx';
+import MainPage from '../pagesOLD/mainPage/MainPage';
+import { renderWithProviders } from '../TestUtils';
 
-import { ThemeProvider } from './ThemeContext.tsx';
+import { ThemeProvider } from './ThemeContext';
 
 let unmount = () => {};
 

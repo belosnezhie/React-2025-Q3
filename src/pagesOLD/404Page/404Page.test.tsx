@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { expect, test } from 'vitest';
 
-import NotFoundPage from './404Page.tsx';
+import NotFoundPage from './404Page';
 
 test('should render 404page', () => {
   render(

@@ -1,8 +1,9 @@
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
 
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 
-import { FavoritesButton } from './FavoritesButton.tsx';
+import { FavoritesButton } from './FavoritesButton';
+import styles from './Main.module.css';
 
 interface CardProps {
   cardData: PeopleSearchResp;
@@ -13,16 +14,14 @@ interface CardProps {
 const Card = (props: CardProps) => {
   return (
     <>
-      <div className="card_wrapper">
-        <NavLink
-          to={`/detailed?page=${props.pageData}&search=${props.searchData}`}
-          className={({ isActive, isPending }) =>
-            isActive ? 'card active' : isPending ? 'card pending' : 'card'
-          }
+      <div className={styles.cardWrapper}>
+        <Link
+          href={`/detailed?page=${props.pageData}&search=${props.searchData}`}
+          className={styles.card}
           data-testid="results_card"
         >
           <p>Name: {props.cardData.name}</p>
-        </NavLink>
+        </Link>
         <FavoritesButton characterData={props.cardData} />
       </div>
     </>

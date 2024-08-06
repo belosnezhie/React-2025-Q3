@@ -5,10 +5,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest';
 
 import useLocalStorage from '../../hooks/UseLocalStorage';
-import { renderWithProviders } from '../../TestUtils.tsx';
+import { renderWithProviders } from '../../TestUtils';
 import { testCharactersSearchArr } from '../main/TestData';
 
-import SearchForm from './SearchForm.tsx';
+import SearchForm from './SearchForm';
 
 let unmount = () => {};
 

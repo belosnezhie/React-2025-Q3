@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { ThemeContext, ThemeSwitcher } from '../context/ThemeContext.tsx';
+import { ThemeContext, ThemeSwitcher } from '../context/ThemeContext';
 
 export const useTheme = () => {
   return useContext(ThemeContext);

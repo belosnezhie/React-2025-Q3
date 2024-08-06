@@ -10,29 +10,29 @@
   background-color: var(--main-background);
 }
 
-.results_section {
+.resultsSection {
   width: 100%;
   display: flex;
   gap: 1em;
 }
 
-.results_list {
+.resultsList {
   display: flex;
   gap: 1em;
   flex-wrap: wrap;
 }
 
-.results_list.list {
+.resultsList.list {
   padding-left: 2em;
   flex-direction: column;
 }
 
-.results_list.table {
+.resultsList.table {
   width: 100%;
   justify-content: center;
 }
 
-.card_wrapper {
+.cardWrapper {
   width: 250px;
   padding: 2%;
   border-radius: 10px;
@@ -54,13 +54,13 @@
   flex-grow: 1;
 }
 
-.results_list.list * {
+.resultsList.list * {
   margin-top: 5px;
   margin-bottom: 0px;
   text-align: left;
 }
 
-.fav_button {
+.favButton {
   width: 35px;
   height: 35px;
   appearance: none;
@@ -71,7 +71,7 @@
   position: relative;
 }
 
-.fav_button::after {
+.favButton::after {
   content: '';
   position: absolute;
   top: 0;
@@ -84,11 +84,11 @@
   transition: 0.3s;
 }
 
-.fav_button:hover:after {
+.favButton:hover:after {
   transform: scale(0.88);
 }
 
-.fav_button:checked:after {
+.favButton:checked:after {
   background-color: var(--border);
 }
 
@@ -96,7 +96,7 @@
   color: var(--border);
 }
 
-.close_detailed {
+.closeDetailed {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -117,7 +117,7 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  background-image: url(/src/assets/yoda.png);
+  background-image: url('../../assets/yoda.png');
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -144,8 +144,8 @@
     transform: scale(0.98);
   }
 
-  .results_item:hover,
-  .close_detailed:hover {
+  .resultsItem:hover,
+  .closeDetailed:hover {
     transform: scale(0.95);
   }
 }

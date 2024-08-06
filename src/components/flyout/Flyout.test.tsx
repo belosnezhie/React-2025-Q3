@@ -5,9 +5,9 @@ import { afterEach, expect, test, vi } from 'vitest';
 import { testDataJane } from '../../components/main/TestData';
 import { addToFavorites } from '../../store/favoriteCharacterSlice/FavoriteCharacterSlice';
 import { store } from '../../store/Store';
-import { renderWithProviders } from '../../TestUtils.tsx';
+import { renderWithProviders } from '../../TestUtils';
 
-import { Flyout } from './Flyout.tsx';
+import { Flyout } from './Flyout';
 
 let unmount = () => {};
 

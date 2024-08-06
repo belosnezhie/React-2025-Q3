@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useState } from 'react';
 import { expect, test } from 'vitest';
 
-import ErrorBoundary from './ErrorBoundary.tsx';
+import ErrorBoundary from './ErrorBoundary';
 
 test('should show fallback UI when error', () => {
   const Child = () => {
