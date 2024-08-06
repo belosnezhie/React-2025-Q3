@@ -1,4 +1,5 @@
 // import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -12,9 +13,23 @@ import Pagination from '../components/pagination/Pagination';
 import { useTheme } from '../hooks/ContextHooks';
 import { useAppSelector } from '../hooks/StateHooks';
 import useLocalStorage from '../hooks/UseLocalStorage';
-import { useFetchCharactersQuery } from '../services/StarWarsApi';
+import { starWarsApi, useFetchCharactersQuery } from '../services/StarWarsApi';
 import { selectPage } from '../store/pageSlice/PageSlice';
-import { type RootState } from '../store/Store';
+import { type RootState, wrapper } from '../store/Store';
+
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async () => {
+    await store.dispatch(
+      starWarsApi.endpoints.fetchCharacters.initiate({
+        searchQuery: '',
+        pageNumber: 1,
+      }),
+    );
+
+    console.log(store);
+
+    return { props: {} };
+  });
 
 const MainPage = () => {
   const { query } = useLocalStorage();
