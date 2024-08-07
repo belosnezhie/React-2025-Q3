@@ -1,23 +1,40 @@
+import { GetServerSideProps } from 'next';
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
 import { useTheme } from '../../hooks/ContextHooks';
-import { useFetchSearchedCharactersQuery } from '../../services/StarWarsApi';
+import {
+  starWarsApi,
+  useFetchSearchedCharactersQuery,
+} from '../../services/StarWarsApi';
+import { wrapper } from '../../store/Store';
 
 import styles from './DetailedSection.module.css';
 // import useLocalStorage from '../../hooks/UseLocalStorage';
 
+export const getFavoritesServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps((store) => async () => {
+    await store.dispatch(
+      starWarsApi.endpoints.fetchSearchedCharacters.initiate('Luke'),
+    );
+
+    console.log(store);
+
+    return { props: {} };
+  });
+
 const DetailedSection = () => {
   // const { query } = useLocalStorage();
-  const [searchParams /* setSearchParams */] = useSearchParams();
+  // const [searchParams setSearchParams] = useSearchParams();
   // const [pageParams] = useState(Number(searchParams.get('page')));
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
   // const navigate = useNavigate();
 
   const theme = useTheme();
-  const { data, isFetching } = useFetchSearchedCharactersQuery(
-    String(searchParams.get('search')),
-  );
+  // const { data, isFetching } = useFetchSearchedCharactersQuery(
+  //   String(searchParams.get('search')),
+  // );
+  const { data, isFetching } = useFetchSearchedCharactersQuery('Luke');
 
   const handleClick = () => {
     // setSearchParams({ page: String(pageParams) });
