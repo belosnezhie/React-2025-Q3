@@ -25,11 +25,6 @@ const ResultsList = () => {
     pageNumber: currentPage,
   });
 
-  // const { data, error } = useFetchCharactersQuery({
-  //   searchQuery: '',
-  //   pageNumber: 1,
-  // });
-
   if (error || !data) {
     return (
       <p className={styles.placeholder}>Oops! there is no such character.</p>

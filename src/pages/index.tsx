@@ -86,7 +86,6 @@ const MainPage = () => {
     if (queryParams.detailed && !isCard) {
       await router.push(`/?page=${currentPage}`);
       setDetailed(false);
-      // console.log(false);
     }
   };
 

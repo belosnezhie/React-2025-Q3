@@ -18,8 +18,12 @@ export const FavoritesButton = ({ characterData }: FavoritesButtonProps) => {
   );
 
   const handleChange = () => {
-    if (favoriteCharacters.includes(characterData)) {
-      dispatch(removeFromFavorites(characterData));
+    const candidate = favoriteCharacters.find(
+      (character) => character.name === characterData.name,
+    );
+
+    if (candidate) {
+      dispatch(removeFromFavorites(candidate));
     } else {
       dispatch(addToFavorites(characterData));
     }
@@ -30,7 +34,11 @@ export const FavoritesButton = ({ characterData }: FavoritesButtonProps) => {
       <input
         type="checkbox"
         className={styles.favButton}
-        checked={favoriteCharacters.includes(characterData)}
+        checked={
+          favoriteCharacters.find(
+            (character) => character.name === characterData.name,
+          ) !== undefined
+        }
         onChange={handleChange}
         data-testid="fav_button"
       ></input>
