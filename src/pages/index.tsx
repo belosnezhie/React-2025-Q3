@@ -1,4 +1,3 @@
-// import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -12,9 +11,7 @@ import ResultsList from '../components/main/ResultsList';
 import Pagination from '../components/pagination/Pagination';
 import { useTheme } from '../hooks/ContextHooks';
 import { useAppSelector } from '../hooks/StateHooks';
-// import useLocalStorage from '../hooks/UseLocalStorage';
 import { starWarsApi, useFetchCharactersQuery } from '../services/StarWarsApi';
-// import { selectPage } from '../store/pageSlice/PageSlice';
 import { type RootState, wrapper } from '../store/Store';
 
 export const getServerSideProps: GetServerSideProps =
@@ -22,14 +19,14 @@ export const getServerSideProps: GetServerSideProps =
     const page = context.query.page ? Number(context.query.page) : 1;
     const query = context.query.search ? String(context.query.search) : '';
 
-    if (!context.query.detailed) {
-      await store.dispatch(
-        starWarsApi.endpoints.fetchCharacters.initiate({
-          searchQuery: query,
-          pageNumber: page,
-        }),
-      );
-    }
+    // if (!context.query.detailed) {
+    await store.dispatch(
+      starWarsApi.endpoints.fetchCharacters.initiate({
+        searchQuery: query,
+        pageNumber: page,
+      }),
+    );
+    // }
 
     if (context.query.detailed) {
       const detailed = String(context.query.detailed);
@@ -43,16 +40,12 @@ export const getServerSideProps: GetServerSideProps =
   });
 
 const MainPage = () => {
-  // const { query } = useLocalStorage();
   const router = useRouter();
   const queryParams = useRouter().query;
   const query = queryParams.search ? String(queryParams.search) : '';
   const currentPage = queryParams.page ? Number(queryParams.page) : 1;
   const theme = useTheme();
   const MAX_PER_PAGE: number = 10;
-  // const currentPage = useAppSelector(selectPage);
-  // const location = useRouter();
-  // const navigate = useNavigate();
   const [isDetailedShown, setDetailed] = useState<boolean>(false);
 
   useEffect(() => {
@@ -84,7 +77,7 @@ const MainPage = () => {
     }
 
     if (queryParams.detailed && !isCard) {
-      await router.push(`/?page=${currentPage}`);
+      await router.push(`/?page=${currentPage}&search=${query}`);
       setDetailed(false);
     }
   };

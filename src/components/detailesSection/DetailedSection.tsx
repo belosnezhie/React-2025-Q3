@@ -22,7 +22,7 @@ const DetailedSection = ({ destroyCallback }: DetailedSectionProps) => {
   // const router = useRouter();
   const router = useRouter();
   const queryParams = useRouter().query;
-  // const query = queryParams.search ? String(queryParams.search) : '';
+  const query = queryParams.search ? String(queryParams.search) : '';
   const detailed = queryParams.detailed ? String(queryParams.detailed) : '';
   const currentPage = queryParams.page ? Number(queryParams.page) : 1;
 
@@ -35,7 +35,7 @@ const DetailedSection = ({ destroyCallback }: DetailedSectionProps) => {
   const handleClick = async () => {
     // setSearchParams({ page: String(pageParams) });
     // navigate(`/?search=${query}&page=${pageParams}`);
-    await router.push(`/?page=${currentPage}`);
+    await router.push(`/?page=${currentPage}&search=${query}`);
     destroyCallback(false);
     setDestroyed(true);
   };

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 
@@ -12,12 +13,15 @@ interface CardProps {
 }
 
 const Card = (props: CardProps) => {
+  const queryParams = useRouter().query;
+  const query = queryParams.search ? String(queryParams.search) : '';
+
   return (
     <>
       <div className={styles.cardWrapper}>
         <Link
-          // href={`/?detailed=[${props.cardData.name}]&page=${props.pageData}&search=${props.searchData}`}
-          href={`/?detailed=${props.cardData.name}&page=${props.pageData}`}
+          href={`/?detailed=${props.cardData.name}&page=${props.pageData}&search=${query}`}
+          // href={`/?detailed=${props.cardData.name}&page=${props.pageData}`}
           // href={'/?detailes'}
           className={styles.card}
           data-testid="results_card"

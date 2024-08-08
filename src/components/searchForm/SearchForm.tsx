@@ -15,7 +15,7 @@ const SearchForm = () => {
   const router = useRouter();
   const queryParams = useRouter().query;
   // const currentPage = queryParams.page ? Number(queryParams.queryParams) : 1;
-  const query = queryParams.query ? String(queryParams.search) : '';
+  const query = queryParams.search ? String(queryParams.search) : '';
   // const currentPage = useAppSelector(selectPage);
   // const [, setSearchParams] = useSearchParams();
   const [currentInputValue, setCurrentInputValue] = useState<string>(query);
