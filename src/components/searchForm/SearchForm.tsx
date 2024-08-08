@@ -1,27 +1,30 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 // import { useSearchParams } from 'react-router-dom';
 
-// import { useRouter } from 'next/router';
-
-import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
-import useLocalStorage from '../../hooks/UseLocalStorage';
-import { useFetchCharactersQuery } from '../../services/StarWarsApi';
-import { selectPage, setCurrentPage } from '../../store/pageSlice/PageSlice';
+// import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
+// import useLocalStorage from '../../hooks/UseLocalStorage';
+// import { useFetchCharactersQuery } from '../../services/StarWarsApi';
+// import { selectPage, setCurrentPage } from '../../store/pageSlice/PageSlice';
 
 import styles from './SearchForm.module.css';
 
 const SearchForm = () => {
-  const { query, setItemToLS } = useLocalStorage();
-  const currentPage = useAppSelector(selectPage);
+  // const { query, setItemToLS } = useLocalStorage();
+  const router = useRouter();
+  const queryParams = useRouter().query;
+  // const currentPage = queryParams.page ? Number(queryParams.queryParams) : 1;
+  const query = queryParams.query ? String(queryParams.search) : '';
+  // const currentPage = useAppSelector(selectPage);
   // const [, setSearchParams] = useSearchParams();
   const [currentInputValue, setCurrentInputValue] = useState<string>(query);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
-  const { refetch } = useFetchCharactersQuery({
-    searchQuery: query,
-    pageNumber: currentPage,
-  });
+  // const { refetch } = useFetchCharactersQuery({
+  //   searchQuery: query,
+  //   pageNumber: currentPage,
+  // });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,9 +33,16 @@ const SearchForm = () => {
     const input = target.elements[0] as HTMLInputElement;
     const searchQuery: string = input.value.trim();
 
-    setItemToLS(searchQuery);
-    dispatch(setCurrentPage(1));
-    await refetch();
+    await router.push({
+      query: {
+        search: searchQuery,
+        page: 1,
+      },
+    });
+
+    // setItemToLS(searchQuery);
+    // dispatch(setCurrentPage(1));
+    // await refetch();
     // setSearchParams({ search: searchQuery, page: String(1) });
   };
 

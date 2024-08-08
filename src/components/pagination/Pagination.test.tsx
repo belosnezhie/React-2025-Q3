@@ -3,9 +3,9 @@ import { MemoryRouter } from 'react-router-dom';
 import { expect, test } from 'vitest';
 
 import { store } from '../../store/Store';
-import { renderWithProviders } from '../../TestUtils.tsx';
+import { renderWithProviders } from '../../TestUtils';
 
-import Pagination from './Pagination.tsx';
+import Pagination from './Pagination';
 
 test('should updates URL query parameter when page changes', () => {
   Object.defineProperty(window, 'location', {

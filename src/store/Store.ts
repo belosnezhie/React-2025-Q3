@@ -21,13 +21,15 @@ export const store = configureStore({
 
 setupListeners(store.dispatch);
 
-const makeStore = () =>
-  configureStore({
-    reducer: rootReducer,
-    devTools: true,
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(starWarsApi.middleware),
-  });
+// const makeStore = () =>
+//   configureStore({
+//     reducer: rootReducer,
+//     devTools: true,
+//     middleware: (getDefaultMiddleware) =>
+//       getDefaultMiddleware().concat(starWarsApi.middleware),
+//   });
+
+const makeStore = () => store;
 
 export type AppStore = ReturnType<typeof makeStore>;
 export type AppState = ReturnType<AppStore['getState']>;

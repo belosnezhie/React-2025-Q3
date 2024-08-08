@@ -1,47 +1,34 @@
 // import { GetServerSideProps } from 'next';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 // import { useLocation } from 'react-router-dom';
 
-import { useAppSelector } from '../../hooks/StateHooks';
+// import { useAppSelector } from '../../hooks/StateHooks';
 // import useLocalStorage from '../../hooks/UseLocalStorage';
-import {
-  // starWarsApi,
-  useFetchCharactersQuery,
-} from '../../services/StarWarsApi';
-import { selectPage } from '../../store/pageSlice/PageSlice';
+import { useFetchCharactersQuery } from '../../services/StarWarsApi';
+// import { selectPage } from '../../store/pageSlice/PageSlice';
 // import { wrapper } from '../../store/Store';
 
 import Card from './Card';
 import styles from './Main.module.css';
 
-// export const getServerSideProps: GetServerSideProps =
-//   wrapper.getServerSideProps((store) => async () => {
-//     await store.dispatch(
-//       starWarsApi.endpoints.fetchCharacters.initiate({
-//         searchQuery: '',
-//         pageNumber: 1,
-//       }),
-//     );
-
-//     console.log(store);
-
-//     return { props: {} };
-//   });
-
 const ResultsList = () => {
   const pathname = usePathname();
   // const { query } = useLocalStorage();
-  const currentPage = useAppSelector(selectPage);
-
-  // const { data, error } = useFetchCharactersQuery({
-  //   searchQuery: query,
-  //   pageNumber: currentPage,
-  // });
+  // const currentPage = useAppSelector(selectPage);
+  const queryParams = useRouter().query;
+  const query = queryParams.search ? String(queryParams.search) : '';
+  const currentPage = queryParams.page ? Number(queryParams.page) : 1;
 
   const { data, error } = useFetchCharactersQuery({
-    searchQuery: '',
-    pageNumber: 1,
+    searchQuery: query,
+    pageNumber: currentPage,
   });
+
+  // const { data, error } = useFetchCharactersQuery({
+  //   searchQuery: '',
+  //   pageNumber: 1,
+  // });
 
   if (error || !data) {
     return (

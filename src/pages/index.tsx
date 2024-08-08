@@ -1,7 +1,7 @@
 // import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import appStyles from '../App.module.css';
 import DetailedSection from '../components/detailesSection/DetailedSection';
@@ -12,33 +12,54 @@ import ResultsList from '../components/main/ResultsList';
 import Pagination from '../components/pagination/Pagination';
 import { useTheme } from '../hooks/ContextHooks';
 import { useAppSelector } from '../hooks/StateHooks';
-import useLocalStorage from '../hooks/UseLocalStorage';
+// import useLocalStorage from '../hooks/UseLocalStorage';
 import { starWarsApi, useFetchCharactersQuery } from '../services/StarWarsApi';
-import { selectPage } from '../store/pageSlice/PageSlice';
+// import { selectPage } from '../store/pageSlice/PageSlice';
 import { type RootState, wrapper } from '../store/Store';
 
 export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps((store) => async () => {
-    await store.dispatch(
-      starWarsApi.endpoints.fetchCharacters.initiate({
-        searchQuery: '',
-        pageNumber: 1,
-      }),
-    );
+  wrapper.getServerSideProps((store) => async (context) => {
+    const page = context.query.page ? Number(context.query.page) : 1;
+    const query = context.query.search ? String(context.query.search) : '';
 
-    console.log(store);
+    if (!context.query.detailed) {
+      await store.dispatch(
+        starWarsApi.endpoints.fetchCharacters.initiate({
+          searchQuery: query,
+          pageNumber: page,
+        }),
+      );
+    }
+
+    if (context.query.detailed) {
+      const detailed = String(context.query.detailed);
+
+      await store.dispatch(
+        starWarsApi.endpoints.fetchSearchedCharacters.initiate(detailed),
+      );
+    }
 
     return { props: {} };
   });
 
 const MainPage = () => {
-  const { query } = useLocalStorage();
+  // const { query } = useLocalStorage();
+  const router = useRouter();
+  const queryParams = useRouter().query;
+  const query = queryParams.search ? String(queryParams.search) : '';
+  const currentPage = queryParams.page ? Number(queryParams.page) : 1;
   const theme = useTheme();
   const MAX_PER_PAGE: number = 10;
-  const currentPage = useAppSelector(selectPage);
-  const location = useRouter();
+  // const currentPage = useAppSelector(selectPage);
+  // const location = useRouter();
   // const navigate = useNavigate();
   const [isDetailedShown, setDetailed] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (queryParams.detailed) {
+      setDetailed(true);
+    }
+  }, [queryParams]);
 
   const { data, isFetching } = useFetchCharactersQuery({
     searchQuery: query,
@@ -49,7 +70,7 @@ const MainPage = () => {
     (state: RootState) => state.favoriteCharacters.favCharacters.length,
   );
 
-  const handleMainClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleMainClick = async (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
 
     let isCard = false;
@@ -62,18 +83,20 @@ const MainPage = () => {
       isCard = true;
     }
 
-    if (location.pathname.includes('detailed') && !isCard) {
+    if (queryParams.detailed && !isCard) {
+      await router.push(`/?page=${currentPage}`);
       setDetailed(false);
+      // console.log(false);
     }
   };
 
   return (
     <>
-      <div className={appStyles.pageWrapper}>
+      <div className={isDetailedShown ? appStyles.pageWrapper : ''}>
         <div
-          className={theme + ' ' + appStyles.wrapper}
-          onClick={(event: React.MouseEvent<HTMLDivElement>) => {
-            handleMainClick(event);
+          className={`${theme} ${isDetailedShown ? appStyles.wrapper : ''}`}
+          onClick={async (event: React.MouseEvent<HTMLDivElement>) => {
+            await handleMainClick(event);
           }}
           data-testid="wrapper"
         >
@@ -92,7 +115,9 @@ const MainPage = () => {
             <div className={pageStyles.yoda} />
           </main>
         </div>
-        {isDetailedShown ? <DetailedSection /> : null}
+        {isDetailedShown ? (
+          <DetailedSection destroyCallback={setDetailed} />
+        ) : null}
       </div>
       {favCharactersCount ? <Flyout /> : null}
     </>

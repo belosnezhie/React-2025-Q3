@@ -1,50 +1,49 @@
-import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 // import { useSearchParams } from 'react-router-dom';
 
 import { useTheme } from '../../hooks/ContextHooks';
-import {
-  starWarsApi,
-  useFetchSearchedCharactersQuery,
-} from '../../services/StarWarsApi';
-import { wrapper } from '../../store/Store';
+import { useFetchSearchedCharactersQuery } from '../../services/StarWarsApi';
 
 import styles from './DetailedSection.module.css';
 // import useLocalStorage from '../../hooks/UseLocalStorage';
 
-export const getFavoritesServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps((store) => async () => {
-    await store.dispatch(
-      starWarsApi.endpoints.fetchSearchedCharacters.initiate('Luke'),
-    );
+interface DetailedSectionProps {
+  destroyCallback: (isDestroyed: boolean) => void;
+}
 
-    console.log(store);
-
-    return { props: {} };
-  });
-
-const DetailedSection = () => {
+const DetailedSection = ({ destroyCallback }: DetailedSectionProps) => {
   // const { query } = useLocalStorage();
   // const [searchParams setSearchParams] = useSearchParams();
   // const [pageParams] = useState(Number(searchParams.get('page')));
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
   // const navigate = useNavigate();
 
-  const theme = useTheme();
-  // const { data, isFetching } = useFetchSearchedCharactersQuery(
-  //   String(searchParams.get('search')),
-  // );
-  const { data, isFetching } = useFetchSearchedCharactersQuery('Luke');
+  // const router = useRouter();
+  const router = useRouter();
+  const queryParams = useRouter().query;
+  // const query = queryParams.search ? String(queryParams.search) : '';
+  const detailed = queryParams.detailed ? String(queryParams.detailed) : '';
+  const currentPage = queryParams.page ? Number(queryParams.page) : 1;
 
-  const handleClick = () => {
+  const theme = useTheme();
+  const { data, isFetching } = useFetchSearchedCharactersQuery(detailed);
+  // const { data, isFetching } = useFetchCharactersQuery({
+  //   searchQuery: query,
+  //   pageNumber: currentPage,
+  // });
+  const handleClick = async () => {
     // setSearchParams({ page: String(pageParams) });
     // navigate(`/?search=${query}&page=${pageParams}`);
+    await router.push(`/?page=${currentPage}`);
+    destroyCallback(false);
     setDestroyed(true);
   };
 
   return isDestroyed ? null : (
     <main
       className={theme + ' ' + styles.detailedResults}
+      id="detailedResults"
       data-testid="detailed_page"
     >
       {isFetching ? (
@@ -61,7 +60,7 @@ const DetailedSection = () => {
               <p>Gender: {data.results[0].gender}</p>
             </>
           ) : null}
-          <button className="close_detailed" onClick={handleClick}>
+          <button className={styles.closeDetailed} onClick={handleClick}>
             X
           </button>
         </>
