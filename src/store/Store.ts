@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
-import { createWrapper } from 'next-redux-wrapper';
+// import { setupListeners } from '@reduxjs/toolkit/query';
+// import { createWrapper } from 'next-redux-wrapper';
 
 import { starWarsApi } from '../services/StarWarsApi';
 
@@ -13,27 +13,27 @@ const rootReducer = combineReducers({
   [starWarsApi.reducerPath]: starWarsApi.reducer,
 });
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(starWarsApi.middleware),
-});
+// export const store = configureStore({
+//   reducer: rootReducer,
+//   middleware: (getDefaultMiddleware) =>
+//     getDefaultMiddleware().concat(starWarsApi.middleware),
+// });
 
-setupListeners(store.dispatch);
+// setupListeners(store.dispatch);
 
-// const makeStore = () =>
-//   configureStore({
-//     reducer: rootReducer,
-//     devTools: true,
-//     middleware: (getDefaultMiddleware) =>
-//       getDefaultMiddleware().concat(starWarsApi.middleware),
-//   });
+export const makeStore = () =>
+  configureStore({
+    reducer: rootReducer,
+    devTools: true,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(starWarsApi.middleware),
+  });
 
-const makeStore = () => store;
+// const makeStore = () => store;
 
 export type AppStore = ReturnType<typeof makeStore>;
-export type AppState = ReturnType<AppStore['getState']>;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+// export type AppState = ReturnType<AppStore['getState']>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
 
-export const wrapper = createWrapper<AppStore>(makeStore);
+// export const wrapper = createWrapper<AppStore>(makeStore);

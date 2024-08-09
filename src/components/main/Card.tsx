@@ -1,7 +1,10 @@
+import { headers } from 'next/headers';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
+import { PageProps } from '../../app/page';
+import { getSearchParams } from '../../app/searchParams';
 import { PeopleSearchResp } from '../../model/TypesStarWars';
+import StoreProvider from '../../store/StoreProvider';
 
 import { FavoritesButton } from './FavoritesButton';
 import styles from './Main.module.css';
@@ -10,11 +13,21 @@ interface CardProps {
   cardData: PeopleSearchResp;
   pageData: number;
   searchData: string;
+  pageProps?: PageProps;
 }
 
 const Card = (props: CardProps) => {
-  const queryParams = useRouter().query;
-  const query = queryParams.search ? String(queryParams.search) : '';
+  // const query = props.pageProps.searchParams.search
+  //   ? String(props.pageProps.searchParams.search)
+  //   : '';
+
+  // const headersList = headers();
+  // const fullUrl = headersList.get('referer') || '';
+  // const searchParams = new URL(fullUrl).searchParams;
+  // const query = searchParams.get('search') ? searchParams.get('search') : '';
+  // const page = searchParams.get('page') ? searchParams.get('page') : '';
+
+  const query = getSearchParams(headers()).query;
 
   return (
     <>
@@ -28,7 +41,9 @@ const Card = (props: CardProps) => {
         >
           <p>Name: {props.cardData.name}</p>
         </Link>
-        <FavoritesButton characterData={props.cardData} />
+        <StoreProvider>
+          <FavoritesButton characterData={props.cardData} />
+        </StoreProvider>
       </div>
     </>
   );

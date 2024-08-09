@@ -1,3 +1,5 @@
+'use client';
+
 import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 import {

@@ -1,47 +1,47 @@
 // import { GetServerSideProps } from 'next';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/router';
+// import { usePathname } from 'next/navigation';
+// import { useRouter } from 'next/router';
 // import { useLocation } from 'react-router-dom';
 
 // import { useAppSelector } from '../../hooks/StateHooks';
 // import useLocalStorage from '../../hooks/UseLocalStorage';
-import { useFetchCharactersQuery } from '../../services/StarWarsApi';
+import { SearchResp } from '../../model/TypesStarWars';
+// import { useFetchCharactersQuery } from '../../services/StarWarsApi';
 // import { selectPage } from '../../store/pageSlice/PageSlice';
 // import { wrapper } from '../../store/Store';
 
 import Card from './Card';
-import styles from './Main.module.css';
+// import styles from './Main.module.css';
 
-const ResultsList = () => {
-  const pathname = usePathname();
+interface ResultsListProps {
+  listData: SearchResp;
+}
+
+const ResultsList = ({ listData }: ResultsListProps) => {
+  // const pathname = usePathname();
   // const { query } = useLocalStorage();
   // const currentPage = useAppSelector(selectPage);
-  const queryParams = useRouter().query;
-  const query = queryParams.search ? String(queryParams.search) : '';
-  const currentPage = queryParams.page ? Number(queryParams.page) : 1;
+  // const queryParams = useRouter().query;
+  // const query = queryParams.search ? String(queryParams.search) : '';
+  // const currentPage = queryParams.page ? Number(queryParams.page) : 1;
 
-  const { data, error } = useFetchCharactersQuery({
-    searchQuery: query,
-    pageNumber: currentPage,
-  });
-
-  if (error || !data) {
-    return (
-      <p className={styles.placeholder}>Oops! there is no such character.</p>
-    );
-  }
+  // if (error || !data) {
+  //   return (
+  //     <p className={styles.placeholder}>Oops! there is no such character.</p>
+  //   );
+  // }
 
   return (
     <>
       <section
-        className={`${styles.resultsList} ${pathname.includes('detailed') ? styles.list : styles.table}`}
+      // className={`${styles.resultsList} ${pathname.includes('detailed') ? styles.list : styles.table}`}
       >
-        {data.results.map((obj, index) => {
+        {listData.results.map((obj, index) => {
           return (
             <Card
               cardData={obj}
               key={index}
-              pageData={currentPage}
+              pageData={1}
               searchData={obj.name}
             />
           );

@@ -1,11 +1,11 @@
-import { useTheme, useThemeSwitcher } from '../../hooks/ContextHooks';
+// import { useTheme, useThemeSwitcher } from '../../hooks/ContextHooks';
 import SearchForm from '../searchForm/SearchForm';
 
 import styles from './Header.module.css';
 
 const Header = () => {
-  const handleThemeChange = useThemeSwitcher();
-  const theme = useTheme();
+  // const handleThemeChange = useThemeSwitcher();
+  const theme = '';
 
   return (
     <>
@@ -14,7 +14,7 @@ const Header = () => {
         <SearchForm />
         <button
           className={theme + ' ' + styles.themeButton}
-          onClick={handleThemeChange}
+          // onClick={handleThemeChange}
           data-testid="theme_switcher"
         />
       </header>
