@@ -1,25 +1,18 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-// import { useSearchParams } from 'react-router-dom';
 
 import { useTheme } from '../../hooks/ContextHooks';
 import { useFetchSearchedCharactersQuery } from '../../services/StarWarsApi';
 
 import styles from './DetailedSection.module.css';
-// import useLocalStorage from '../../hooks/UseLocalStorage';
 
 interface DetailedSectionProps {
   destroyCallback: (isDestroyed: boolean) => void;
 }
 
 const DetailedSection = ({ destroyCallback }: DetailedSectionProps) => {
-  // const { query } = useLocalStorage();
-  // const [searchParams setSearchParams] = useSearchParams();
-  // const [pageParams] = useState(Number(searchParams.get('page')));
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
-  // const navigate = useNavigate();
 
-  // const router = useRouter();
   const router = useRouter();
   const queryParams = useRouter().query;
   const query = queryParams.search ? String(queryParams.search) : '';

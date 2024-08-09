@@ -19,14 +19,12 @@ export const getServerSideProps: GetServerSideProps =
     const page = context.query.page ? Number(context.query.page) : 1;
     const query = context.query.search ? String(context.query.search) : '';
 
-    // if (!context.query.detailed) {
     await store.dispatch(
       starWarsApi.endpoints.fetchCharacters.initiate({
         searchQuery: query,
         pageNumber: page,
       }),
     );
-    // }
 
     if (context.query.detailed) {
       const detailed = String(context.query.detailed);
