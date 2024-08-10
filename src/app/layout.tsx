@@ -22,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={orbitron.className}>
-      <body>
+    <html lang="en">
+      <body className={orbitron.className}>
         <ThemeProvider>
           <StoreProvider>{children}</StoreProvider>
         </ThemeProvider>

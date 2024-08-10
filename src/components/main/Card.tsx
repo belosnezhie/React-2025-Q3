@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { PageProps } from '../../app/page';
 import { getSearchParams } from '../../app/searchParams';
 import { PeopleSearchResp } from '../../model/TypesStarWars';
-import StoreProvider from '../../store/StoreProvider';
 
 import { FavoritesButton } from './FavoritesButton';
 import styles from './Main.module.css';
@@ -41,9 +40,7 @@ const Card = (props: CardProps) => {
         >
           <p>Name: {props.cardData.name}</p>
         </Link>
-        <StoreProvider>
-          <FavoritesButton characterData={props.cardData} />
-        </StoreProvider>
+        <FavoritesButton characterData={props.cardData} />
       </div>
     </>
   );
