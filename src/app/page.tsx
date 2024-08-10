@@ -1,5 +1,3 @@
-// import { useState } from 'react';
-
 import appStyles from '../App.module.css';
 import DetailedSection from '../components/detailesSection/DetailedSection';
 import Header from '../components/header/Header';
@@ -28,26 +26,6 @@ export default async function Page(pageProps: PageProps) {
   const MAX_PER_PAGE: number = 10;
 
   const isDetailedShown = pageProps.searchParams.detailed || false;
-  // const [isDetailedShown, setDetailed] = useState<boolean>(false);
-
-  // const handleMainClick = (event: React.MouseEvent<HTMLDivElement>) => {
-  //   const target = event.target as HTMLElement;
-
-  //   let isCard = false;
-
-  //   if (
-  //     (target.parentElement &&
-  //       target.parentElement.classList.contains('card')) ||
-  //     target.classList.contains('card')
-  //   ) {
-  //     isCard = true;
-  //   }
-
-  //   if (pageProps.searchParams.detailed && !isCard) {
-  //     // await router.push(`/?page=${currentPage}&search=${query}`);
-  //     // setDetailed(false);
-  //   }
-  // };
 
   return (
     <>
@@ -55,9 +33,6 @@ export default async function Page(pageProps: PageProps) {
         <div className={isDetailedShown ? appStyles.pageWrapper : ''}>
           <div
             className={`${isDetailedShown ? appStyles.wrapper : ''}`}
-            // onClick={(event: React.MouseEvent<HTMLDivElement>) => {
-            //   handleMainClick(event);
-            // }}
             data-testid="wrapper"
           >
             <Header />

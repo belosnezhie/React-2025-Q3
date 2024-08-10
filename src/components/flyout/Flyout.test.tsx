@@ -4,8 +4,10 @@ import { afterEach, expect, test, vi } from 'vitest';
 
 import { testDataJane } from '../../components/main/TestData';
 import { addToFavorites } from '../../store/favoriteCharacterSlice/FavoriteCharacterSlice';
-import { store } from '../../store/Store';
+import { makeStore } from '../../store/Store';
 import { renderWithProviders } from '../../TestUtils';
+
+const store = makeStore();
 
 import { Flyout } from './Flyout';
 

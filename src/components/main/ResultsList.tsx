@@ -9,18 +9,6 @@ interface ResultsListProps {
 }
 
 const ResultsList = ({ listData, isDetailed }: ResultsListProps) => {
-  // const pathname = usePathname();
-  // const { query } = useLocalStorage();
-  // const currentPage = useAppSelector(selectPage);
-  // const queryParams = useRouter().query;
-  // const query = queryParams.search ? String(queryParams.search) : '';
-  // const currentPage = queryParams.page ? Number(queryParams.page) : 1;
-
-  // if (error || !data) {
-  //   return (
-  //     <p className={styles.placeholder}>Oops! there is no such character.</p>
-  //   );
-  // }
   return (
     <>
       <section
