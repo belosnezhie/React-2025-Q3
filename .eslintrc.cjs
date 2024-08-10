@@ -79,7 +79,7 @@ module.exports = {
         { "exceptAfterSingleLine": true }
       ],
       "import/extensions": [
-        "error",
+        0,
         "ignorePackages",
         {
           "tsx": "never",

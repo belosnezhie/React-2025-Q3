@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTheme } from '../../hooks/ContextHooks';
 import './DetailedSection.css';
 import useLocalStorage from '../../hooks/UseLocalStorage';
-import { useFetchSearchedCharactersQuery } from '../../services/StarWarsApi';
+import { useFetchSearchedCharactersQuery } from '../../store/StarWarsApi';
 
 const DetailedSection = () => {
   const { query } = useLocalStorage();

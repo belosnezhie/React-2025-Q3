@@ -7,8 +7,8 @@ import Pagination from '../../components/pagination/Pagination.tsx';
 import { useTheme } from '../../hooks/ContextHooks';
 import { useAppSelector } from '../../hooks/StateHooks';
 import useLocalStorage from '../../hooks/UseLocalStorage';
-import { useFetchCharactersQuery } from '../../services/StarWarsApi';
 import { selectPage } from '../../store/pageSlice/PageSlice';
+import { useFetchCharactersQuery } from '../../store/StarWarsApi.ts';
 import type { RootState } from '../../store/Store';
 
 const MainPage = () => {

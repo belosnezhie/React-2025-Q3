@@ -1,10 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
-import { starWarsApi } from '../services/StarWarsApi';
-
 import favoriteCharactersReducer from './favoriteCharacterSlice/FavoriteCharacterSlice';
 import pageReducer from './pageSlice/PageSlice';
+import { starWarsApi } from './StarWarsApi';
 
 const rootReducer = combineReducers({
   favoriteCharacters: favoriteCharactersReducer,
