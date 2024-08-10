@@ -8,6 +8,7 @@ import Header from '../components/header/Header';
 import pageStyles from '../components/main/Main.module.css';
 import ResultsList from '../components/main/ResultsList';
 import Pagination from '../components/pagination/Pagination';
+import Wrapper from '../components/ThemeWrapper';
 
 import { getDefaultData } from './api/api';
 
@@ -50,29 +51,30 @@ export default async function Page(pageProps: PageProps) {
 
   return (
     <>
-      <div /*className={isDetailedShown ? appStyles.pageWrapper : ''} */>
-        <div
-          // className={`${'light'} ${/* isDetailedShown ? appStyles.wrapper : ''*/}`}
-          // onClick={(event: React.MouseEvent<HTMLDivElement>) => {
-          //   handleMainClick(event);
-          // }}
-          className="light"
-          data-testid="wrapper"
-        >
-          <Header />
-          <main className={pageStyles.page}>
-            <section className={pageStyles.resultsSection}>
-              <ResultsList listData={data} />
-            </section>
-            <Pagination pagesCount={Math.ceil(data.count / MAX_PER_PAGE)} />
-            <div className={pageStyles.yoda} />
-          </main>
-        </div>
-        {/* {isDetailedShown ? (
+      <Wrapper>
+        <div /*className={isDetailedShown ? appStyles.pageWrapper : ''} */>
+          <div
+            // className={`${'light'} ${/* isDetailedShown ? appStyles.wrapper : ''*/}`}
+            // onClick={(event: React.MouseEvent<HTMLDivElement>) => {
+            //   handleMainClick(event);
+            // }}
+            data-testid="wrapper"
+          >
+            <Header />
+            <main className={pageStyles.page}>
+              <section className={pageStyles.resultsSection}>
+                <ResultsList listData={data} />
+              </section>
+              <Pagination pagesCount={Math.ceil(data.count / MAX_PER_PAGE)} />
+              <div className={pageStyles.yoda} />
+            </main>
+          </div>
+          {/* {isDetailedShown ? (
           <DetailedSection destroyCallback={setDetailed} />
         ) : null} */}
-      </div>
-      {/* {favCharactersCount ? <Flyout /> : null} */}
+        </div>
+        {/* {favCharactersCount ? <Flyout /> : null} */}
+      </Wrapper>
     </>
   );
 }
