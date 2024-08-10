@@ -33,6 +33,7 @@ const Card = (props: CardProps) => {
       <div className={styles.cardWrapper}>
         <Link
           href={`/?detailed=${props.cardData.name}&page=${props.pageData}&search=${query}`}
+          // href={`/detailed/?page=${props.pageData}&search=${query}`}
           // href={`/?detailed=${props.cardData.name}&page=${props.pageData}`}
           // href={'/?detailes'}
           className={styles.card}

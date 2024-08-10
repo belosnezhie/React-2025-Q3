@@ -1,9 +1,7 @@
 // import { useState } from 'react';
 
-// import appStyles from '../App.module.css';
-// import DetailedSection from '../components/detailesSection/DetailedSection';
-// import { Flyout } from '../components/flyout/Flyout';
-
+import appStyles from '../App.module.css';
+import DetailedSection from '../components/detailesSection/DetailedSection';
 import Header from '../components/header/Header';
 import pageStyles from '../components/main/Main.module.css';
 import ResultsList from '../components/main/ResultsList';
@@ -28,6 +26,8 @@ export type SearchParams = {
 export default async function Page(pageProps: PageProps) {
   const data = await getDefaultData(pageProps.searchParams);
   const MAX_PER_PAGE: number = 10;
+
+  const isDetailedShown = pageProps.searchParams.detailed || false;
   // const [isDetailedShown, setDetailed] = useState<boolean>(false);
 
   // const handleMainClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -52,9 +52,9 @@ export default async function Page(pageProps: PageProps) {
   return (
     <>
       <Wrapper>
-        <div /*className={isDetailedShown ? appStyles.pageWrapper : ''} */>
+        <div className={isDetailedShown ? appStyles.pageWrapper : ''}>
           <div
-            // className={`${'light'} ${/* isDetailedShown ? appStyles.wrapper : ''*/}`}
+            className={`${isDetailedShown ? appStyles.wrapper : ''}`}
             // onClick={(event: React.MouseEvent<HTMLDivElement>) => {
             //   handleMainClick(event);
             // }}
@@ -63,17 +63,14 @@ export default async function Page(pageProps: PageProps) {
             <Header />
             <main className={pageStyles.page}>
               <section className={pageStyles.resultsSection}>
-                <ResultsList listData={data} />
+                <ResultsList listData={data} isDetailed={isDetailedShown} />
               </section>
               <Pagination pagesCount={Math.ceil(data.count / MAX_PER_PAGE)} />
               <div className={pageStyles.yoda} />
             </main>
           </div>
-          {/* {isDetailedShown ? (
-          <DetailedSection destroyCallback={setDetailed} />
-        ) : null} */}
+          {isDetailedShown ? <DetailedSection /> : null}
         </div>
-        {/* {favCharactersCount ? <Flyout /> : null} */}
       </Wrapper>
     </>
   );

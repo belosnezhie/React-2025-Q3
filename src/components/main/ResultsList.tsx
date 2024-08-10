@@ -1,23 +1,14 @@
-// import { GetServerSideProps } from 'next';
-// import { usePathname } from 'next/navigation';
-// import { useRouter } from 'next/router';
-// import { useLocation } from 'react-router-dom';
-
-// import { useAppSelector } from '../../hooks/StateHooks';
-// import useLocalStorage from '../../hooks/UseLocalStorage';
 import { SearchResp } from '../../model/TypesStarWars';
-// import { useFetchCharactersQuery } from '../../services/StarWarsApi';
-// import { selectPage } from '../../store/pageSlice/PageSlice';
-// import { wrapper } from '../../store/Store';
 
 import Card from './Card';
-// import styles from './Main.module.css';
+import styles from './Main.module.css';
 
 interface ResultsListProps {
   listData: SearchResp;
+  isDetailed: string | false | string[];
 }
 
-const ResultsList = ({ listData }: ResultsListProps) => {
+const ResultsList = ({ listData, isDetailed }: ResultsListProps) => {
   // const pathname = usePathname();
   // const { query } = useLocalStorage();
   // const currentPage = useAppSelector(selectPage);
@@ -30,11 +21,10 @@ const ResultsList = ({ listData }: ResultsListProps) => {
   //     <p className={styles.placeholder}>Oops! there is no such character.</p>
   //   );
   // }
-
   return (
     <>
       <section
-      // className={`${styles.resultsList} ${pathname.includes('detailed') ? styles.list : styles.table}`}
+        className={`${styles.resultsList} ${isDetailed ? styles.list : styles.table}`}
       >
         {listData.results.map((obj, index) => {
           return (
