@@ -11,11 +11,26 @@ export function middleware(request: NextRequest) {
 
   headers.set('x-current-page', String(page));
 
+  // let query;
+
+  // if (
+  //   request.nextUrl.searchParams.get('search') ||
+  //   request.nextUrl.searchParams.get('search') !== null
+  // ) {
+  //   query = request.nextUrl.searchParams.get('search');
+  // } else {
+  //   query = '';
+  // }
+
   const query = request.nextUrl.searchParams.get('search')
     ? request.nextUrl.searchParams.get('search')
     : '';
 
-  headers.set('x-current-query', String(query));
+  if (query !== null) {
+    headers.set('x-current-query', query);
+  } else {
+    headers.set('x-current-query', '');
+  }
 
   return NextResponse.next({ headers });
 }

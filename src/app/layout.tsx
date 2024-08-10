@@ -1,8 +1,9 @@
-import { Orbitron } from '@next/font/google';
 import { Metadata } from 'next';
+import { Orbitron } from 'next/font/google';
 
 import './index.css';
 import { ThemeProvider } from '../context/ThemeContext';
+import StoreProvider from '../store/StoreProvider';
 
 const orbitron = Orbitron({
   subsets: ['latin'],
@@ -23,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={orbitron.className}>
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <StoreProvider>{children}</StoreProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -8,7 +8,7 @@ import Header from '../components/header/Header';
 import pageStyles from '../components/main/Main.module.css';
 import ResultsList from '../components/main/ResultsList';
 import Pagination from '../components/pagination/Pagination';
-import Wrapper from '../components/ThemeWrapper';
+import Wrapper from '../components/Wrapper';
 
 import { getDefaultData } from './api/api';
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '../../hooks/ContextHooks';
 import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
 import { clearFavorites } from '../../store/favoriteCharacterSlice/FavoriteCharacterSlice';

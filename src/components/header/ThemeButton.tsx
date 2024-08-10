@@ -1,13 +1,15 @@
 'use client';
-import { useThemeSwitcher } from '../../hooks/ContextHooks';
+import { useTheme, useThemeSwitcher } from '../../hooks/ContextHooks';
 
 import styles from './Header.module.css';
 
 const ThemeButton = () => {
+  const theme = useTheme();
+
   return (
     <>
       <button
-        className={styles.themeButton}
+        className={`${theme} ${styles.themeButton}`}
         onClick={useThemeSwitcher()}
       ></button>
     </>
