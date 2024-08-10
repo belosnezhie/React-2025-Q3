@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from '@remix-run/node';
-import { Outlet, useLoaderData } from '@remix-run/react';
+import { Outlet, useLoaderData, useNavigation } from '@remix-run/react';
 
 import { Flyout } from '../../src/components/flyout/Flyout.tsx';
 import Header from '../../src/components/header/Header.tsx';
@@ -28,6 +28,7 @@ export default function MainPage() {
   // const navigate = useNavigate();
 
   const data = useLoaderData<typeof loader>();
+  const navigation = useNavigation();
 
   const favCharactersCount = useAppSelector(
     (state: RootState) => state.favoriteCharacters.favCharacters.length,
@@ -63,22 +64,16 @@ export default function MainPage() {
         >
           <Header />
           <main className="page">
-            {/* {isFetching ? (
+            {navigation.state === 'loading' ? (
               <div className="spinner" data-testid="spinner_test" />
             ) : data?.results ? (
               <>
                 <section className="results_section">
-                  <ResultsList />
+                  <ResultsList listData={data} />
                 </section>
                 <Pagination pagesCount={Math.ceil(data.count / MAX_PER_PAGE)} />
               </>
-            ) : null} */}
-            <>
-              <section className="results_section">
-                <ResultsList listData={data} />
-              </section>
-              <Pagination pagesCount={Math.ceil(data.count / MAX_PER_PAGE)} />
-            </>
+            ) : null}
             <div className="yoda" />
           </main>
         </div>
