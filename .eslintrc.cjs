@@ -23,7 +23,7 @@ module.exports = {
   plugins: ['react-refresh', "react-compiler", "import", "prettier", "@typescript-eslint", "typescript-sort-keys"],
   rules: {
     'react-refresh/only-export-components': [
-      'warn',
+      'off',
       { allowConstantExport: true },
     ],
     "react-compiler/react-compiler": "error",
@@ -79,7 +79,7 @@ module.exports = {
         { "exceptAfterSingleLine": true }
       ],
       "import/extensions": [
-        "error",
+        0,
         "ignorePackages",
         {
           "tsx": "never",

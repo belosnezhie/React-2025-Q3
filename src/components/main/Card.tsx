@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from '@remix-run/react';
 
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 
@@ -6,16 +6,19 @@ import { FavoritesButton } from './FavoritesButton.tsx';
 
 interface CardProps {
   cardData: PeopleSearchResp;
-  pageData: number;
   searchData: string;
 }
 
 const Card = (props: CardProps) => {
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('search') || '';
+  const page = searchParams.get('page') || 1;
+
   return (
     <>
       <div className="card_wrapper">
         <NavLink
-          to={`/detailed?page=${props.pageData}&search=${props.searchData}`}
+          to={`/detailes/${props.searchData}?page=${page}&search=${query}`}
           className={({ isActive, isPending }) =>
             isActive ? 'card active' : isPending ? 'card pending' : 'card'
           }

@@ -5,14 +5,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--error);
+  background-color: #f26749;
   color: white;
 }
 
 .nav_link {
   margin-top: 20px;
   text-decoration: none;
-  color: var(--border);
+  color: #204ecf;
   transition: 0.3s;
 }
 

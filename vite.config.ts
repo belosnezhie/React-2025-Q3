@@ -1,12 +1,18 @@
-import react from '@vitejs/plugin-react';
-// import { defineConfig } from 'vite';
+import { vitePlugin as remix } from '@remix-run/dev';
+import reactVitest from '@vitejs/plugin-react';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: '',
+  // plugins: [remix({ ignoredRouteFiles: ['**/*.css'] }), tsconfigPaths()],
+  plugins: [
+    process.env.VITEST
+      ? reactVitest()
+      : remix({ ignoredRouteFiles: ['**/*.css'] }),
+    tsconfigPaths(),
+  ],
   test: {
     environment: 'jsdom',
+    globals: true,
   },
 });

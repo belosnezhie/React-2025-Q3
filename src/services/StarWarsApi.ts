@@ -1,30 +1,27 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
 import { SearchResp } from '../model/TypesStarWars';
 
-export interface SearchedParams {
-  searchQuery: string;
-  pageNumber: number;
-}
+export const getDefaultData = async (page: number, query: string) => {
+  const resp = await fetch(
+    `https://swapi.dev/api/people/?page=${page}&search=${query}`,
+  );
 
-export const starWarsApi = createApi({
-  reducerPath: 'starWarsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://swapi.dev/api/people' }),
-  endpoints: (builder) => ({
-    fetchCharacters: builder.query<SearchResp, SearchedParams>({
-      query: ({ searchQuery, pageNumber }) => {
-        if (searchQuery !== '' && searchQuery !== 'null') {
-          return `/?search=${searchQuery}&format=json&page=${pageNumber}`;
-        }
+  if (resp.status !== 200) {
+    throw new Error('Request faild!');
+  }
 
-        return `/?page=${pageNumber}`;
-      },
-    }),
-    fetchSearchedCharacters: builder.query<SearchResp, string>({
-      query: (searchQuery) => `/?search=${searchQuery}&format=json`,
-    }),
-  }),
-});
+  const data: SearchResp = <SearchResp>await resp.json();
 
-export const { useFetchSearchedCharactersQuery, useFetchCharactersQuery } =
-  starWarsApi;
+  return data;
+};
+
+export const getSearchedData = async (query: string) => {
+  const resp = await fetch(`https://swapi.dev/api/people/?&search=${query}`);
+
+  if (resp.status !== 200) {
+    throw new Error('Request faild!');
+  }
+
+  const data: SearchResp = <SearchResp>await resp.json();
+
+  return data;
+};
