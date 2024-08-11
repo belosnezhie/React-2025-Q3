@@ -1,3 +1,4 @@
+import { PageProps, Params } from '../../app/page';
 import { PeopleSearchResp, SearchResp } from '../../model/TypesStarWars';
 
 export const testDataJane: PeopleSearchResp = {
@@ -35,4 +36,17 @@ export const testCharactersSearchArr: SearchResp = {
 export const testCharactersSearch: SearchResp = {
   count: 1,
   results: [testDataJane],
+};
+
+const testParams: Params = {
+  slug: 'test',
+};
+
+const testSearchParams = {
+  ['test']: 'test',
+};
+
+export const testPageProps: PageProps = {
+  params: testParams,
+  searchParams: testSearchParams,
 };

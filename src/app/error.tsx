@@ -1,12 +1,10 @@
-import './FallbackUIPage.css';
+'use client';
 
-import { useTheme } from '../../hooks/ContextHooks';
+import styles from './FallbackUIPage.module.css';
 
 const FallbackUIPage = () => {
-  const theme = useTheme();
-
   return (
-    <div className={theme + ' fallbackUI_page'}>
+    <div className={styles.fallbackUIPage}>
       <h2>Oops! Something went wrong. Please try again later.</h2>
     </div>
   );

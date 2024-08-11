@@ -1,18 +1,20 @@
 .notFoundPage {
   min-width: 100%;
   min-height: 100vh;
+  padding: 2%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--error);
+  background-color: #f26749;
   color: white;
+  text-align: center;
 }
 
 .navLink {
   margin-top: 20px;
   text-decoration: none;
-  color: var(--border);
+  color: var(#204ecf);
   transition: 0.3s;
 }
 

@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+'use client';
 
-interface ThemeProviderProps {
-  children: React.ReactNode;
-}
+import React, { useState } from 'react';
 
 export const ThemeContext = React.createContext('light');
 export const ThemeSwitcher = React.createContext(() => {});
 
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState<string>('light');
 
   const updateTheme = (): void => {

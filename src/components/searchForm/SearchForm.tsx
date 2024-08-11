@@ -1,27 +1,26 @@
-import { useRouter } from 'next/router';
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 
 import styles from './SearchForm.module.css';
 
 const SearchForm = () => {
   const router = useRouter();
-  const queryParams = useRouter().query;
-  const query = queryParams.search ? String(queryParams.search) : '';
-  const [currentInputValue, setCurrentInputValue] = useState<string>(query);
+  const searchParams = useSearchParams();
+  const query = searchParams.get('search') ? searchParams.get('search') : '';
+  const [currentInputValue, setCurrentInputValue] = useState<string>(
+    String(query),
+  );
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const target: HTMLFormElement = event.target as HTMLFormElement;
     const input = target.elements[0] as HTMLInputElement;
     const searchQuery: string = input.value.trim();
 
-    await router.push({
-      query: {
-        search: searchQuery,
-        page: 1,
-      },
-    });
+    router.push(`?page=${String(1)}&search=${searchQuery}`);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

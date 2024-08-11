@@ -1,9 +1,9 @@
-.fallbackUI_page {
+.fallbackUIPage {
   min-width: 100%;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--error);
+  background-color: #f26749;
   color: white;
 }

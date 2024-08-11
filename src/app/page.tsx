@@ -1,0 +1,52 @@
+import appStyles from '../App.module.css';
+import DetailedSection from '../components/detailesSection/DetailedSection';
+import Header from '../components/header/Header';
+import pageStyles from '../components/main/Main.module.css';
+import ResultsList from '../components/main/ResultsList';
+import Pagination from '../components/pagination/Pagination';
+import Wrapper from '../components/Wrapper';
+
+import { getDefaultData } from './api/api';
+
+export type PageProps = {
+  params: Params;
+  searchParams: SearchParams;
+};
+
+export type Params = {
+  slug: string;
+};
+
+export type SearchParams = {
+  [key: string]: string | string[] | undefined;
+};
+
+export default async function Page(pageProps: PageProps) {
+  const data = await getDefaultData(pageProps.searchParams);
+  const MAX_PER_PAGE: number = 10;
+
+  const isDetailedShown = pageProps.searchParams.detailed || false;
+
+  return (
+    <>
+      <Wrapper>
+        <div className={isDetailedShown ? appStyles.pageWrapper : ''}>
+          <div
+            className={`${isDetailedShown ? appStyles.wrapper : ''}`}
+            data-testid="wrapper"
+          >
+            <Header />
+            <main className={pageStyles.page}>
+              <section className={pageStyles.resultsSection}>
+                <ResultsList listData={data} isDetailed={isDetailedShown} />
+              </section>
+              <Pagination pagesCount={Math.ceil(data.count / MAX_PER_PAGE)} />
+              <div className={pageStyles.yoda} />
+            </main>
+          </div>
+          {isDetailedShown ? <DetailedSection /> : null}
+        </div>
+      </Wrapper>
+    </>
+  );
+}

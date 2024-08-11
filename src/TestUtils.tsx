@@ -4,7 +4,9 @@ import type { RenderOptions } from '@testing-library/react';
 import React, { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
 
-import { store } from './store/Store';
+import { makeStore } from './store/Store';
+
+export const store = makeStore();
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   testStore?: EnhancedStore;
