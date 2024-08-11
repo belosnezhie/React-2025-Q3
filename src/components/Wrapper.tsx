@@ -20,6 +20,15 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const handleMainClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
 
+    console.log(target);
+
+    if (
+      target.id === 'detailedResults' ||
+      target.parentElement?.id === 'detailedResults'
+    ) {
+      return;
+    }
+
     let isCard = false;
 
     if (

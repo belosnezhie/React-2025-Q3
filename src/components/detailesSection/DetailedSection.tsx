@@ -9,8 +9,9 @@ import styles from './DetailedSection.module.css';
 const DetailedSection = async () => {
   const query = getSearchParams(headers()).query;
   const currentPage = getSearchParams(headers()).page;
+  const name = getSearchParams(headers()).name;
 
-  const data = await getSearchedData(query);
+  const data = await getSearchedData(name);
 
   return (
     <main

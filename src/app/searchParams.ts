@@ -6,11 +6,18 @@ export const getSearchParams = (headers: ReadonlyHeaders) => {
   if (query === null) {
     query = '';
   }
+
+  let name = headers.get('x-current-name');
+
+  if (name === null) {
+    name = '';
+  }
   const page = headers.get('x-current-page');
 
   const params = {
     page: page,
     query: query,
+    name: name,
   };
 
   return params;
