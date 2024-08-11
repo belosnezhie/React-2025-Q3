@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-// import { HYDRATE } from 'next-redux-wrapper';
 
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 import { RootState } from '../Store';
@@ -35,14 +34,6 @@ export const favoriteCharacterSlice = createSlice({
       };
     },
   },
-  // extraReducers: {
-  //   [HYDRATE]: (state, action: PayloadAction<PeopleSearchResp>) => {
-  //     return {
-  //       ...state,
-  //       ...action.payload,
-  //     };
-  //   },
-  // },
 });
 
 export const { addToFavorites, removeFromFavorites, clearFavorites } =
