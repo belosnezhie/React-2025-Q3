@@ -6,9 +6,7 @@ import { Provider } from 'react-redux';
 
 import { makeStore } from './store/Store';
 
-// import { store } from './store/Store';
-
-const store = makeStore();
+export const store = makeStore();
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   testStore?: EnhancedStore;

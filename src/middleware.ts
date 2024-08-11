@@ -11,17 +11,6 @@ export function middleware(request: NextRequest) {
 
   headers.set('x-current-page', String(page));
 
-  // let query;
-
-  // if (
-  //   request.nextUrl.searchParams.get('search') ||
-  //   request.nextUrl.searchParams.get('search') !== null
-  // ) {
-  //   query = request.nextUrl.searchParams.get('search');
-  // } else {
-  //   query = '';
-  // }
-
   const query = request.nextUrl.searchParams.get('search')
     ? request.nextUrl.searchParams.get('search')
     : '';

@@ -1,46 +1,48 @@
-// import { fireEvent, screen, waitFor } from '@testing-library/react';
-// import { BrowserRouter } from 'react-router-dom';
-// import { afterEach, expect, test } from 'vitest';
-import { test } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { expect, test, vi } from 'vitest';
 
-// import Page from '../app/page';
-// import { testPageProps } from '../components/main/TestData';
-// import { renderWithProviders } from '../TestUtils';
+import Header from '../components/header/Header';
 
-// import { ThemeProvider } from './ThemeContext';
+import { ThemeProvider } from './ThemeContext';
 
-// const unmount = () => {};
+vi.mock('next/navigation', async () => {
+  const actual = await vi.importActual('next/navigation');
 
-// afterEach(() => {
-//   unmount();
-// });
-
-test('Should render light theme', () => {
-  // const renderObject = renderWithProviders(
-  //   <BrowserRouter>
-  //     <ThemeProvider>
-  //       <Page pageProps={testPageProps} />
-  //     </ThemeProvider>
-  //   </BrowserRouter>,
-  // );
-  // unmount = renderObject.unmount;
-  // const wrapper = screen.getByTestId('wrapper');
-  // expect(wrapper.classList).toContain('light');
+  return {
+    ...actual,
+    useRouter: vi.fn(),
+    usePathname: vi.fn(),
+    useSearchParams: vi.fn(() => ({
+      get: vi.fn(),
+    })),
+  };
 });
 
-test('Should render dark theme after switcher theme click', async () => {
-  // const renderObject = renderWithProviders(
-  //   <BrowserRouter>
-  //     <ThemeProvider>
-  //       <MainPage />
-  //     </ThemeProvider>
-  //   </BrowserRouter>,
-  // );
-  // unmount = renderObject.unmount;
-  // const switcher = screen.getByTestId('theme_switcher');
-  // fireEvent.click(switcher);
-  // await waitFor(() => {
-  //   const wrapper = screen.getByTestId('wrapper');
-  //   expect(wrapper.classList).toContain('dark');
-  // });
+vi.mock('next/headers', async () => {
+  const actual = await vi.importActual('next/headers');
+
+  return {
+    ...actual,
+    headers: vi.fn(() => ({
+      get: vi.fn(),
+    })),
+  };
+});
+
+test('Theme provider should switch theme', async () => {
+  render(
+    <ThemeProvider>
+      <Header />
+    </ThemeProvider>,
+  );
+
+  const themeButtonBefore = await screen.findByTestId('theme_button');
+
+  expect(themeButtonBefore).toBeDefined();
+
+  fireEvent.click(themeButtonBefore);
+
+  const themeButtonAfter = await screen.findByTestId('theme_button');
+
+  expect(themeButtonAfter.getAttribute('class')).contains('dark');
 });

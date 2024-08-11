@@ -11,6 +11,7 @@ const ThemeButton = () => {
       <button
         className={`${theme} ${styles.themeButton}`}
         onClick={useThemeSwitcher()}
+        data-testid="theme_button"
       ></button>
     </>
   );
