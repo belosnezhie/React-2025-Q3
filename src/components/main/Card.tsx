@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink } from '@remix-run/react';
 
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 
@@ -15,7 +15,7 @@ const Card = (props: CardProps) => {
     <>
       <div className="card_wrapper">
         <NavLink
-          to={`/detailed?page=${props.pageData}&search=${props.searchData}`}
+          to={`/detailes?page=${props.pageData}&search=${props.searchData}`}
           className={({ isActive, isPending }) =>
             isActive ? 'card active' : isPending ? 'card pending' : 'card'
           }
