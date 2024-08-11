@@ -1,7 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-// import { useState } from 'react';
 
 import appStyles from '../App.module.css';
 import DetailedSection from '../components/detailesSection/DetailedSection';
@@ -67,7 +66,7 @@ const MainPage = () => {
     if (queryParams.detailed) {
       event.nativeEvent.stopImmediatePropagation();
       await router.push(`/?page=${currentPage}&search=${query}`);
-      setDetailed(false);
+      // setDetailed(false);
     }
   };
 
