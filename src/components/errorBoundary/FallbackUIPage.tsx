@@ -6,7 +6,7 @@ const FallbackUIPage = () => {
   const theme = useTheme();
 
   return (
-    <div className={theme + ' fallbackUI_page'}>
+    <div data-testid="fallbackUI_page" className={theme + ' fallbackUI_page'}>
       <h2>Oops! Something went wrong. Please try again later.</h2>
     </div>
   );

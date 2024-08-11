@@ -6,7 +6,6 @@ import { FavoritesButton } from './FavoritesButton.tsx';
 
 interface CardProps {
   cardData: PeopleSearchResp;
-  pageData: number;
   searchData: string;
 }
 

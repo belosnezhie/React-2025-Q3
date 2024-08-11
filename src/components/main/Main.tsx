@@ -7,13 +7,14 @@ import {
 } from '@remix-run/react';
 
 import { loader } from '../../../app/root.tsx';
-import { Flyout } from '../../components/flyout/Flyout.tsx';
-import Header from '../../components/header/Header.tsx';
-import ResultsList from '../../components/main/ResultsList.tsx';
-import Pagination from '../../components/pagination/Pagination.tsx';
 import { useTheme } from '../../hooks/ContextHooks.ts';
 import { useAppSelector } from '../../hooks/StateHooks.ts';
 import type { RootState } from '../../store/Store.ts';
+import { Flyout } from '../flyout/Flyout.tsx';
+import Header from '../header/Header.tsx';
+import Pagination from '../pagination/Pagination.tsx';
+
+import ResultsList from './ResultsList.tsx';
 
 export default function MainPage() {
   const theme = useTheme();

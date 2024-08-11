@@ -2,19 +2,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
 import favoriteCharactersReducer from './favoriteCharacterSlice/FavoriteCharacterSlice';
-import pageReducer from './pageSlice/PageSlice';
-import { starWarsApi } from './StarWarsApi';
 
 const rootReducer = combineReducers({
   favoriteCharacters: favoriteCharactersReducer,
-  page: pageReducer,
-  [starWarsApi.reducerPath]: starWarsApi.reducer,
 });
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(starWarsApi.middleware),
 });
 
 setupListeners(store.dispatch);

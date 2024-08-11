@@ -1,8 +1,5 @@
 import { NavLink, useSearchParams } from '@remix-run/react';
-import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-
-import { RootState } from '../../store/Store';
 
 import './Pagination.css';
 
@@ -11,7 +8,7 @@ interface PaginationProps {
   isTest?: boolean;
 }
 
-const PaginationRaw = ({ pagesCount, isTest }: PaginationProps) => {
+const Pagination = ({ pagesCount, isTest }: PaginationProps) => {
   const location = useLocation().pathname;
   const [searchParams] = useSearchParams();
   const query = searchParams.get('search') || '';
@@ -35,13 +32,5 @@ const PaginationRaw = ({ pagesCount, isTest }: PaginationProps) => {
     </div>
   );
 };
-
-const mapStateToProps = (state: RootState) => {
-  const { page } = state;
-
-  return { currentPage: page.currentPage };
-};
-
-const Pagination = connect(mapStateToProps)(PaginationRaw);
 
 export default Pagination;

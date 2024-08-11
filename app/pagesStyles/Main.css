@@ -1,0 +1,154 @@
+.page {
+  min-height: 85vh;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1em;
+  flex-wrap: wrap;
+  background-color: var(--main-background);
+}
+
+.results_section {
+  width: 100%;
+  display: flex;
+  gap: 1em;
+}
+
+.results_list {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+.results_list.list {
+  padding-left: 2em;
+  flex-direction: column;
+}
+
+.results_list.table {
+  width: 100%;
+  justify-content: center;
+}
+
+.card_wrapper {
+  width: 250px;
+  padding: 2%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2%;
+  border: 2px solid var(--border);
+  background-color: var(--card-background);
+  z-index: 2000;
+}
+
+.card {
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.results_list.list * {
+  margin-top: 5px;
+  margin-bottom: 0px;
+  text-align: left;
+}
+
+.fav_button {
+  width: 35px;
+  height: 35px;
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.fav_button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 35px;
+  height: 35px;
+  mask: url('../../assets/star.svg') no-repeat 50% 50%;
+  mask-size: cover;
+  background-color: var(--background);
+  transition: 0.3s;
+}
+
+.fav_button:hover:after {
+  transform: scale(0.88);
+}
+
+.fav_button:checked:after {
+  background-color: var(--border);
+}
+
+.placeholder {
+  color: var(--border);
+}
+
+.close_detailed {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  border: none;
+  background-color: var(--background);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.yoda {
+  width: 300px;
+  height: 300px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-image: url(/src/assets/yoda.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.spinner {
+  width: 80px;
+  height: 80px;
+  margin-top: 100px;
+  padding: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  --_m:
+    conic-gradient(#0000 10%,#000),
+    linear-gradient(#000 0 0) content-box;
+          mask: var(--_m);
+          mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {to{transform: rotate(1turn)}}
+
+
+@media (hover: hover) {
+  .card:hover {
+    transform: scale(0.98);
+  }
+
+  .results_item:hover,
+  .close_detailed:hover {
+    transform: scale(0.95);
+  }
+}
