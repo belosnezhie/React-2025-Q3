@@ -3,10 +3,9 @@ import { HttpResponse, delay, http } from 'msw';
 import { setupServer } from 'msw/node';
 import { afterAll, afterEach, beforeAll, expect, test, vi } from 'vitest';
 
-import { renderWithProviders } from '../../TestUtils';
-import { testCharactersSearchArr } from '../main/TestData';
-
-import DetailedSection from './DetailedSection';
+import DetailedSection from '../src/components/detailesSection/DetailedSection';
+import { testCharactersSearchArr } from '../src/components/main/TestData';
+import { renderWithProviders } from '../src/TestUtils';
 
 export const handlers = [
   http.get(

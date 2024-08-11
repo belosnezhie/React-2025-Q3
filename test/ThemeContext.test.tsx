@@ -1,9 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { expect, test, vi } from 'vitest';
 
-import Header from '../components/header/Header';
-
-import { ThemeProvider } from './ThemeContext';
+import Header from '../src/components/header/Header';
+import { ThemeProvider } from '../src/context/ThemeContext';
 
 vi.mock('next/router', async () => {
   const actual = await vi.importActual('next/router');

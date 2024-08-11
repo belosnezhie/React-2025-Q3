@@ -1,9 +1,8 @@
 import { screen } from '@testing-library/dom';
 import { expect, test } from 'vitest';
 
-import { renderWithProviders } from '../TestUtils';
-
-import NotFoundPage from './404';
+import NotFoundPage from '../src/pages/404';
+import { renderWithProviders } from '../src/TestUtils';
 
 test('NotFoundPage can be displayed', async () => {
   renderWithProviders(<NotFoundPage />);

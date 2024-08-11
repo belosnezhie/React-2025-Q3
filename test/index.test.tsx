@@ -11,11 +11,10 @@ import {
   vi,
 } from 'vitest';
 
-import { testCharactersSearchArr } from '../components/main/TestData';
-import { store } from '../store/Store';
-import { renderWithProviders } from '../TestUtils';
-
-import MainPage from '.';
+import { testCharactersSearchArr } from '../src/components/main/TestData';
+import MainPage from '../src/pages';
+import { store } from '../src/store/Store';
+import { renderWithProviders } from '../src/TestUtils';
 
 let unmount = () => {};
 
