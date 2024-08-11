@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
 
-import FallbackUIPage from './FallbackUIPage';
+import FallbackUIPage from '../src/components/errorBoundary/FallbackUIPage';
 
 test('FallbackUIPage could be rendered', async () => {
   render(<FallbackUIPage />);

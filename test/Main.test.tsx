@@ -2,13 +2,12 @@ import { createRemixStub } from '@remix-run/testing';
 import { fireEvent, screen } from '@testing-library/react';
 import { beforeEach, expect, test, vi } from 'vitest';
 
-import { testCharactersSearchArr } from '../../components/main/TestData';
-import { ThemeProvider } from '../../context/ThemeContext';
-import { clearFavorites } from '../../store/favoriteCharacterSlice/FavoriteCharacterSlice';
-import { store } from '../../store/Store';
-import { renderWithProviders } from '../../TestUtils';
-
-import MainPage from './Main';
+import MainPage from '../src/components/main/Main';
+import { testCharactersSearchArr } from '../src/components/main/TestData';
+import { ThemeProvider } from '../src/context/ThemeContext';
+import { clearFavorites } from '../src/store/favoriteCharacterSlice/FavoriteCharacterSlice';
+import { store } from '../src/store/Store';
+import { renderWithProviders } from '../src/TestUtils';
 
 beforeEach(() => {
   global.URL.createObjectURL = vi.fn(() => 'details');

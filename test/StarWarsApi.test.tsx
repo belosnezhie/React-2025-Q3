@@ -2,9 +2,8 @@ import { HttpResponse, delay, http } from 'msw';
 import { SetupServerApi, setupServer } from 'msw/node';
 import { afterEach, expect, test } from 'vitest';
 
-import { testCharactersSearchArr } from '../components/main/TestData';
-
-import { getDefaultData, getSearchedData } from './StarWarsApi';
+import { testCharactersSearchArr } from '../src/components/main/TestData';
+import { getDefaultData, getSearchedData } from '../src/services/StarWarsApi';
 
 let server: SetupServerApi;
 

@@ -2,10 +2,9 @@ import { createRemixStub } from '@remix-run/testing';
 import { screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
 
-import { testCharactersSearch } from '../../src/components/main/TestData';
-import { renderWithProviders } from '../../src/TestUtils';
-
-import DetailedSection from './detailes.$name';
+import DetailedSection from '../app/routes/detailes.$name';
+import { testCharactersSearch } from '../src/components/main/TestData';
+import { renderWithProviders } from '../src/TestUtils';
 
 test('Detailed section should display character details', async () => {
   const MainPageStub = createRemixStub([

@@ -2,9 +2,8 @@ import { createRemixStub } from '@remix-run/testing';
 import { screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
 
-import { renderWithProviders } from '../../src/TestUtils';
-
-import NotFoundPage from './$';
+import NotFoundPage from '../app/routes/$';
+import { renderWithProviders } from '../src/TestUtils';
 
 test('NotFoundPage could be rendered', () => {
   const NotFoundPageStub = createRemixStub([

@@ -35,7 +35,7 @@ const DetailedSection = () => {
         <div className="spinner detailed" data-testid="spinner_test" />
       ) : (
         <>
-          {data?.results ? (
+          {data?.results.length > 0 ? (
             <>
               <p data-testid="name">Name: {data.results[0].name}</p>
               <p data-testid="birth_year">

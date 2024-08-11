@@ -23,5 +23,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "app", "src/services/StarWarsApi.test.tsx", "app/routes/$.test.tsx"]
+  "include": ["src", "test", "app", "test/StarWarsApi.test.tsx", "test/$.test.tsx"]
 }
