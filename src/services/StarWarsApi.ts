@@ -1,7 +1,7 @@
 import type { Action, PayloadAction } from '@reduxjs/toolkit';
 import {
-  // CombinedState,
-  // EndpointDefinition,
+  CombinedState,
+  EndpointDefinitions,
   createApi,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
@@ -22,21 +22,16 @@ function isHydrateAction(action: Action): action is PayloadAction<RootState> {
 export const starWarsApi = createApi({
   reducerPath: 'starWarsApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://swapi.dev/api/people' }),
-  extractRehydrationInfo(action, { reducerPath }): any { // eslint-disable-line
+  extractRehydrationInfo(
+    action,
+    { reducerPath },
+  ): CombinedState<EndpointDefinitions, string, 'starWarsApi'> | undefined {
     if (isHydrateAction(action)) {
       return action.payload[reducerPath];
     }
-  },
-  // extractRehydrationInfo(
-  //   action,
-  //   { reducerPath },
-  // ): CombinedState<EndpointDefinition, string, 'starWarsApi'> | undefined {
-  //   if (isHydrateAction(action)) {
-  //     return action.payload[reducerPath];
-  //   }
 
-  //   return undefined;
-  // },
+    return undefined;
+  },
   endpoints: (builder) => ({
     fetchCharacters: builder.query<SearchResp, SearchedParams>({
       query: ({ searchQuery, pageNumber }) => {
