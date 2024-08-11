@@ -1,12 +1,10 @@
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
-import { useLocation, useSearchParams } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
-import useLocalStorage from '../../hooks/UseLocalStorage';
-import { selectPage, setCurrentPage } from '../../store/pageSlice/PageSlice';
 import { RootState } from '../../store/Store';
 
-import './Pagination.css';
+import styles from './Pagination.module.css';
 
 interface PaginationProps {
   pagesCount: number;
@@ -14,31 +12,38 @@ interface PaginationProps {
 }
 
 const PaginationRaw = ({ pagesCount, isTest }: PaginationProps) => {
-  const location = useLocation().pathname;
-  const currentPage = useAppSelector(selectPage);
-  const dispatch = useAppDispatch();
-  const { query } = useLocalStorage();
-  const [, setSearchParams] = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const queryParams = useRouter().query;
+  const query = queryParams.search ? String(queryParams.search) : '';
+  const currentPage = queryParams.page ? Number(queryParams.page) : 1;
 
-  const handlePageChange = (pageNumber: number) => {
-    dispatch(setCurrentPage(pageNumber));
+  const handlePageChange = async (pageNumber: number) => {
+    if (queryParams.detailed) {
+      return;
+    }
 
-    setSearchParams({ search: query, page: String(pageNumber) });
+    await router.push({
+      query: {
+        search: query,
+        page: pageNumber,
+      },
+    });
   };
 
   return (
-    <div className="pagination">
+    <div className={styles.pagination}>
       {Array.from({ length: pagesCount }, (_, index) => (
         <button
           key={index}
           onClick={() => handlePageChange(index + 1)}
-          className={`pagination_button ${currentPage === index + 1 ? 'active' : ''}`}
+          className={`${styles.paginationButton} ${currentPage === index + 1 ? styles.active : ''}`}
           data-testid={`page_button_${index + 1}`}
         >
           {index + 1}
         </button>
       ))}
-      {isTest ? <p data-testid="path">{location}</p> : null}
+      {isTest ? <p data-testid="path">{pathname}</p> : null}
     </div>
   );
 };

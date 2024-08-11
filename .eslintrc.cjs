@@ -7,7 +7,8 @@ module.exports = {
     'plugin:react-hooks/recommended',
     "airbnb-typescript/base",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "next/core-web-vitals"
   ],
   parserOptions: {
     ecmaVersion: 'latest',
@@ -23,7 +24,7 @@ module.exports = {
   plugins: ['react-refresh', "react-compiler", "import", "prettier", "@typescript-eslint", "typescript-sort-keys"],
   rules: {
     'react-refresh/only-export-components': [
-      'warn',
+      'off',
       { allowConstantExport: true },
     ],
     "react-compiler/react-compiler": "error",
@@ -66,7 +67,7 @@ module.exports = {
       "prettier/prettier": "error",
       "@typescript-eslint/return-await": ["error", "in-try-catch"],
       "@typescript-eslint/no-explicit-any": "error",
-      "@typescript-eslint/unbound-method": "error",
+      "@typescript-eslint/unbound-method": "off",
       "@typescript-eslint/no-misused-promises": [
         "error",
         { "checksVoidReturn": false }

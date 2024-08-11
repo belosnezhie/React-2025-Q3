@@ -3,9 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
 import { clearFavorites } from '../../store/favoriteCharacterSlice/FavoriteCharacterSlice';
 import type { RootState } from '../../store/Store';
 
-import { DownloadButton } from './DownloadButton.tsx';
-
-import './Flyout.css';
+import { DownloadButton } from './DownloadButton';
+import styles from './Flyout.module.css';
 
 export const Flyout = () => {
   const favCharactersCount = useAppSelector(
@@ -16,9 +15,9 @@ export const Flyout = () => {
 
   return (
     <>
-      <div className={theme + ' flyout'} data-testid="flyout">
+      <div className={theme + ' ' + styles.flyout} data-testid="flyout">
         <button
-          className="unselect_button"
+          className={styles.unselectButton}
           onClick={() => dispatch(clearFavorites())}
         >
           Unselect all

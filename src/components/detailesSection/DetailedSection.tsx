@@ -1,46 +1,62 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useTheme } from '../../hooks/ContextHooks';
-import './DetailedSection.css';
-import useLocalStorage from '../../hooks/UseLocalStorage';
 import { useFetchSearchedCharactersQuery } from '../../services/StarWarsApi';
 
-const DetailedSection = () => {
-  const { query } = useLocalStorage();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [pageParams] = useState(Number(searchParams.get('page')));
+import styles from './DetailedSection.module.css';
+
+interface DetailedSectionProps {
+  destroyCallback: (isDestroyed: boolean) => void;
+}
+
+const DetailedSection = ({ destroyCallback }: DetailedSectionProps) => {
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
-  const navigate = useNavigate();
+
+  const router = useRouter();
+  const queryParams = useRouter().query;
+  const query = queryParams.search ? String(queryParams.search) : '';
+  const detailed = queryParams.detailed ? String(queryParams.detailed) : '';
+  const currentPage = queryParams.page ? Number(queryParams.page) : 1;
 
   const theme = useTheme();
-  const { data, isFetching } = useFetchSearchedCharactersQuery(
-    String(searchParams.get('search')),
-  );
+  const { data, isFetching } = useFetchSearchedCharactersQuery(detailed);
 
-  const handleClick = () => {
-    setSearchParams({ page: String(pageParams) });
-    navigate(`/?search=${query}&page=${pageParams}`);
+  const handleClick = async () => {
+    await router.push(`/?page=${currentPage}&search=${query}`);
+    destroyCallback(false);
     setDestroyed(true);
   };
 
   return isDestroyed ? null : (
-    <main className={theme + ' detailed_results'} data-testid="detailed_page">
+    <main
+      className={theme + ' ' + styles.detailedResults}
+      id="detailedResults"
+      data-testid="detailed_page"
+    >
       {isFetching ? (
         <div className="spinner detailed" data-testid="spinner_test" />
       ) : (
         <>
           {data?.results ? (
             <>
-              <p>Name: {data.results[0].name}</p>
-              <p>Birth year: {data.results[0].birth_year}</p>
-              <p>Hair color: {data.results[0].hair_color}</p>
-              <p>Skin color: {data.results[0].skin_color}</p>
-              <p>Eye color: {data.results[0].eye_color}</p>
-              <p>Gender: {data.results[0].gender}</p>
+              <p data-testid="name">Name: {data.results[0].name}</p>
+              <p data-testid="birth_year">
+                Birth year: {data.results[0].birth_year}
+              </p>
+              <p data-testid="hair_color">
+                Hair color: {data.results[0].hair_color}
+              </p>
+              <p data-testid="skin_color">
+                Skin color: {data.results[0].skin_color}
+              </p>
+              <p data-testid="eye_color">
+                Eye color: {data.results[0].eye_color}
+              </p>
+              <p data-testid="gender">Gender: {data.results[0].gender}</p>
             </>
           ) : null}
-          <button className="close_detailed" onClick={handleClick}>
+          <button className={styles.closeDetailed} onClick={handleClick}>
             X
           </button>
         </>

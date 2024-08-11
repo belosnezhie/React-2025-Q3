@@ -5,6 +5,7 @@ import {
   removeFromFavorites,
 } from '../../store/favoriteCharacterSlice/FavoriteCharacterSlice';
 import { RootState } from '../../store/Store';
+import styles from '../main/Main.module.css';
 
 interface FavoritesButtonProps {
   characterData: PeopleSearchResp;
@@ -17,8 +18,12 @@ export const FavoritesButton = ({ characterData }: FavoritesButtonProps) => {
   );
 
   const handleChange = () => {
-    if (favoriteCharacters.includes(characterData)) {
-      dispatch(removeFromFavorites(characterData));
+    const candidate = favoriteCharacters.find(
+      (character) => character.name === characterData.name,
+    );
+
+    if (candidate) {
+      dispatch(removeFromFavorites(candidate));
     } else {
       dispatch(addToFavorites(characterData));
     }
@@ -28,8 +33,12 @@ export const FavoritesButton = ({ characterData }: FavoritesButtonProps) => {
     <>
       <input
         type="checkbox"
-        className="fav_button"
-        checked={favoriteCharacters.includes(characterData)}
+        className={styles.favButton}
+        checked={
+          favoriteCharacters.find(
+            (character) => character.name === characterData.name,
+          ) !== undefined
+        }
         onChange={handleChange}
         data-testid="fav_button"
       ></input>

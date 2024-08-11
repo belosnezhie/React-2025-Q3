@@ -10,13 +10,13 @@
   flex-wrap: wrap;
 }
 
-.header_title {
+.headerTitle {
   margin: 0;
   font-size: 24px;
   color: var(--title);
 }
 
-.theme_button {
+.themeButton {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -28,16 +28,16 @@
   transition: 0.3s;
 }
 
-.light .theme_button {
+.themeButton:global(.light){
   background-image: url('../../assets/moon.png');
 }
 
-.dark .theme_button {
+.themeButton:global(.dark) {
   background-image: url('../../assets/sun.png');
 }
 
 @media (hover: hover) {
-  .theme_button:hover {
+  .themeButton:hover {
     transform: scale(0.95);
   }
 }

@@ -1,6 +1,6 @@
 import React, { ErrorInfo, ReactNode } from 'react';
 
-import FallbackUIPage from '../../pages/fallbackUIPage/FallbackUIPage.tsx';
+import FallbackUIPage from '../../pages/_error';
 
 interface ErrorBoundaryProps {
   children: ReactNode;

@@ -6,10 +6,10 @@
   position: relative;
 }
 
-#root:has(.detailed_results) .page_wrapper{
+.pageWrapper {
   display: flex;
 }
 
-#root:has(.detailed_results) .wrapper{
+.wrapper {
   width: 50%;
 }
