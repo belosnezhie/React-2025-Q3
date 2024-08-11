@@ -1,5 +1,10 @@
 import type { Action, PayloadAction } from '@reduxjs/toolkit';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  // CombinedState,
+  // EndpointDefinition,
+  createApi,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 
 import { SearchResp } from '../model/TypesStarWars';
@@ -22,6 +27,16 @@ export const starWarsApi = createApi({
       return action.payload[reducerPath];
     }
   },
+  // extractRehydrationInfo(
+  //   action,
+  //   { reducerPath },
+  // ): CombinedState<EndpointDefinition, string, 'starWarsApi'> | undefined {
+  //   if (isHydrateAction(action)) {
+  //     return action.payload[reducerPath];
+  //   }
+
+  //   return undefined;
+  // },
   endpoints: (builder) => ({
     fetchCharacters: builder.query<SearchResp, SearchedParams>({
       query: ({ searchQuery, pageNumber }) => {

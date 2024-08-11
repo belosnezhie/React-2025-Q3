@@ -21,13 +21,8 @@ const DetailedSection = ({ destroyCallback }: DetailedSectionProps) => {
 
   const theme = useTheme();
   const { data, isFetching } = useFetchSearchedCharactersQuery(detailed);
-  // const { data, isFetching } = useFetchCharactersQuery({
-  //   searchQuery: query,
-  //   pageNumber: currentPage,
-  // });
+
   const handleClick = async () => {
-    // setSearchParams({ page: String(pageParams) });
-    // navigate(`/?search=${query}&page=${pageParams}`);
     await router.push(`/?page=${currentPage}&search=${query}`);
     destroyCallback(false);
     setDestroyed(true);

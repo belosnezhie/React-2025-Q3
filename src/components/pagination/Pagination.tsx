@@ -2,9 +2,6 @@ import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 
-// import { useAppDispatch } from '../../hooks/StateHooks';
-// import useLocalStorage from '../../hooks/UseLocalStorage';
-// import { setCurrentPage } from '../../store/pageSlice/PageSlice';
 import { RootState } from '../../store/Store';
 
 import styles from './Pagination.module.css';
@@ -16,28 +13,16 @@ interface PaginationProps {
 
 const PaginationRaw = ({ pagesCount, isTest }: PaginationProps) => {
   const pathname = usePathname();
-  // const { replace } = useRouter();
-  // const searchParams = useSearchParams();
-  // const currentPage = useAppSelector(selectPage);
-  // const dispatch = useAppDispatch();
-  // const { query } = useLocalStorage();
-
   const router = useRouter();
   const queryParams = useRouter().query;
   const query = queryParams.search ? String(queryParams.search) : '';
   const currentPage = queryParams.page ? Number(queryParams.page) : 1;
 
-  // const handlePageChange = (pageNumber: number) => {
-  //   // dispatch(setCurrentPage(pageNumber));
-  //   const params = new URLSearchParams(searchParams);
-
-  //   params.set('search', query);
-  //   params.set('page', String(pageNumber));
-  //   replace(`${pathname}?${params.toString()}`);
-  // };
-
   const handlePageChange = async (pageNumber: number) => {
-    // dispatch(setCurrentPage(pageNumber));
+    if (queryParams.detailed) {
+      return;
+    }
+
     await router.push({
       query: {
         search: query,

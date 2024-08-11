@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+// import { useState } from 'react';
 
 import appStyles from '../App.module.css';
 import DetailedSection from '../components/detailesSection/DetailedSection';
@@ -50,7 +51,7 @@ const MainPage = () => {
     if (queryParams.detailed) {
       setDetailed(true);
     }
-  }, [queryParams]);
+  }, [queryParams.detailed]);
 
   const { data, isFetching } = useFetchCharactersQuery({
     searchQuery: query,
@@ -62,19 +63,9 @@ const MainPage = () => {
   );
 
   const handleMainClick = async (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLElement;
-
-    let isCard = false;
-
-    if (
-      (target.parentElement &&
-        target.parentElement.classList.contains('card')) ||
-      target.classList.contains('card')
-    ) {
-      isCard = true;
-    }
-
-    if (queryParams.detailed && !isCard) {
+    event.stopPropagation();
+    if (queryParams.detailed) {
+      event.nativeEvent.stopImmediatePropagation();
       await router.push(`/?page=${currentPage}&search=${query}`);
       setDetailed(false);
     }
