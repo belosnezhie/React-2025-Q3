@@ -36,3 +36,12 @@ code {
   min-width: 100%;
   min-height: 100vh;
 }
+
+.global_wrapper {
+  display: flex;
+}
+
+
+.global_wrapper:has(.detailed_results) .page_wrapper {
+  width: 50%;
+}

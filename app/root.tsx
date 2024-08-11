@@ -1,7 +1,6 @@
-import type { LinksFunction } from '@remix-run/node';
-import { Links, Meta, Outlet, Scripts } from '@remix-run/react';
+import type { LinksFunction, LoaderFunctionArgs } from '@remix-run/node';
+import { Links, Meta, Outlet, Scripts, useLocation } from '@remix-run/react';
 import { Provider } from 'react-redux';
-import { LoaderFunctionArgs } from 'react-router-dom';
 
 import { ThemeProvider } from '../src/context/ThemeContext';
 import MainPage from '../src/pages/mainPage/MainPage';
@@ -16,6 +15,7 @@ export const links: LinksFunction = () => [
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
+
   const page = url.searchParams.get('page') || 1;
   const query = url.searchParams.get('search') || '';
 
@@ -25,6 +25,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 const RootPage = () => {
+  const isDetailed = useLocation().pathname.includes('detailes');
+
   return (
     <>
       <html lang="en">
@@ -36,8 +38,10 @@ const RootPage = () => {
         <body>
           <ThemeProvider>
             <Provider store={store}>
-              <MainPage />
-              <Outlet />
+              <div className={isDetailed ? 'global_wrapper' : ''}>
+                <MainPage />
+                <Outlet />
+              </div>
             </Provider>
           </ThemeProvider>
           <Scripts />

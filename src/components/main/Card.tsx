@@ -1,4 +1,4 @@
-import { NavLink } from '@remix-run/react';
+import { NavLink, useSearchParams } from '@remix-run/react';
 
 import { PeopleSearchResp } from '../../model/TypesStarWars';
 
@@ -11,11 +11,15 @@ interface CardProps {
 }
 
 const Card = (props: CardProps) => {
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('search') || '';
+  const page = searchParams.get('page') || 1;
+
   return (
     <>
       <div className="card_wrapper">
         <NavLink
-          to={`/detailes?page=${props.pageData}&search=${props.searchData}`}
+          to={`/detailes/${props.searchData}?page=${page}&search=${query}`}
           className={({ isActive, isPending }) =>
             isActive ? 'card active' : isPending ? 'card pending' : 'card'
           }
