@@ -1,52 +1,48 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { afterEach, expect, test } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { expect, test, vi } from 'vitest';
 
-import MainPage from '../pagesOLD/mainPage/MainPage';
-import { renderWithProviders } from '../TestUtils';
+import Header from '../components/header/Header';
 
 import { ThemeProvider } from './ThemeContext';
 
-let unmount = () => {};
+vi.mock('next/router', async () => {
+  const actual = await vi.importActual('next/router');
 
-afterEach(() => {
-  unmount();
+  return {
+    ...actual,
+    useRouter: vi.fn(() => ({
+      push: vi.fn(() => {}),
+      query: {
+        search: '',
+        page: 1,
+      },
+    })),
+  };
 });
 
-test('Should render light theme', () => {
-  const renderObject = renderWithProviders(
-    <BrowserRouter>
-      <ThemeProvider>
-        <MainPage />
-      </ThemeProvider>
-    </BrowserRouter>,
-  );
+vi.mock('next/navigation', async () => {
+  const actual = await vi.importActual('next/navigation');
 
-  unmount = renderObject.unmount;
-
-  const wrapper = screen.getByTestId('wrapper');
-
-  expect(wrapper.classList).toContain('light');
+  return {
+    ...actual,
+    usePathname: vi.fn(() => ''),
+  };
 });
 
-test('Should render dark theme after switcher theme click', async () => {
-  const renderObject = renderWithProviders(
-    <BrowserRouter>
-      <ThemeProvider>
-        <MainPage />
-      </ThemeProvider>
-    </BrowserRouter>,
+test('Theme provider should switch theme', async () => {
+  render(
+    <ThemeProvider>
+      <Header />
+    </ThemeProvider>,
   );
 
-  unmount = renderObject.unmount;
+  const themeSwitcherBefore = await screen.findByTestId('theme_switcher');
 
-  const switcher = screen.getByTestId('theme_switcher');
+  expect(themeSwitcherBefore).toBeDefined();
 
-  fireEvent.click(switcher);
+  fireEvent.click(themeSwitcherBefore);
 
-  await waitFor(() => {
-    const wrapper = screen.getByTestId('wrapper');
+  const themeSwitcherAfter = await screen.findByTestId('theme_switcher');
 
-    expect(wrapper.classList).toContain('dark');
-  });
+  expect(themeSwitcherAfter.getAttribute('class')).contains('dark');
 });

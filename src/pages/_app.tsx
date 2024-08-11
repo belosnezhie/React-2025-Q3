@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import './index.css';
 
+import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
 import { ThemeProvider } from '../context/ThemeContext';
 import { wrapper } from '../store/Store';
 
@@ -47,7 +48,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
               <div className="spinner" />
             </div>
           ) : (
-            <Component {...pageProps} />
+            <ErrorBoundary>
+              <Component {...pageProps} />
+            </ErrorBoundary>
           )}
         </div>
       </ThemeProvider>

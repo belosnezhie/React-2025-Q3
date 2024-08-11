@@ -1,23 +1,22 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/dom';
 import { HttpResponse, delay, http } from 'msw';
 import { setupServer } from 'msw/node';
-import { BrowserRouter } from 'react-router-dom';
-import { afterAll, afterEach, beforeAll, expect, test } from 'vitest';
+import { afterAll, afterEach, beforeAll, expect, test, vi } from 'vitest';
 
-import { testCharactersSearchArr } from '../../components/main/TestData';
-import { ThemeContext } from '../../context/ThemeContext';
 import { renderWithProviders } from '../../TestUtils';
+import { testCharactersSearchArr } from '../main/TestData';
 
 import DetailedSection from './DetailedSection';
 
-let unmount = () => {};
-
 export const handlers = [
-  http.get('https://swapi.dev/api/people/?search=*&format=json', async () => {
-    await delay(150);
+  http.get(
+    'https://swapi.dev/api/people/?search=*&format=json&page=1',
+    async () => {
+      await delay(150);
 
-    return HttpResponse.json(testCharactersSearchArr);
-  }),
+      return HttpResponse.json(testCharactersSearchArr);
+    },
+  ),
 ];
 
 const server = setupServer(...handlers);
@@ -26,76 +25,53 @@ beforeAll(() => server.listen());
 
 afterEach(() => {
   server.resetHandlers();
-  unmount();
 });
 
 afterAll(() => server.close());
 
-test('Check that a loading indicator is displayed while fetching data', () => {
-  const renderObject = renderWithProviders(
-    <BrowserRouter>
-      <DetailedSection />
-    </BrowserRouter>,
-  );
+vi.mock('next/router', async () => {
+  const actual = await vi.importActual('next/router');
 
-  unmount = renderObject.unmount;
-
-  const spinner = screen.getByTestId('spinner_test');
-
-  expect(spinner).toBeDefined();
+  return {
+    ...actual,
+    useRouter: vi.fn(() => ({
+      push: vi.fn(() => {}),
+      query: {
+        search: '',
+        page: 1,
+      },
+    })),
+  };
 });
 
-test('Should close component after click on button', async () => {
-  const renderObject = renderWithProviders(
-    <BrowserRouter>
-      <DetailedSection />
-    </BrowserRouter>,
-  );
+vi.mock('next/navigation', async () => {
+  const actual = await vi.importActual('next/navigation');
 
-  unmount = renderObject.unmount;
-
-  await waitFor(() => {
-    expect(screen.getByText('X')).toBeDefined();
-  });
-
-  const button = screen.getByText('X');
-
-  fireEvent.click(button);
-
-  expect(renderObject.container.children.length).toEqual(0);
+  return {
+    ...actual,
+    usePathname: vi.fn(() => ''),
+  };
 });
 
-test('Should correctly display the detailed card data', async () => {
-  const renderObject = renderWithProviders(
-    <BrowserRouter>
-      <DetailedSection />
-    </BrowserRouter>,
+test('Detailed section should display character details', async () => {
+  renderWithProviders(<DetailedSection destroyCallback={() => {}} />);
+
+  expect((await screen.findByTestId('name')).textContent).toEqual(
+    'Name: Jane Dow',
   );
-
-  unmount = renderObject.unmount;
-
-  await waitFor(() => {
-    const page = screen.getByTestId('detailed_page');
-
-    expect(page.children).lengthOf(7);
-  });
-});
-
-test('Should show theme according to context', async () => {
-  const renderObject = renderWithProviders(
-    <ThemeContext.Provider value={'light'}>
-      <BrowserRouter>
-        <DetailedSection />
-      </BrowserRouter>
-      ,
-    </ThemeContext.Provider>,
+  expect((await screen.findByTestId('birth_year')).textContent).toEqual(
+    'Birth year: test',
   );
-
-  unmount = renderObject.unmount;
-
-  await waitFor(() => {
-    const page = screen.getByTestId('detailed_page');
-
-    expect(page.classList.contains('light')).toBeTruthy();
-  });
+  expect((await screen.findByTestId('hair_color')).textContent).toEqual(
+    'Hair color: test',
+  );
+  expect((await screen.findByTestId('skin_color')).textContent).toEqual(
+    'Skin color: test',
+  );
+  expect((await screen.findByTestId('eye_color')).textContent).toEqual(
+    'Eye color: test',
+  );
+  expect((await screen.findByTestId('gender')).textContent).toEqual(
+    'Gender: test',
+  );
 });

@@ -1,7 +1,8 @@
 import Link from 'next/link';
 
 import { useTheme } from '../hooks/ContextHooks';
-import styles from '../pagesOLD/404Page/404Page.module.css';
+
+import styles from './pagesStyles/404Page.module.css';
 
 const NotFoundPage = () => {
   const theme = useTheme();

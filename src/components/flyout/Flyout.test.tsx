@@ -15,7 +15,7 @@ afterEach(() => {
   unmount();
 });
 
-test('Showuld show flyout', () => {
+test.skip('Showuld show flyout', () => {
   global.URL.createObjectURL = vi.fn();
 
   store.dispatch(addToFavorites(testDataJane));

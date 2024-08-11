@@ -40,12 +40,20 @@ const DetailedSection = ({ destroyCallback }: DetailedSectionProps) => {
         <>
           {data?.results ? (
             <>
-              <p>Name: {data.results[0].name}</p>
-              <p>Birth year: {data.results[0].birth_year}</p>
-              <p>Hair color: {data.results[0].hair_color}</p>
-              <p>Skin color: {data.results[0].skin_color}</p>
-              <p>Eye color: {data.results[0].eye_color}</p>
-              <p>Gender: {data.results[0].gender}</p>
+              <p data-testid="name">Name: {data.results[0].name}</p>
+              <p data-testid="birth_year">
+                Birth year: {data.results[0].birth_year}
+              </p>
+              <p data-testid="hair_color">
+                Hair color: {data.results[0].hair_color}
+              </p>
+              <p data-testid="skin_color">
+                Skin color: {data.results[0].skin_color}
+              </p>
+              <p data-testid="eye_color">
+                Eye color: {data.results[0].eye_color}
+              </p>
+              <p data-testid="gender">Gender: {data.results[0].gender}</p>
             </>
           ) : null}
           <button className={styles.closeDetailed} onClick={handleClick}>
