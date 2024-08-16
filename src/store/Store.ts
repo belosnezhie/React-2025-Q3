@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
+import countriesReduser from './countriesSlise/CountriesSlice';
 import submittedDataReducer from './submittedDataSlice/SubmittedDataSlice';
 
 // import favoriteCharactersReducer from './favoriteCharacterSlice/FavoriteCharacterSlice';
@@ -8,6 +9,7 @@ import submittedDataReducer from './submittedDataSlice/SubmittedDataSlice';
 
 const rootReducer = combineReducers({
   submittedData: submittedDataReducer,
+  countries: countriesReduser,
 });
 
 export const store = configureStore({

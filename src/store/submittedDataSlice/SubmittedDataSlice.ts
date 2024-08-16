@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { InputsData } from '../../model/Types';
+import { InputsData } from '../../model/Model';
 import { RootState } from '../Store';
 
-export interface PageState {
+export interface SubmittedDataState {
   data: InputsData[];
 }
 
-export const initialState: PageState = {
+export const initialState: SubmittedDataState = {
   data: [],
 };
 

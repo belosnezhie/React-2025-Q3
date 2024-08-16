@@ -2,7 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Header from '../../components/header/Header.tsx';
-import { InputsData } from '../../model/Types';
+import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
+import { InputsData } from '../../model/Model';
+import { RootState } from '../../store/Store';
+import { saveData } from '../../store/submittedDataSlice/SubmittedDataSlice';
 import { schema } from '../../utils/validation/Validation';
 
 import './ReactHookFormPage.css';
@@ -16,8 +19,15 @@ const ReactHookFormPage = () => {
     resolver: yupResolver(schema),
     mode: 'all',
   });
+  const dispatch = useAppDispatch();
+  const countries = useAppSelector(
+    (state: RootState) => state.countries.countries,
+  );
 
-  const onSubmit: SubmitHandler<InputsData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<InputsData> = (data) => {
+    console.log(data);
+    dispatch(saveData(data));
+  };
 
   return (
     <>
@@ -55,7 +65,7 @@ const ReactHookFormPage = () => {
           </label>
           <p className="error_message">{errors.password?.message}</p>
           <label htmlFor="confirmed_password" className="lable">
-            Repeat the password:
+            Confirm password:
             <input
               type="text"
               id="confirmed_password"
@@ -84,12 +94,12 @@ const ReactHookFormPage = () => {
           <p className="error_message">{errors.image?.message}</p>
           <label htmlFor="country" className="lable">
             Country:
-            <select id="country" {...register('country')}>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
+            <input list="countries" id="country" {...register('country')} />
+            <datalist id="countries">
+              {countries.map((item, index) => {
+                return <option value={item} key={index}></option>;
+              })}
+            </datalist>
           </label>
           <p className="error_message">{errors.country?.message}</p>
           <input type="submit" value="Submit" className="button" />
