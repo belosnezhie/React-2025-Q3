@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
   border-radius: 5px;
   background-color: var(--background);
 }
@@ -34,6 +34,7 @@
 }
 
 .error_message {
+  min-height: 20px;
   font-size: unset;
   color: var(--error);
 }
