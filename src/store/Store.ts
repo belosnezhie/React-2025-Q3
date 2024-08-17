@@ -4,9 +4,6 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import countriesReduser from './countriesSlise/CountriesSlice';
 import submittedDataReducer from './submittedDataSlice/SubmittedDataSlice';
 
-// import favoriteCharactersReducer from './favoriteCharacterSlice/FavoriteCharacterSlice';
-// import pageReducer from './pageSlice/PageSlice';
-
 const rootReducer = combineReducers({
   submittedData: submittedDataReducer,
   countries: countriesReduser,

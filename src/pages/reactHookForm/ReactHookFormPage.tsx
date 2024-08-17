@@ -1,11 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import Header from '../../components/header/Header.tsx';
 import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
-import { InputsData } from '../../model/Model';
+import { InputsData, SliceData } from '../../model/Model';
 import { RootState } from '../../store/Store';
 import { saveData } from '../../store/submittedDataSlice/SubmittedDataSlice';
+import { Encoder } from '../../utils/encoding/Encoder';
 import { schema } from '../../utils/validation/Validation';
 
 import './ReactHookFormPage.css';
@@ -23,10 +25,18 @@ const ReactHookFormPage = () => {
   const countries = useAppSelector(
     (state: RootState) => state.countries.countries,
   );
+  const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<InputsData> = (data) => {
+  const onSubmit: SubmitHandler<InputsData> = async (data) => {
     console.log(data);
-    dispatch(saveData(data));
+
+    const encoder = new Encoder(data);
+
+    const copy: SliceData = await encoder.encode();
+
+    dispatch(saveData(copy));
+
+    navigate('/');
   };
 
   return (
@@ -89,7 +99,7 @@ const ReactHookFormPage = () => {
           </label>
           <p className="error_message">{errors.terms?.message}</p>
           <label htmlFor="image" className="lable">
-            <input id="image" {...register('image')} />
+            <input type="file" id="image" {...register('image')} />
           </label>
           <p className="error_message">{errors.image?.message}</p>
           <label htmlFor="country" className="lable">

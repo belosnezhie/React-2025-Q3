@@ -33,7 +33,18 @@ export const schema = yup
       .bool()
       .oneOf([true], 'You must accept the terms and conditions')
       .required('This field is required'),
-    image: yup.string().required('This field is required'),
+    image: yup
+      .mixed<FileList>()
+      .required('You need to provide a file')
+      .test('format', 'Only png jpeg formats are accepted', (list) => {
+        return (
+          list.length > 0 &&
+          (list[0].type === 'image/jpeg' || list[0].type === 'image/png')
+        );
+      })
+      .test('fileSize', 'The file is too large', (list) => {
+        return list.length > 0 && list[0].size <= 200000000;
+      }),
     country: yup.string().required('This field is required'),
   })
   .required();

@@ -11,7 +11,11 @@ const MainPage = () => {
     <>
       <Header />
       <main className="page mainPage">
-        {data.length === 0 ? null : <SubmitedItemsList />}
+        {data.length === 0 ? (
+          <div>Forms haven't been submited yet.</div>
+        ) : (
+          <SubmitedItemsList />
+        )}
       </main>
     </>
   );

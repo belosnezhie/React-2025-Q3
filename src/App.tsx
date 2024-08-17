@@ -12,10 +12,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/reactHookForm" element={<ReactHookFormPage />} />
-          <Route
-            path="/uncontrolledForm"
-            element={<UncontrolledFormPage />}
-          />{' '}
+          <Route path="/uncontrolledForm" element={<UncontrolledFormPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

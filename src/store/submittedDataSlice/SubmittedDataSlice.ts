@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { InputsData } from '../../model/Model';
+import { SliceData } from '../../model/Model';
 import { RootState } from '../Store';
 
 export interface SubmittedDataState {
-  data: InputsData[];
+  data: SliceData[];
 }
 
 export const initialState: SubmittedDataState = {
@@ -16,7 +16,7 @@ export const submittedDataSlice = createSlice({
   name: 'submittedData',
   initialState,
   reducers: {
-    saveData: (state, action: PayloadAction<InputsData>) => {
+    saveData: (state, action: PayloadAction<SliceData>) => {
       state.data.push(action.payload);
     },
   },

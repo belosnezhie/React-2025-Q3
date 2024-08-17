@@ -1,8 +1,8 @@
-import { InputsData } from '../../model/Model';
+import { SliceData } from '../../model/Model';
 import './SubmitedItemCard.css';
 
 interface SubmitedItemCardProps {
-  cardData: InputsData;
+  cardData: SliceData;
   isLast?: boolean;
 }
 
@@ -15,7 +15,7 @@ const SubmitedItemCard = ({ cardData, isLast }: SubmitedItemCardProps) => {
       <p>Email: {cardData.email}</p>
       <p>Password: {cardData.password}</p>
       <p>Gender: {cardData.gender}</p>
-      <p>Image: {cardData.image}</p>
+      <img src={cardData.encodedImage} className="image"></img>
       <p>Country: {cardData.country}</p>
     </div>
   );

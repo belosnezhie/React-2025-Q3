@@ -1,4 +1,4 @@
-export type InputsData = {
+export interface InputsData {
   name: string;
   age: number;
   email: string;
@@ -6,9 +6,21 @@ export type InputsData = {
   confirmed_password: string;
   gender: string;
   terms: boolean;
-  image: string;
+  image: FileList;
   country: string;
-};
+}
+
+export interface SliceData {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  confirmed_password: string;
+  gender: string;
+  terms: boolean;
+  encodedImage: string;
+  country: string;
+}
 
 export const COUNTRIES = [
   'Afghanistan',
