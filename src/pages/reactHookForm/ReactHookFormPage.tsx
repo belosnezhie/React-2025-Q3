@@ -1,8 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import Header from '../../components/header/Header.tsx';
+import ShowPasswordInput from '../../components/showPasswordInput/ShowPasswordInput.tsx';
 import { useAppDispatch, useAppSelector } from '../../hooks/StateHooks';
 import { InputsData, SliceData } from '../../model/Model';
 import { RootState } from '../../store/Store';
@@ -28,6 +30,8 @@ const ReactHookFormPage = () => {
     (state: RootState) => state.countries.countries,
   );
   const navigate = useNavigate();
+  const [passwordInputType, setPasswordInputType] = useState('password');
+  const [confirmedInputType, setConfirmedInputType] = useState('password');
 
   const onSubmit: SubmitHandler<InputsData> = async (data) => {
     data.formType = 'ReactHookForm';
@@ -48,6 +52,24 @@ const ReactHookFormPage = () => {
 
     return getPasswordStrength(whatchPassword);
   };
+
+  // const showPassword = () => {
+  //   if (passwordInputType === 'password') {
+  //     setPasswordInputType('text');
+  //   } else {
+  //     setPasswordInputType('password');
+  //   }
+  // };
+
+  const showPassword = () =>
+    passwordInputType === 'password'
+      ? setPasswordInputType('text')
+      : setPasswordInputType('password');
+
+  const showConfirmed = () =>
+    confirmedInputType === 'password'
+      ? setConfirmedInputType('text')
+      : setConfirmedInputType('password');
 
   return (
     <>
@@ -79,14 +101,15 @@ const ReactHookFormPage = () => {
             />
           </label>
           <p className="error_message">{errors.email?.message}</p>
-          <label htmlFor="password" className="lable">
+          <label htmlFor="password" className="lable password_lable">
             Password:
             <input
-              type="text"
+              type={passwordInputType}
               id="password"
               defaultValue=""
               {...register('password')}
             />
+            <ShowPasswordInput callback={showPassword} />
           </label>
           <p className="error_message">{errors.password?.message}</p>
           <div className="strenth_bar_container">
@@ -95,13 +118,14 @@ const ReactHookFormPage = () => {
               <div className={`value ${getStrenth()}`}></div>
             </div>
           </div>
-          <label htmlFor="confirmed_password" className="lable">
+          <label htmlFor="confirmed_password" className="lable password_lable">
             Confirm password:
             <input
-              type="text"
+              type={confirmedInputType}
               id="confirmed_password"
               {...register('confirmed_password')}
             />
+            <ShowPasswordInput callback={showConfirmed} />
           </label>
           <p className="error_message">{errors.confirmed_password?.message}</p>
           <label htmlFor="gender" className="lable">

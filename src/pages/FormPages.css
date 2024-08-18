@@ -20,6 +20,10 @@
   font-weight: bold;
 }
 
+.password_lable {
+  position: relative;
+}
+
 .lable.terms {
   flex-direction: unset;
   align-items: center;
