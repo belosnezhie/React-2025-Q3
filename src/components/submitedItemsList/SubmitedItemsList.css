@@ -1,9 +1,16 @@
 .list {
-  width: 80%;
+  width: 100%;
   display: flex;
-  flex-direction: row-reverse;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 5%;
+  gap: 10px;
+}
+
+.list > .card ~ .card {
+  border: none;
+}
+
+.list > .card {
+  border: 4px solid var(--border);
 }

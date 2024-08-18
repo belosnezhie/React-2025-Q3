@@ -3,12 +3,11 @@ import './SubmitedItemCard.css';
 
 interface SubmitedItemCardProps {
   cardData: SliceData;
-  isLast?: boolean;
 }
 
-const SubmitedItemCard = ({ cardData, isLast }: SubmitedItemCardProps) => {
+const SubmitedItemCard = ({ cardData }: SubmitedItemCardProps) => {
   return (
-    <div className={`card ${isLast ? 'last' : ''}`}>
+    <div className="card">
       <p>Form type: {cardData.formType}</p>
       <p>Name: {cardData.name}</p>
       <p>Age: {cardData.age}</p>

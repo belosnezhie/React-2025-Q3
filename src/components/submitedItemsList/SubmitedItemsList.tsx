@@ -9,10 +9,13 @@ const SubmitedItemsList = () => {
 
   return (
     <div className="list">
-      {data.map((item, index) => {
-        const isLast = index === data.length - 1 ? true : false;
-
-        return <SubmitedItemCard cardData={item} isLast={isLast} key={index} />;
+      {data.map((_, index) => {
+        return (
+          <SubmitedItemCard
+            cardData={data[data.length - index - 1]}
+            key={index}
+          />
+        );
       })}
     </div>
   );

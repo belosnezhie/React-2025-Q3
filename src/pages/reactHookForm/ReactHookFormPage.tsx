@@ -53,14 +53,6 @@ const ReactHookFormPage = () => {
     return getPasswordStrength(whatchPassword);
   };
 
-  // const showPassword = () => {
-  //   if (passwordInputType === 'password') {
-  //     setPasswordInputType('text');
-  //   } else {
-  //     setPasswordInputType('password');
-  //   }
-  // };
-
   const showPassword = () =>
     passwordInputType === 'password'
       ? setPasswordInputType('text')
