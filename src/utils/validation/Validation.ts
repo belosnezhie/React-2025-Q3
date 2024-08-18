@@ -1,7 +1,5 @@
 import * as yup from 'yup';
 
-import { InputsData } from '../../model/Model';
-
 export function getPasswordStrength(password: string): string {
   let score = 0;
 
@@ -10,7 +8,6 @@ export function getPasswordStrength(password: string): string {
   if (/\d/.test(password)) score += 1;
   if (/[^A-Za-z0-9]/.test(password)) score += 1;
 
-  console.log(score);
   if (score <= 1) {
     return 'weak';
   } else if (score === 2) {
@@ -49,14 +46,7 @@ export const schema = yup
     confirmed_password: yup
       .string()
       .required('This field is required')
-      // .oneOf([yup.ref('password')], 'Passwords must match'),
-      .test('confirmed', 'Passwords must match', (confirmed, context) => {
-        if (confirmed) {
-          const data = context.parent as InputsData;
-
-          return confirmed === data.password;
-        }
-      }),
+      .oneOf([yup.ref('password')], 'Passwords must match'),
     gender: yup.string().required(),
     terms: yup
       .bool()

@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,12 +16,13 @@ const ReactHookFormPage = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isDirty, isValid },
   } = useForm<InputsData>({
     resolver: yupResolver(schema),
     mode: 'onChange',
   });
-  const [passwordStrenth, setPasswordStrenth] = useState<string>();
+  const whatchPassword = watch('password');
   const dispatch = useAppDispatch();
   const countries = useAppSelector(
     (state: RootState) => state.countries.countries,
@@ -39,14 +39,12 @@ const ReactHookFormPage = () => {
     navigate('/');
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value || event.target.value === '') {
-      const level = getPasswordStrength(event.target.value);
-
-      setPasswordStrenth(level);
-
-      console.log(event.target.value);
+  const getStrenth = () => {
+    if (whatchPassword === '') {
+      return '';
     }
+
+    return getPasswordStrength(whatchPassword);
   };
 
   return (
@@ -85,19 +83,14 @@ const ReactHookFormPage = () => {
               type="text"
               id="password"
               defaultValue=""
-              // {...register('password')}
-              {...(register('password'),
-              {
-                onChange: handleChange,
-                // onInput: handleChange,
-              })}
+              {...register('password')}
             />
           </label>
           <p className="error_message">{errors.password?.message}</p>
           <div className="strenth_bar_container">
             Password strenth:
             <div className="strenth_bar">
-              <div className={`value ${passwordStrenth}`}></div>
+              <div className={`value ${getStrenth()}`}></div>
             </div>
           </div>
           <label htmlFor="confirmed_password" className="lable">
