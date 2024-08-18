@@ -1,5 +1,7 @@
 import * as yup from 'yup';
 
+import { COUNTRIES } from '../../model/Model';
+
 export function getPasswordStrength(password: string): string {
   let score = 0;
 
@@ -47,7 +49,7 @@ export const schema = yup
       .string()
       .required('This field is required')
       .oneOf([yup.ref('password')], 'Passwords must match'),
-    gender: yup.string().required(),
+    gender: yup.string().required('This field is required'),
     terms: yup
       .bool()
       .oneOf([true], 'You must accept the terms and conditions')
@@ -68,6 +70,11 @@ export const schema = yup
 
         return list.length > 0 && list[0].size <= 300000;
       }),
-    country: yup.string().optional().required(),
+    country: yup
+      .string()
+      .required('This field is required')
+      .test('country', 'Choose one of the present countries', (country) => {
+        return COUNTRIES.includes(country);
+      }),
   })
   .required();
