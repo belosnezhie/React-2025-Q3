@@ -30,6 +30,8 @@ const ReactHookFormPage = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<InputsData> = async (data) => {
+    data.formType = 'ReactHookForm';
+
     const encoder = new Encoder(data);
 
     const copy: SliceData = await encoder.encode();

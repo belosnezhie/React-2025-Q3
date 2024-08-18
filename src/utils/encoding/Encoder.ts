@@ -24,6 +24,7 @@ export class Encoder {
           terms: this.data.terms,
           country: this.data.country,
           encodedImage: '',
+          formType: this.data.formType || '',
         };
 
         if (typeof reader.result === 'string') {

@@ -8,11 +8,12 @@ export interface InputsData {
   terms: boolean;
   image: FileList;
   country: string;
+  formType?: string;
 }
 
 export interface SliceData {
   name: string;
-  age?: number;
+  age: number;
   email: string;
   password: string;
   confirmed_password: string;
@@ -20,6 +21,7 @@ export interface SliceData {
   terms: boolean;
   encodedImage: string;
   country: string;
+  formType?: string;
 }
 
 export const COUNTRIES = [

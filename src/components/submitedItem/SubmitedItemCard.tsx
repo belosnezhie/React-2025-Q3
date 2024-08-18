@@ -9,7 +9,7 @@ interface SubmitedItemCardProps {
 const SubmitedItemCard = ({ cardData, isLast }: SubmitedItemCardProps) => {
   return (
     <div className={`card ${isLast ? 'last' : ''}`}>
-      <p>Form type:</p>
+      <p>Form type: {cardData.formType}</p>
       <p>Name: {cardData.name}</p>
       <p>Age: {cardData.age}</p>
       <p>Email: {cardData.email}</p>

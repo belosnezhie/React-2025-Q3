@@ -67,6 +67,8 @@ const UncontrolledFormPage = () => {
           });
         });
 
+      data.formType = 'Uncontrolled form';
+
       const encoder = new Encoder(data);
 
       const copy: SliceData = await encoder.encode();
