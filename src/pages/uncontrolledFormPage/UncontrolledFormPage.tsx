@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ValidationError } from 'yup';
 
@@ -8,7 +8,7 @@ import { InputsData, SliceData } from '../../model/Model';
 import { RootState } from '../../store/Store';
 import { saveData } from '../../store/submittedDataSlice/SubmittedDataSlice';
 import { Encoder } from '../../utils/encoding/Encoder';
-import { schema } from '../../utils/validation/Validation';
+import { getPasswordStrength, schema } from '../../utils/validation/Validation';
 
 const UncontrolledFormPage = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +29,7 @@ const UncontrolledFormPage = () => {
   const [errorsMap, setErrorMap] = useState<Map<string, string>>(
     new Map<string, string>(),
   );
+  const [passwordStrenth, setPasswordStrenth] = useState<string>();
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -76,6 +77,14 @@ const UncontrolledFormPage = () => {
     }
   };
 
+  const countStrenth = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value) {
+      const level = getPasswordStrength(event.target.value);
+
+      setPasswordStrenth(level);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -98,9 +107,20 @@ const UncontrolledFormPage = () => {
           <p className="error_message">{errorsMap.get('email')}</p>
           <label htmlFor="password" className="lable">
             Password:
-            <input type="text" id="password" ref={passwordRef} />
+            <input
+              type="text"
+              id="password"
+              ref={passwordRef}
+              onChange={countStrenth}
+            />
           </label>
           <p className="error_message">{errorsMap.get('password')}</p>
+          <div className="strenth_bar_container">
+            Password strenth:
+            <div className="strenth_bar">
+              <div className={`value ${passwordStrenth}`}></div>
+            </div>
+          </div>
           <label htmlFor="confirmed_password" className="lable">
             Confirm password:
             <input

@@ -1,5 +1,25 @@
 import * as yup from 'yup';
 
+export function getPasswordStrength(password: string): string {
+  let score = 0;
+
+  if (/[a-z]/.test(password)) score += 1;
+  if (/[A-Z]/.test(password)) score += 1;
+  if (/\d/.test(password)) score += 1;
+  if (/[^A-Za-z0-9]/.test(password)) score += 1;
+
+  console.log(score);
+  if (score <= 1) {
+    return 'weak';
+  } else if (score === 2) {
+    return 'middle';
+  } else if (score === 3) {
+    return 'good';
+  } else {
+    return 'great';
+  }
+}
+
 export const schema = yup
   .object({
     name: yup
@@ -21,7 +41,7 @@ export const schema = yup
       .string()
       .required('This field is required')
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{4,25}$/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z])/,
         'Password must contain at least one uppercase and one lowercase letter, one digit and one special character.',
       ),
     confirmed_password: yup

@@ -2,7 +2,7 @@
 
 :root {
   --border: #815ea7;
-  --background: #f2b1c8;
+  --background-bright: #f2b1c8;
   --header_background: #fbfb84;
   --background: rgba(255, 255, 255,0.8);
   --error: #f16838;
@@ -49,7 +49,7 @@ p {
   border: none;
   border-radius: 5px;
   font: inherit;
-  background-color: #f2b1c8;
+  background-color: var(--background);
   cursor: pointer;
   align-self: center;
 }

@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ import { InputsData, SliceData } from '../../model/Model';
 import { RootState } from '../../store/Store';
 import { saveData } from '../../store/submittedDataSlice/SubmittedDataSlice';
 import { Encoder } from '../../utils/encoding/Encoder';
-import { schema } from '../../utils/validation/Validation';
+import { getPasswordStrength, schema } from '../../utils/validation/Validation';
 
 import './ReactHookFormPage.css';
 
@@ -16,11 +17,12 @@ const ReactHookFormPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
   } = useForm<InputsData>({
     resolver: yupResolver(schema),
     mode: 'all',
   });
+  const [passwordStrenth, setPasswordStrenth] = useState<string>();
   const dispatch = useAppDispatch();
   const countries = useAppSelector(
     (state: RootState) => state.countries.countries,
@@ -28,8 +30,6 @@ const ReactHookFormPage = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<InputsData> = async (data) => {
-    console.log(data);
-
     const encoder = new Encoder(data);
 
     const copy: SliceData = await encoder.encode();
@@ -70,10 +70,25 @@ const ReactHookFormPage = () => {
               type="text"
               id="password"
               defaultValue=""
-              {...register('password')}
+              {...(register('password'),
+              {
+                onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                  if (event.target.value) {
+                    const level = getPasswordStrength(event.target.value);
+
+                    setPasswordStrenth(level);
+                  }
+                },
+              })}
             />
           </label>
           <p className="error_message">{errors.password?.message}</p>
+          <div className="strenth_bar_container">
+            Password strenth:
+            <div className="strenth_bar">
+              <div className={`value ${passwordStrenth}`}></div>
+            </div>
+          </div>
           <label htmlFor="confirmed_password" className="lable">
             Confirm password:
             <input
@@ -87,8 +102,8 @@ const ReactHookFormPage = () => {
           <label htmlFor="gender" className="lable">
             Gender:
             <select id="gender" {...register('gender')} required={true}>
-              <option value="Men">Men</option>
               <option value="Women">Women</option>
+              <option value="Men">Men</option>
               <option value="Other">Other</option>
             </select>
           </label>
@@ -112,7 +127,12 @@ const ReactHookFormPage = () => {
             </datalist>
           </label>
           <p className="error_message">{errors.country?.message}</p>
-          <input type="submit" value="Submit" className="button" />
+          <input
+            type="submit"
+            value="Submit"
+            className="button"
+            disabled={!isDirty || !isValid}
+          />
         </form>
       </main>
     </>
