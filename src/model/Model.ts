@@ -12,7 +12,7 @@ export interface InputsData {
 
 export interface SliceData {
   name: string;
-  age: number;
+  age?: number;
   email: string;
   password: string;
   confirmed_password: string;

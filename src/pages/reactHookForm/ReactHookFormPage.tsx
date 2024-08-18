@@ -11,7 +11,7 @@ import { saveData } from '../../store/submittedDataSlice/SubmittedDataSlice';
 import { Encoder } from '../../utils/encoding/Encoder';
 import { getPasswordStrength, schema } from '../../utils/validation/Validation';
 
-import './ReactHookFormPage.css';
+import '../FormPages.css';
 
 const ReactHookFormPage = () => {
   const {
@@ -20,7 +20,7 @@ const ReactHookFormPage = () => {
     formState: { errors, isDirty, isValid },
   } = useForm<InputsData>({
     resolver: yupResolver(schema),
-    mode: 'all',
+    mode: 'onChange',
   });
   const [passwordStrenth, setPasswordStrenth] = useState<string>();
   const dispatch = useAppDispatch();
@@ -39,11 +39,26 @@ const ReactHookFormPage = () => {
     navigate('/');
   };
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value || event.target.value === '') {
+      const level = getPasswordStrength(event.target.value);
+
+      setPasswordStrenth(level);
+
+      console.log(event.target.value);
+    }
+  };
+
   return (
     <>
       <Header />
       <main className="page reactHookFormPage">
-        <form onSubmit={handleSubmit(onSubmit)} className="form" noValidate>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="form"
+          autoComplete="off"
+          noValidate
+        >
           <label htmlFor="name" className="lable">
             Name:
             <input type="text" id="name" {...register('name')} />
@@ -70,15 +85,11 @@ const ReactHookFormPage = () => {
               type="text"
               id="password"
               defaultValue=""
+              // {...register('password')}
               {...(register('password'),
               {
-                onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                  if (event.target.value) {
-                    const level = getPasswordStrength(event.target.value);
-
-                    setPasswordStrenth(level);
-                  }
-                },
+                onChange: handleChange,
+                // onInput: handleChange,
               })}
             />
           </label>
@@ -94,14 +105,13 @@ const ReactHookFormPage = () => {
             <input
               type="text"
               id="confirmed_password"
-              defaultValue=""
               {...register('confirmed_password')}
             />
           </label>
           <p className="error_message">{errors.confirmed_password?.message}</p>
           <label htmlFor="gender" className="lable">
             Gender:
-            <select id="gender" {...register('gender')} required={true}>
+            <select id="gender" {...register('gender')}>
               <option value="Women">Women</option>
               <option value="Men">Men</option>
               <option value="Other">Other</option>
@@ -114,7 +124,13 @@ const ReactHookFormPage = () => {
           </label>
           <p className="error_message">{errors.terms?.message}</p>
           <label htmlFor="image" className="lable">
-            <input type="file" id="image" {...register('image')} />
+            Choose a picture:
+            <input
+              type="file"
+              id="image"
+              className="file_input"
+              {...register('image')}
+            />
           </label>
           <p className="error_message">{errors.image?.message}</p>
           <label htmlFor="country" className="lable">

@@ -1,5 +1,7 @@
 import * as yup from 'yup';
 
+import { InputsData } from '../../model/Model';
+
 export function getPasswordStrength(password: string): string {
   let score = 0;
 
@@ -24,7 +26,7 @@ export const schema = yup
   .object({
     name: yup
       .string()
-      .matches(/^[A-Z][a-z]*$/, 'Name should starts from uppercase letter')
+      .matches(/^[A-Z][A-Za-z\s]*$/, 'Name should starts from uppercase letter')
       .required('This field is required'),
     age: yup
       .number()
@@ -47,8 +49,15 @@ export const schema = yup
     confirmed_password: yup
       .string()
       .required('This field is required')
-      .oneOf([yup.ref('password')], 'Passwords must match'),
-    gender: yup.string().required('This field is required'),
+      // .oneOf([yup.ref('password')], 'Passwords must match'),
+      .test('confirmed', 'Passwords must match', (confirmed, context) => {
+        if (confirmed) {
+          const data = context.parent as InputsData;
+
+          return confirmed === data.password;
+        }
+      }),
+    gender: yup.string().required(),
     terms: yup
       .bool()
       .oneOf([true], 'You must accept the terms and conditions')
@@ -63,8 +72,12 @@ export const schema = yup
         );
       })
       .test('fileSize', 'The file is too large', (list) => {
-        return list.length > 0 && list[0].size <= 200000000;
+        if (!list) {
+          return false;
+        }
+
+        return list.length > 0 && list[0].size <= 300000;
       }),
-    country: yup.string().required('This field is required'),
+    country: yup.string().optional().required(),
   })
   .required();

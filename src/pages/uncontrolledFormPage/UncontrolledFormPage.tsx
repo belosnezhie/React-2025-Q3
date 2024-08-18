@@ -10,6 +10,8 @@ import { saveData } from '../../store/submittedDataSlice/SubmittedDataSlice';
 import { Encoder } from '../../utils/encoding/Encoder';
 import { getPasswordStrength, schema } from '../../utils/validation/Validation';
 
+import '../FormPages.css';
+
 const UncontrolledFormPage = () => {
   const dispatch = useAppDispatch();
   const countries = useAppSelector(
@@ -78,7 +80,7 @@ const UncontrolledFormPage = () => {
   };
 
   const countStrenth = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value) {
+    if (event.target.value || event.target.value === '') {
       const level = getPasswordStrength(event.target.value);
 
       setPasswordStrenth(level);
@@ -89,7 +91,12 @@ const UncontrolledFormPage = () => {
     <>
       <Header />
       <main className="page reactHookFormPage">
-        <form onSubmit={onSubmit} className="form" ref={formRef}>
+        <form
+          onSubmit={onSubmit}
+          className="form"
+          autoComplete="off"
+          ref={formRef}
+        >
           <label htmlFor="name" className="lable">
             Name:
             <input type="text" id="name" ref={nameRef} />
@@ -132,7 +139,7 @@ const UncontrolledFormPage = () => {
           <p className="error_message">{errorsMap.get('confirmed_password')}</p>
           <label htmlFor="gender" className="lable">
             Gender:
-            <select id="gender" required={true} ref={genderRef}>
+            <select id="gender" ref={genderRef}>
               <option value="Women">Women</option>
               <option value="Men">Men</option>
               <option value="Other">Other</option>
@@ -145,7 +152,13 @@ const UncontrolledFormPage = () => {
           </label>
           <p className="error_message">{errorsMap.get('terms')}</p>
           <label htmlFor="image" className="lable">
-            <input type="file" id="image" ref={imageRef} />
+            Choose a picture:
+            <input
+              type="file"
+              id="image"
+              ref={imageRef}
+              className="file_input"
+            />
           </label>
           <p className="error_message">{errorsMap.get('image')}</p>
           <label htmlFor="country" className="lable">
