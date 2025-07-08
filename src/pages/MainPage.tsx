@@ -6,12 +6,14 @@ import { SearchResp } from '../model/TypesStarWars';
 import { ApiService, apiService } from '../services/ApiService';
 import { searchQueryStorage } from '../services/LocalStorage';
 
+const PAGE = 1;
+
 class MainPage extends React.Component {
   private service: ApiService = apiService;
   private storage = searchQueryStorage;
 
   state = {
-    peopleData: [],
+    charactersData: [],
     isLoading: false,
   };
 
@@ -22,7 +24,7 @@ class MainPage extends React.Component {
 
     const res: SearchResp = await this.service.getSeachedData(searchQuery);
 
-    this.setState({ peopleData: res.results });
+    this.setState({ charactersData: res.results });
 
     this.setState({ isLoading: false });
 
@@ -39,9 +41,9 @@ class MainPage extends React.Component {
 
       this.setState({ isLoading: false });
     } else {
-      const res: SearchResp = await this.service.getDefaultData(1);
+      const res: SearchResp = await this.service.getDefaultData(PAGE);
 
-      this.setState({ peopleData: res.results });
+      this.setState({ charactersData: res.results });
 
       this.setState({ isLoading: false });
     }
@@ -59,7 +61,7 @@ class MainPage extends React.Component {
           {this.state.isLoading ? (
             <div className="spinner" />
           ) : (
-            <CardsWrapper cardPeopleData={this.state.peopleData} />
+            <CardsWrapper cardCharacterData={this.state.charactersData} />
           )}
           <div className="yoda" />
         </main>

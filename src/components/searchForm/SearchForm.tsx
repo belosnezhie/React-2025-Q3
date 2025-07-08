@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, createRef } from 'react';
 
 import './SearchForm.css';
 import { searchQueryStorage } from '../../services/LocalStorage';
@@ -12,12 +12,13 @@ class SearchForm extends React.Component<SearchFormProps> {
     currentInputValue: searchQueryStorage.getSearchQuery(),
   };
 
+  inputRef = createRef<HTMLInputElement>();
+
   async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const target: HTMLFormElement = event.target as HTMLFormElement;
-    const input = target.elements[0] as HTMLInputElement;
-    const searchQuery: string = input.value.trim();
+    const inputElement = this.inputRef.current;
+    const searchQuery = inputElement?.value.trim() || '';
 
     await this.props.updateCartsCallback(searchQuery);
   }
@@ -36,6 +37,7 @@ class SearchForm extends React.Component<SearchFormProps> {
           }}
         >
           <input
+            ref={this.inputRef}
             className="search_input"
             type="text"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

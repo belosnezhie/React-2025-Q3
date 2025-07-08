@@ -1,8 +1,10 @@
 import { SearchResp } from '../model/TypesStarWars';
 
+const BASE_URL = 'https://swapi.py4e.com/api/people';
+
 export class ApiService {
   async getDefaultData(pageNumber: number) {
-    const defaultUrl = `https://swapi.dev/api/people/?page=${pageNumber}`;
+    const defaultUrl = `${BASE_URL}/?page=${pageNumber}`;
 
     const resp: Response = await fetch(defaultUrl);
 
@@ -16,7 +18,7 @@ export class ApiService {
   }
 
   async getSeachedData(searchQuery: string) {
-    const url = `https://swapi.dev/api/people/?search=${searchQuery}&format=json`;
+    const url = `${BASE_URL}/?search=${searchQuery}&format=json`;
 
     const resp: Response = await fetch(url);
 

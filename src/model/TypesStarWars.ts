@@ -1,8 +1,8 @@
 export interface SearchResp {
-  results: PeopleSearchResp[];
+  results: CharacterSearchResp[];
 }
 
-export interface PeopleSearchResp {
+export interface CharacterSearchResp {
   name: string;
   height: string;
   mass: string;

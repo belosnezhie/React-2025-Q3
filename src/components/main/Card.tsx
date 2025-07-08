@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { PeopleSearchResp } from '../../model/TypesStarWars';
+import { CharacterSearchResp } from '../../model/TypesStarWars';
 
 interface CardProps {
-  cardData: PeopleSearchResp;
+  cardData: CharacterSearchResp;
 }
 
 class Card extends React.Component<CardProps> {
