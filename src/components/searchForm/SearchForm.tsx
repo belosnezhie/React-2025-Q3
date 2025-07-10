@@ -17,8 +17,14 @@ class SearchForm extends React.Component<SearchFormProps> {
   async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const inputElement = this.inputRef.current;
-    const searchQuery = inputElement?.value.trim() || '';
+    const formData = new FormData(event.currentTarget);
+    const data = formData.get('search');
+
+    if (typeof data !== 'string') {
+      throw new Error('Invalid input');
+    }
+
+    const searchQuery = data.trim() || '';
 
     await this.props.updateCartsCallback(searchQuery);
   }
@@ -37,7 +43,7 @@ class SearchForm extends React.Component<SearchFormProps> {
           }}
         >
           <input
-            ref={this.inputRef}
+            name="search"
             className="search_input"
             type="text"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

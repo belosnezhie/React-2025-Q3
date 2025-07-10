@@ -1,10 +1,9 @@
 import React, { ReactNode } from 'react';
 
-import './Header.css';
-
 import SearchForm from '../searchForm/SearchForm.tsx';
 
 import ErrorButton from './ErrorButton.tsx';
+import './Header.css';
 
 interface HeaderProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;
