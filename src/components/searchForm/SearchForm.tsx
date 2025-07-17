@@ -26,6 +26,8 @@ class SearchForm extends React.Component<SearchFormProps> {
 
     const searchQuery = data.trim() || '';
 
+    searchQueryStorage.setSearchQuery(searchQuery);
+
     await this.props.updateCartsCallback(searchQuery);
   }
 
@@ -51,7 +53,12 @@ class SearchForm extends React.Component<SearchFormProps> {
             }}
             value={this.state.currentInputValue}
           ></input>
-          <input className="submit_input" type="submit" value="Search"></input>
+          <input
+            className="submit_input"
+            type="submit"
+            value="Search"
+            data-testid="submit_input"
+          ></input>
         </form>
       </>
     );
