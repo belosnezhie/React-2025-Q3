@@ -1,6 +1,6 @@
 import React, { ReactNode, createRef } from 'react';
 
-import './searchForm.css';
+import './search-form.css';
 import { searchQueryStorage } from '../../services/local-storage';
 
 interface SearchFormProps {

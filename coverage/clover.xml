@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1752834582057" clover="3.2.0">
-  <project timestamp="1752834582057" name="All files">
-    <metrics statements="338" coveredstatements="128" conditionals="32" coveredconditionals="23" methods="26" coveredmethods="19" elements="396" coveredelements="170" complexity="0" loc="338" ncloc="338" packages="8" files="12" classes="12"/>
-    <package name="components.errorBoundary">
+<coverage generated="1752838607567" clover="3.2.0">
+  <project timestamp="1752838607567" name="All files">
+    <metrics statements="374" coveredstatements="189" conditionals="38" coveredconditionals="29" methods="26" coveredmethods="20" elements="438" coveredelements="238" complexity="0" loc="374" ncloc="374" packages="8" files="13" classes="13"/>
+    <package name="components.error-boundary">
       <metrics statements="31" coveredstatements="31" conditionals="7" coveredconditionals="7" methods="5" coveredmethods="5"/>
-      <file name="ErrorBoundary.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/errorBoundary/ErrorBoundary.tsx">
+      <file name="error-boundary.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/error-boundary/error-boundary.tsx">
         <metrics statements="20" coveredstatements="20" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -27,7 +27,7 @@
         <line num="29" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
       </file>
-      <file name="FallbackUIPage.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/errorBoundary/FallbackUIPage.tsx">
+      <file name="fallbackUI-page.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/error-boundary/fallbackUI-page.tsx">
         <metrics statements="11" coveredstatements="11" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -44,7 +44,7 @@
     </package>
     <package name="components.header">
       <metrics statements="56" coveredstatements="26" conditionals="7" coveredconditionals="6" methods="5" coveredmethods="4"/>
-      <file name="ErrorButton.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/header/ErrorButton.tsx">
+      <file name="error-button.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/header/error-button.tsx">
         <metrics statements="26" coveredstatements="26" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="2" type="cond" truecount="1" falsecount="0"/>
@@ -73,7 +73,7 @@
         <line num="30" count="1" type="stmt"/>
         <line num="32" count="1" type="stmt"/>
       </file>
-      <file name="Header.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/header/Header.tsx">
+      <file name="header.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/header/header.tsx">
         <metrics statements="30" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
         <line num="2" count="0" type="stmt"/>
@@ -108,37 +108,37 @@
       </file>
     </package>
     <package name="components.main">
-      <metrics statements="51" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
-      <file name="Card.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/main/Card.tsx">
-        <metrics statements="26" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="2" count="0" type="stmt"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
+      <metrics statements="51" coveredstatements="26" conditionals="8" coveredconditionals="6" methods="2" coveredmethods="1"/>
+      <file name="card.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/main/card.tsx">
+        <metrics statements="26" coveredstatements="26" conditionals="7" coveredconditionals="6" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="26" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="27" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="28" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="29" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="30" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
       </file>
-      <file name="CardsWrapper.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/main/CardsWrapper.tsx">
+      <file name="cards-wrapper.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/main/cards-wrapper.tsx">
         <metrics statements="25" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
         <line num="2" count="0" type="stmt"/>
@@ -167,9 +167,9 @@
         <line num="25" count="0" type="stmt"/>
       </file>
     </package>
-    <package name="components.searchForm">
+    <package name="components.search-form">
       <metrics statements="50" coveredstatements="48" conditionals="8" coveredconditionals="6" methods="6" coveredmethods="6"/>
-      <file name="SearchForm.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/searchForm/SearchForm.tsx">
+      <file name="search-form.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/components/search-form/search-form.tsx">
         <metrics statements="50" coveredstatements="48" conditionals="8" coveredconditionals="6" methods="6" coveredmethods="6"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -224,9 +224,9 @@
       </file>
     </package>
     <package name="model">
-      <metrics statements="14" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="TypesStarWars.ts" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/model/TypesStarWars.ts">
-        <metrics statements="14" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <metrics statements="15" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="types-star-wars.ts" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/model/types-star-wars.ts">
+        <metrics statements="15" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
         <line num="2" count="0" type="stmt"/>
         <line num="3" count="0" type="stmt"/>
@@ -241,11 +241,12 @@
         <line num="12" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
       </file>
     </package>
     <package name="pages">
       <metrics statements="71" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="MainPage.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/pages/MainPage.tsx">
+      <file name="main-page.tsx" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/pages/main-page.tsx">
         <metrics statements="71" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
         <line num="2" count="0" type="stmt"/>
@@ -322,7 +323,7 @@
     </package>
     <package name="services">
       <metrics statements="56" coveredstatements="14" conditionals="5" coveredconditionals="3" methods="5" coveredmethods="3"/>
-      <file name="ApiService.ts" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/services/ApiService.ts">
+      <file name="api-service.ts" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/services/api-service.ts">
         <metrics statements="35" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
         <line num="2" count="0" type="stmt"/>
@@ -360,7 +361,7 @@
         <line num="34" count="0" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
       </file>
-      <file name="LocalStorage.ts" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/services/LocalStorage.ts">
+      <file name="local-storage.ts" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/services/local-storage.ts">
         <metrics statements="21" coveredstatements="14" conditionals="4" coveredconditionals="3" methods="4" coveredmethods="3"/>
         <line num="1" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="2" count="1" type="stmt"/>
@@ -385,9 +386,47 @@
         <line num="27" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="tests">
-      <metrics statements="9" coveredstatements="9" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
-      <file name="UserEventSetup.ts" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/tests/UserEventSetup.ts">
+    <package name="test-utils">
+      <metrics statements="44" coveredstatements="44" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+      <file name="test-data.ts" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/test-utils/test-data.ts">
+        <metrics statements="35" coveredstatements="35" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+      </file>
+      <file name="user-event-setup.ts" path="/Users/mariatrejer/RS School/React/React-2024-Q3/src/test-utils/user-event-setup.ts">
         <metrics statements="9" coveredstatements="9" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="6" count="1" type="cond" truecount="1" falsecount="0"/>
