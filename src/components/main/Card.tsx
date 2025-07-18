@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CharacterSearchResp } from '../../model/TypesStarWars';
+import { CharacterSearchResp } from '../../model/types-star-wars';
 
 interface CardProps {
   cardData: CharacterSearchResp;

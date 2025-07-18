@@ -1,7 +1,7 @@
 import React, { ReactNode, createRef } from 'react';
 
-import './SearchForm.css';
-import { searchQueryStorage } from '../../services/LocalStorage';
+import './searchForm.css';
+import { searchQueryStorage } from '../../services/local-storage';
 
 interface SearchFormProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;

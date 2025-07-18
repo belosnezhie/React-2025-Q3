@@ -1,4 +1,4 @@
-import { SearchResp } from '../model/TypesStarWars';
+import { SearchResp } from '../model/types-star-wars';
 
 const BASE_URL = 'https://swapi.py4e.com/api/people';
 

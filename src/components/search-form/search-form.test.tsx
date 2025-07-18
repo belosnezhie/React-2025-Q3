@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { expect, test, vi } from 'vitest';
 
-import SearchForm from '../components/searchForm/SearchForm.tsx';
-import { searchQueryStorage } from '../services/LocalStorage';
+import { searchQueryStorage } from '../../services/local-storage';
+import { setup } from '../../test-utils/user-event-setup';
 
-import { setup } from './UserEventSetup';
+import SearchForm from './search-form.tsx';
 
 describe('Search Component tests', () => {
   const mockUpdateCartsCallback = vi.fn();

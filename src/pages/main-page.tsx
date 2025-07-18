@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 
-import Header from '../components/header/Header.tsx';
-import CardsWrapper from '../components/main/CardsWrapper.tsx';
-import { SearchResp } from '../model/TypesStarWars';
-import { ApiService, apiService } from '../services/ApiService';
-import { searchQueryStorage } from '../services/LocalStorage';
+import Header from '../components/header/header.tsx';
+import CardsWrapper from '../components/main/cards-wrapper.tsx';
+import { SearchResp } from '../model/types-star-wars';
+import { ApiService, apiService } from '../services/api-service';
+import { searchQueryStorage } from '../services/local-storage';
 
 const PAGE = 1;
 

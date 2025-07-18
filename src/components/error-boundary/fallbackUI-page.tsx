@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './FallbackUIPage.css';
+import './fallbackUI-page.css';
 
 class FallbackUIPage extends React.Component {
   render(): React.ReactNode {

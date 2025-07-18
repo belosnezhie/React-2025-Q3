@@ -1,8 +1,8 @@
 import { Component, ReactNode } from 'react';
 
-import './App.css';
-import ErrorBoundary from './components/errorBoundary/ErrorBoundary.tsx';
-import MainPage from './pages/MainPage.tsx';
+import './app.css';
+import ErrorBoundary from './components/error-boundary/error-boundary.tsx';
+import MainPage from './pages/main-page.tsx';
 
 class App extends Component {
   render(): ReactNode {

@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 
-import { CharacterSearchResp } from '../../model/TypesStarWars';
+import { CharacterSearchResp } from '../../model/types-star-wars';
 
-import Card from './Card.tsx';
+import Card from './card.tsx';
 
-import './Main.css';
+import './main.css';
 
 interface CardsWrapperProps {
   cardCharacterData: CharacterSearchResp[];
