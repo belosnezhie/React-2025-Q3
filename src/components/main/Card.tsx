@@ -21,7 +21,7 @@ class Card extends React.Component<CardProps> {
 
     return (
       <>
-        <div className="card">
+        <div className="card" data-testid="results_card">
           <p>Name: {name ?? placeholder}</p>
           <p>Birth year: {birthYear ?? placeholder}</p>
           <p>Hair color: {hairColor ?? placeholder}</p>

@@ -12,6 +12,10 @@ interface CardsWrapperProps {
 
 class CardsWrapper extends React.Component<CardsWrapperProps> {
   render(): ReactNode {
+    if (!this.props.cardCharacterData.length) {
+      return <p>Oops! there is no such character.</p>;
+    }
+
     return (
       <>
         {this.props.cardCharacterData.map((obj, index) => {
