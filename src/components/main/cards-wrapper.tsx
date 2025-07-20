@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { CharacterSearchResp } from '../../model/types-star-wars';
 
-import Card from './card.tsx';
+import Card from './card';
 
 import './main.css';
 
