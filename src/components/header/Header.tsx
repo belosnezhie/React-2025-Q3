@@ -1,8 +1,10 @@
 import React, { ReactNode } from 'react';
 
+import { searchQueryStorage } from '../../services/local-storage';
 import SearchForm from '../search-form/search-form.tsx';
 
 import ErrorButton from './error-button.tsx';
+
 import './header.css';
 
 interface HeaderProps {
@@ -19,6 +21,7 @@ class Header extends React.Component<HeaderProps> {
             updateCartsCallback={async (searchQuery: string): Promise<void> => {
               await this.props.updateCartsCallback(searchQuery);
             }}
+            storage={searchQueryStorage}
           ></SearchForm>
           <ErrorButton />
         </header>

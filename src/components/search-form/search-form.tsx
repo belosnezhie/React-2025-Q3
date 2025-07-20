@@ -1,16 +1,27 @@
 import React, { ReactNode, createRef } from 'react';
 
 import './search-form.css';
-import { searchQueryStorage } from '../../services/local-storage';
+import { SearchQueryStorage } from '../../services/local-storage';
 
 interface SearchFormProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;
+  storage: SearchQueryStorage;
 }
 
-class SearchForm extends React.Component<SearchFormProps> {
-  state = {
-    currentInputValue: searchQueryStorage.getSearchQuery(),
-  };
+interface SearchFormState {
+  currentInputValue: string;
+}
+
+class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
+  private storage: SearchQueryStorage;
+
+  constructor(props: SearchFormProps) {
+    super(props);
+    this.storage = this.props.storage;
+    this.state = {
+      currentInputValue: this.storage.getSearchQuery(),
+    };
+  }
 
   inputRef = createRef<HTMLInputElement>();
 
@@ -26,7 +37,7 @@ class SearchForm extends React.Component<SearchFormProps> {
 
     const searchQuery = data.trim() || '';
 
-    searchQueryStorage.setSearchQuery(searchQuery);
+    this.storage.setSearchQuery(searchQuery);
 
     await this.props.updateCartsCallback(searchQuery);
   }

@@ -1,4 +1,4 @@
-class SearchQueryStorage {
+export class SearchQueryStorage {
   private key = 'User_JSFE2023Q4';
 
   public checkSearchQuery(): boolean {
