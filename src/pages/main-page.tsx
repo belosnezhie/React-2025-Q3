@@ -35,7 +35,7 @@ class MainPage extends React.Component<MainPageProps> {
       this.setState({ charactersData: res.results });
     } catch (err) {
       this.setState({
-        error: err instanceof Error ? err.message : 'Unknown error',
+        error: err instanceof Error ? err : 'Unknown error',
         charactersData: [],
       });
     } finally {
@@ -59,7 +59,7 @@ class MainPage extends React.Component<MainPageProps> {
       this.setState({ charactersData: res.results });
     } catch (err) {
       this.setState({
-        error: err instanceof Error ? err.message : 'Unknown error',
+        error: err instanceof Error ? err : 'Unknown error',
         charactersData: [],
       });
     } finally {
@@ -84,12 +84,8 @@ class MainPage extends React.Component<MainPageProps> {
               data-testid="spinner"
               aria-label="spinner"
             />
-          ) : error ? (
-            <div data-testid="error">
-              <p>Something went wrong: {error}</p>
-            </div>
           ) : (
-            <CardsWrapper cardCharacterData={charactersData} />
+            <CardsWrapper cardCharacterData={charactersData} error={error} />
           )}
           <div className="yoda" />
         </main>

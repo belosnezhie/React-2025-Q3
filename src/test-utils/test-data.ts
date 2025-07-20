@@ -22,7 +22,7 @@ export const testDataJohn: CharacterSearchResp = {
   gender: 'man',
 };
 
-export const testDataNA: CharacterSearchResp = {
+export const partialTestData: CharacterSearchResp = {
   name: 'N/A',
 };
 
@@ -39,4 +39,9 @@ export const testCharactersSearchArr: SearchResp = {
 export const testCharactersSearch: SearchResp = {
   count: 1,
   results: [testDataJane],
+};
+
+export const partialTestSearchRes: SearchResp = {
+  count: 1,
+  results: [partialTestData],
 };

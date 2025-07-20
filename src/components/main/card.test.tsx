@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
 
-import { testDataJane, testDataNA } from '../../test-utils/test-data';
+import { partialTestData, testDataJane } from '../../test-utils/test-data';
 
 import Card from './card.tsx';
 
@@ -25,7 +25,7 @@ describe('Card Component Tests', () => {
   });
 
   test('Should handle missing props gracefully', () => {
-    render(<Card cardData={testDataNA} />);
+    render(<Card cardData={partialTestData} />);
 
     const name = screen.getByText('Name: N/A');
     const hairColor = screen.getByText('Hair color: N/A');

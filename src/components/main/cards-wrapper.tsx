@@ -8,11 +8,18 @@ import './main.css';
 
 interface CardsWrapperProps {
   cardCharacterData: CharacterSearchResp[];
+  error: Error | null;
 }
 
 class CardsWrapper extends React.Component<CardsWrapperProps> {
   render(): ReactNode {
-    if (!this.props.cardCharacterData.length) {
+    const { cardCharacterData, error } = this.props;
+
+    if (error) {
+      return <p>Something went wrong: {error.message}</p>;
+    }
+
+    if (!cardCharacterData.length) {
       return <p>Oops! there is no such character.</p>;
     }
 

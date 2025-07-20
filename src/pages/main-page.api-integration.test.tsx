@@ -69,7 +69,11 @@ describe('API Integration Tests', () => {
     render(<MainPage service={new ApiService()} />);
 
     await waitFor(() => {
-      expect(screen.getAllByTestId('error')).lengthOf(1);
+      const placeholder = screen.getByText(
+        'Something went wrong: Request faild with code: 401',
+      );
+
+      expect(placeholder).toBeInTheDocument();
     });
   });
 });
