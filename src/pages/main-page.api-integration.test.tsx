@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import { HttpResponse, delay, http } from 'msw';
 import { SetupServerApi, setupServer } from 'msw/node';
 import { describe, expect, it, vi } from 'vitest';
@@ -26,7 +26,9 @@ describe('API Integration Tests', () => {
       getSearchData: vi.fn().mockResolvedValue(new DefaultSearchResp()),
     } as unknown as ApiService;
 
-    render(<MainPage service={mockService} />);
+    act(() => {
+      render(<MainPage service={mockService} />);
+    });
 
     expect(mockService.getDefaultData).toHaveBeenCalledWith(1);
   });

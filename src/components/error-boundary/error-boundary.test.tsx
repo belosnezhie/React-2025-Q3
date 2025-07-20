@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 
 import { setup } from '../../test-utils/user-event-setup';
 import ErrorButton from '../header/error-button.tsx';
@@ -10,6 +10,8 @@ test('should show fallback UI when error', async () => {
   const Child = () => {
     return <ErrorButton />;
   };
+
+  vi.spyOn(console, 'error').mockImplementation(() => {});
 
   const { user, getByTestId } = setup(
     <ErrorBoundary>

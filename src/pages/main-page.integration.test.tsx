@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 import { DefaultSearchResp } from '../model/types-star-wars';
@@ -13,7 +13,9 @@ describe('Integration Tests', () => {
       getDefaultData: vi.fn().mockResolvedValue(new DefaultSearchResp()),
     } as unknown as ApiService;
 
-    render(<MainPage service={mockService} />);
+    act(() => {
+      render(<MainPage service={mockService} />);
+    });
 
     expect(mockService.getDefaultData).toHaveBeenCalled();
   });
