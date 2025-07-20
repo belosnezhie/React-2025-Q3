@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { HttpResponse, delay, http } from 'msw';
 import { SetupServerApi, setupServer } from 'msw/node';
 import { describe, expect, it, vi } from 'vitest';
@@ -20,13 +20,13 @@ describe('API Integration Tests', () => {
   });
   afterAll(() => server.close());
 
-  it('calls API with correct parameters', () => {
+  it('calls API with correct parameters', async () => {
     const mockService = {
       getDefaultData: vi.fn().mockResolvedValue(new DefaultSearchResp()),
       getSearchData: vi.fn().mockResolvedValue(new DefaultSearchResp()),
     } as unknown as ApiService;
 
-    act(() => {
+    await waitFor(() => {
       render(<MainPage service={mockService} />);
     });
 
