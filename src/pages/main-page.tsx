@@ -2,52 +2,74 @@ import React, { ReactNode } from 'react';
 
 import Header from '../components/header/header.tsx';
 import CardsWrapper from '../components/main/cards-wrapper.tsx';
-import { SearchResp } from '../model/types-star-wars';
-import { ApiService, apiService } from '../services/api-service';
+import { ApiService } from '../services/api-service';
 import { searchQueryStorage } from '../services/local-storage';
 
 const PAGE = 1;
 
-class MainPage extends React.Component {
-  private service: ApiService = apiService;
+interface MainPageProps {
+  service: ApiService;
+}
+
+class MainPage extends React.Component<MainPageProps> {
+  private service: ApiService;
   private storage = searchQueryStorage;
+
+  constructor(props: MainPageProps) {
+    super(props);
+    this.service = this.props.service;
+  }
 
   state = {
     charactersData: [],
     isLoading: false,
+    error: null,
   };
 
-  async searchData(searchQuery: string): Promise<SearchResp> {
-    this.setState({ isLoading: true });
+  async searchData(searchQuery: string): Promise<void> {
+    this.setState({ isLoading: true, error: null });
 
-    const res: SearchResp = await this.service.getSeachedData(searchQuery);
+    try {
+      const res = await this.service.getSeachedData(searchQuery);
 
-    this.setState({ charactersData: res.results });
-
-    this.setState({ isLoading: false });
-
-    return res;
+      this.setState({ charactersData: res.results });
+    } catch (err) {
+      this.setState({
+        error: err instanceof Error ? err.message : 'Unknown error',
+        charactersData: [],
+      });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   async componentDidMount(): Promise<void> {
     const searchQuery = this.storage.getSearchQuery();
 
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true, error: null });
 
-    if (searchQuery) {
-      await this.searchData(searchQuery);
+    try {
+      let res;
 
-      this.setState({ isLoading: false });
-    } else {
-      const res: SearchResp = await this.service.getDefaultData(PAGE);
-
+      if (searchQuery) {
+        res = await this.service.getSeachedData(searchQuery);
+      } else {
+        res = await this.service.getDefaultData(PAGE);
+      }
       this.setState({ charactersData: res.results });
-
+    } catch (err) {
+      this.setState({
+        error: err instanceof Error ? err.message : 'Unknown error',
+        charactersData: [],
+      });
+    } finally {
       this.setState({ isLoading: false });
     }
   }
 
   render(): ReactNode {
+    const { isLoading, charactersData, error } = this.state;
+
     return (
       <>
         <Header
@@ -56,10 +78,18 @@ class MainPage extends React.Component {
           }}
         />
         <main className="cards_wrapper">
-          {this.state.isLoading ? (
-            <div className="spinner" />
+          {isLoading ? (
+            <div
+              className="spinner"
+              data-testid="spinner"
+              aria-label="spinner"
+            />
+          ) : error ? (
+            <div data-testid="error">
+              <p>Something went wrong: {error}</p>
+            </div>
           ) : (
-            <CardsWrapper cardCharacterData={this.state.charactersData} />
+            <CardsWrapper cardCharacterData={charactersData} />
           )}
           <div className="yoda" />
         </main>

@@ -1,28 +1,29 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
 
+import { setup } from '../../test-utils/user-event-setup';
 import ErrorButton from '../header/error-button.tsx';
 
 import ErrorBoundary from './error-boundary.tsx';
 
-test('should show fallback UI when error', () => {
+test('should show fallback UI when error', async () => {
   const Child = () => {
     return <ErrorButton />;
   };
 
-  render(
+  const { user, getByTestId } = setup(
     <ErrorBoundary>
       <Child />
     </ErrorBoundary>,
   );
 
-  const errorButton = screen.getByTestId('error_button');
+  const errorButton = getByTestId('error_button');
 
-  fireEvent.click(errorButton);
+  await user.click(errorButton);
 
   const fallbackPage = screen.getByText(
     'Oops! Something went wrong. Please try again later.',
   );
 
-  expect(fallbackPage).toBeDefined();
+  expect(fallbackPage).toBeInTheDocument();
 });

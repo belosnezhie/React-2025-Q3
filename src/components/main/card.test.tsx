@@ -16,12 +16,12 @@ describe('Card Component Tests', () => {
     const birthYear = screen.getByText('Birth year: 1888');
     const gender = screen.getByText('Gender: woman');
 
-    expect(name).toBeDefined();
-    expect(hairColor).toBeDefined();
-    expect(skinColor).toBeDefined();
-    expect(eyeColor).toBeDefined();
-    expect(birthYear).toBeDefined();
-    expect(gender).toBeDefined();
+    expect(name).toBeInTheDocument();
+    expect(hairColor).toBeInTheDocument();
+    expect(skinColor).toBeInTheDocument();
+    expect(eyeColor).toBeInTheDocument();
+    expect(birthYear).toBeInTheDocument();
+    expect(gender).toBeInTheDocument();
   });
 
   test('Should handle missing props gracefully', () => {
@@ -34,11 +34,11 @@ describe('Card Component Tests', () => {
     const birthYear = screen.getByText('Birth year: N/A');
     const gender = screen.getByText('Gender: N/A');
 
-    expect(name).toBeDefined();
-    expect(hairColor).toBeDefined();
-    expect(skinColor).toBeDefined();
-    expect(eyeColor).toBeDefined();
-    expect(birthYear).toBeDefined();
-    expect(gender).toBeDefined();
+    expect(name).toBeInTheDocument();
+    expect(hairColor).toBeInTheDocument();
+    expect(skinColor).toBeInTheDocument();
+    expect(eyeColor).toBeInTheDocument();
+    expect(birthYear).toBeInTheDocument();
+    expect(gender).toBeInTheDocument();
   });
 });

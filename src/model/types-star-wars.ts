@@ -13,3 +13,12 @@ export interface CharacterSearchResp {
   birth_year?: string;
   gender?: string;
 }
+
+export class DefaultSearchResp implements SearchResp {
+  count: number;
+  results: CharacterSearchResp[];
+  constructor() {
+    this.count = 0;
+    this.results = [{} as CharacterSearchResp];
+  }
+}
