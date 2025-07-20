@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
-import Header from '../components/header/header';
-import CardsWrapper from '../components/main/cards-wrapper';
+import Header from '../components/header/header.tsx';
+import CardsWrapper from '../components/main/cards-wrapper.tsx';
 import { ApiService } from '../services/api-service';
 import { searchQueryStorage } from '../services/local-storage';
 

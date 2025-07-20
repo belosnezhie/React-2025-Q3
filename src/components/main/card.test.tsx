@@ -3,7 +3,7 @@ import { expect, test } from 'vitest';
 
 import { partialTestData, testDataJane } from '../../test-utils/test-data';
 
-import Card from './card';
+import Card from './card.tsx';
 
 describe('Card Component Tests', () => {
   test('Should display item name and description correctly', () => {
