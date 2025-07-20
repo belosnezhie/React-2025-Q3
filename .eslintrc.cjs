@@ -67,7 +67,7 @@ module.exports = {
       "prettier/prettier": "error",
       "@typescript-eslint/return-await": ["error", "in-try-catch"],
       "@typescript-eslint/no-explicit-any": "error",
-      "@typescript-eslint/unbound-method": "error",
+      "@typescript-eslint/unbound-method": "off",
       "@typescript-eslint/no-misused-promises": [
         "error",
         { "checksVoidReturn": false }

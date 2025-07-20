@@ -17,6 +17,7 @@ class ErrorButton extends React.Component {
         <button
           className="throw_error_button"
           type="button"
+          data-testid="error_button"
           onClick={() => {
             this.handleClick();
           }}

@@ -1,18 +1,27 @@
-import React, { ReactNode, createRef } from 'react';
+import React, { ReactNode } from 'react';
 
-import './SearchForm.css';
-import { searchQueryStorage } from '../../services/LocalStorage';
+import './search-form.css';
+import { SearchQueryStorage } from '../../services/local-storage';
 
 interface SearchFormProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;
+  storage: SearchQueryStorage;
 }
 
-class SearchForm extends React.Component<SearchFormProps> {
-  state = {
-    currentInputValue: searchQueryStorage.getSearchQuery(),
-  };
+interface SearchFormState {
+  currentInputValue: string;
+}
 
-  inputRef = createRef<HTMLInputElement>();
+class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
+  private storage: SearchQueryStorage;
+
+  constructor(props: SearchFormProps) {
+    super(props);
+    this.storage = this.props.storage;
+    this.state = {
+      currentInputValue: this.storage.getSearchQuery(),
+    };
+  }
 
   async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -24,7 +33,9 @@ class SearchForm extends React.Component<SearchFormProps> {
       throw new Error('Invalid input');
     }
 
-    const searchQuery = data.trim() || '';
+    const searchQuery = data.trim();
+
+    this.storage.setSearchQuery(searchQuery);
 
     await this.props.updateCartsCallback(searchQuery);
   }
@@ -51,7 +62,12 @@ class SearchForm extends React.Component<SearchFormProps> {
             }}
             value={this.state.currentInputValue}
           ></input>
-          <input className="submit_input" type="submit" value="Search"></input>
+          <input
+            className="submit_input"
+            type="submit"
+            value="Search"
+            data-testid="submit_input"
+          ></input>
         </form>
       </>
     );

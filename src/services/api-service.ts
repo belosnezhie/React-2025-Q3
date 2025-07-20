@@ -1,4 +1,4 @@
-import { SearchResp } from '../model/TypesStarWars';
+import { SearchResp } from '../model/types-star-wars';
 
 const BASE_URL = 'https://swapi.py4e.com/api/people';
 
@@ -9,7 +9,7 @@ export class ApiService {
     const resp: Response = await fetch(defaultUrl);
 
     if (resp.status !== 200) {
-      throw new Error('Request faild!');
+      throw new Error(`Request faild with code: ${resp.status}`);
     }
 
     const data: SearchResp = <SearchResp>await resp.json();
@@ -23,7 +23,7 @@ export class ApiService {
     const resp: Response = await fetch(url);
 
     if (resp.status !== 200) {
-      throw new Error('Request faild!');
+      throw new Error(`Request faild with code: ${resp.status}`);
     }
 
     const data: SearchResp = <SearchResp>await resp.json();
