@@ -1,4 +1,4 @@
-import React, { ReactNode, createRef } from 'react';
+import React, { ReactNode } from 'react';
 
 import './search-form.css';
 import { SearchQueryStorage } from '../../services/local-storage';
@@ -23,8 +23,6 @@ class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
     };
   }
 
-  inputRef = createRef<HTMLInputElement>();
-
   async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -35,7 +33,7 @@ class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
       throw new Error('Invalid input');
     }
 
-    const searchQuery = data.trim() || '';
+    const searchQuery = data.trim();
 
     this.storage.setSearchQuery(searchQuery);
 

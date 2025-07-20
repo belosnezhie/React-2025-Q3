@@ -3,9 +3,9 @@ import { HttpResponse, delay, http } from 'msw';
 import { SetupServerApi, setupServer } from 'msw/node';
 import { describe, expect, it, vi } from 'vitest';
 
-import { DefaultSearchResp } from '../model/types-star-wars';
 import { ApiService } from '../services/api-service';
 import { testCharactersSearchArr } from '../test-utils/test-data';
+import { setup } from '../test-utils/user-event-setup';
 
 import MainPage from './main-page.tsx';
 
@@ -17,20 +17,27 @@ describe('API Integration Tests', () => {
       server.resetHandlers();
       server.close();
     }
+    vi.resetAllMocks();
   });
   afterAll(() => server.close());
 
   it('calls API with correct parameters', async () => {
-    const mockService = {
-      getDefaultData: vi.fn().mockResolvedValue(new DefaultSearchResp()),
-      getSearchData: vi.fn().mockResolvedValue(new DefaultSearchResp()),
-    } as unknown as ApiService;
+    const service = new ApiService();
 
-    await waitFor(() => {
-      render(<MainPage service={mockService} />);
-    });
+    using getSeachedDataSpy = vi
+      .spyOn(service, 'getSeachedData')
+      .mockResolvedValue(testCharactersSearchArr);
 
-    expect(mockService.getDefaultData).toHaveBeenCalledWith(1);
+    const { user, getByRole } = setup(<MainPage service={service} />);
+
+    const searchInput = getByRole('textbox');
+    const submitInput = getByRole('button', { name: /search/i });
+
+    await user.clear(searchInput);
+    await user.type(searchInput, 'Jane');
+    await user.click(submitInput);
+
+    expect(getSeachedDataSpy).toHaveBeenCalledWith('Jane');
   });
 
   it('handles successful API responses', async () => {
