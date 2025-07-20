@@ -33,7 +33,7 @@ describe('API Integration Tests', () => {
 
   it('handles successful API responses', async () => {
     const handlers = [
-      http.get('https://swapi.py4e.com/api/people/?page=1', async () => {
+      http.get('https://swapi.py4e.com/api/people/', async () => {
         await delay(150);
 
         return HttpResponse.json(testCharactersSearchArr);
@@ -54,7 +54,7 @@ describe('API Integration Tests', () => {
 
   it('handles API error responses', async () => {
     const handlers = [
-      http.get('https://swapi.py4e.com/api/people/?page=1', async () => {
+      http.get('https://swapi.py4e.com/api/people/', async () => {
         await delay(150);
 
         return new HttpResponse(null, { status: 401 });

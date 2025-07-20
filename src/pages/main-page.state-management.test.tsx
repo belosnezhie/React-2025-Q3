@@ -8,7 +8,7 @@ import { HttpResponse, delay, http } from 'msw';
 import { SetupServerApi, setupServer } from 'msw/node';
 import { describe, expect, it } from 'vitest';
 
-import { ApiService } from '../services/api-service';
+import { apiService } from '../services/api-service';
 import { searchQueryStorage } from '../services/local-storage';
 import { testCharactersSearchArr } from '../test-utils/test-data';
 
@@ -27,7 +27,7 @@ describe('State Management Tests', () => {
 
   it('updates component state based on API responses', async () => {
     const handlers = [
-      http.get('https://swapi.py4e.com/api/people/?page=1', async () => {
+      http.get('https://swapi.py4e.com/api/people/', async () => {
         await delay(150);
 
         return HttpResponse.json(testCharactersSearchArr);
@@ -37,7 +37,7 @@ describe('State Management Tests', () => {
     server = setupServer(...handlers);
     server.listen();
 
-    render(<MainPage service={new ApiService()} />);
+    render(<MainPage service={apiService} />);
 
     expect(await screen.findByLabelText('spinner')).toBeInTheDocument();
     await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
@@ -56,20 +56,17 @@ describe('State Management Tests', () => {
       );
 
       const handlers = [
-        http.get(
-          'https://swapi.py4e.com/api/people/?search=test&format=json',
-          async () => {
-            await delay(150);
+        http.get('https://swapi.py4e.com/api/people/', async () => {
+          await delay(150);
 
-            return HttpResponse.json(testCharactersSearchArr);
-          },
-        ),
+          return HttpResponse.json(testCharactersSearchArr);
+        }),
       ];
 
       server = setupServer(...handlers);
       server.listen();
 
-      render(<MainPage service={new ApiService()} />);
+      render(<MainPage service={apiService} />);
 
       expect(await screen.findAllByTestId('results_card')).toBeDefined();
     });
