@@ -20,7 +20,7 @@ module.exports = {
   },
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', "react-compiler", "import", "prettier", "@typescript-eslint", "typescript-sort-keys"],
+  plugins: ['react-refresh', "react-compiler", "import", "prettier", "@typescript-eslint"],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
@@ -87,7 +87,5 @@ module.exports = {
           "ts": "never",
         }
       ],
-      "typescript-sort-keys/interface": "off",
-      "typescript-sort-keys/string-enum": "error"
   },
 }
