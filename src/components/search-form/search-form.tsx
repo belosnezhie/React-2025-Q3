@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
 import './search-form.css';
-import { SearchQueryStorage } from '../../services/local-storage';
+import { SearchQueryStorage } from '@/services/local-storage';
 
 interface SearchFormProps {
   storage: SearchQueryStorage;
@@ -12,7 +12,10 @@ interface SearchFormState {
   currentInputValue: string;
 }
 
-class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
+export class SearchForm extends React.Component<
+  SearchFormProps,
+  SearchFormState
+> {
   private storage: SearchQueryStorage;
 
   constructor(props: SearchFormProps) {
@@ -73,5 +76,3 @@ class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
     );
   }
 }
-
-export default SearchForm;

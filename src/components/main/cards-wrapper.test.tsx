@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
 
+import { CardsWrapper } from '@/components';
 import {
   partialTestSearchResponse,
   testCharactersSearch,
   testCharactersSearchArray as testCharactersSearchArray,
-} from '../../test-utils/test-data';
-import CardsWrapper from './cards-wrapper';
+} from '@/test-utils/test-data';
 
 describe('Rendering Tests', () => {
   test('should render correct number of items when data is provided', () => {

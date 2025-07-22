@@ -1,15 +1,16 @@
 import React, { ReactNode } from 'react';
 
-import { searchQueryStorage } from '../../services/local-storage';
-import SearchForm from '../search-form/search-form';
-import ErrorButton from './error-button';
+import { ErrorButton } from '@/components';
+import { SearchForm } from '@/components';
+import { searchQueryStorage } from '@/services/local-storage';
+
 import './header.css';
 
 interface HeaderProps {
   updateCartsCallback: (searchQuery: string) => Promise<void>;
 }
 
-class Header extends React.Component<HeaderProps> {
+export class Header extends React.Component<HeaderProps> {
   render(): ReactNode {
     return (
       <>
@@ -27,5 +28,3 @@ class Header extends React.Component<HeaderProps> {
     );
   }
 }
-
-export default Header;

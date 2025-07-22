@@ -1,9 +1,9 @@
 import { Component, ReactNode } from 'react';
 
 import './app.css';
-import ErrorBoundary from './components/error-boundary/error-boundary';
-import MainPage from './pages/main-page';
-import { apiService } from './services/api-service';
+import { ErrorBoundary } from '@/components';
+import MainPage from '@/pages/main-page';
+import { apiService } from '@/services/api-service';
 
 class App extends Component {
   render(): ReactNode {

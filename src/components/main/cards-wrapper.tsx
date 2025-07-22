@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
 
-import { CharacterSearchResponse } from '../../model/types-star-wars';
-import Card from './card';
+import { Card } from '@/components';
+import { CharacterSearchResponse } from '@/model/types-star-wars';
+
 import './main.css';
 
 interface CardsWrapperProps {
@@ -9,7 +10,7 @@ interface CardsWrapperProps {
   error: Error | null;
 }
 
-class CardsWrapper extends React.Component<CardsWrapperProps> {
+export class CardsWrapper extends React.Component<CardsWrapperProps> {
   render(): ReactNode {
     const { cardCharacterData, error } = this.props;
 
@@ -30,5 +31,3 @@ class CardsWrapper extends React.Component<CardsWrapperProps> {
     );
   }
 }
-
-export default CardsWrapper;

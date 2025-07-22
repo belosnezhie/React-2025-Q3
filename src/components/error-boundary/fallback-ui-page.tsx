@@ -2,7 +2,7 @@ import React from 'react';
 
 import './fallback-ui-page.css';
 
-class FallbackUIPage extends React.Component {
+export class FallbackUIPage extends React.Component {
   render(): React.ReactNode {
     return (
       <div className="fallbackUI_page">
@@ -11,5 +11,3 @@ class FallbackUIPage extends React.Component {
     );
   }
 }
-
-export default FallbackUIPage;

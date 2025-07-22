@@ -2,9 +2,9 @@ import { render, screen } from '@testing-library/react';
 import { JSX } from 'react';
 import { expect, test, vi } from 'vitest';
 
-import { SearchQueryStorage } from '../../services/local-storage';
-import { setup } from '../../test-utils/user-event-setup';
-import SearchForm from './search-form';
+import { SearchForm } from '@/components';
+import { SearchQueryStorage } from '@/services/local-storage';
+import { setup } from '@/test-utils/user-event-setup';
 
 const renderHelper = (
   storage: SearchQueryStorage,

@@ -1,5 +1,5 @@
-import { SearchResponse } from '../model/types-star-wars';
-import { validateSearchResponse } from '../utils/guards';
+import { SearchResponse } from '@/model/types-star-wars';
+import { validateSearchResponse } from '@/utils/guards';
 
 const BASE_URL = 'https://swapi.py4e.com/api/people';
 

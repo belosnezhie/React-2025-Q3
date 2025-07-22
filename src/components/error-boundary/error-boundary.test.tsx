@@ -2,9 +2,9 @@ import { render, screen } from '@testing-library/react';
 import { JSX } from 'react';
 import { expect, test, vi } from 'vitest';
 
-import { setup } from '../../test-utils/user-event-setup';
-import ErrorButton from '../header/error-button';
-import ErrorBoundary from './error-boundary';
+import { ErrorButton } from '@/components';
+import { ErrorBoundary } from '@/components';
+import { setup } from '@/test-utils/user-event-setup';
 
 const ErrorChild = (): never => {
   throw new Error('test error');

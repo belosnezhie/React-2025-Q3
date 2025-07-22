@@ -1,6 +1,6 @@
 import React from 'react';
 
-class ErrorButton extends React.Component {
+export class ErrorButton extends React.Component {
   state = {
     wasClicked: false,
   };
@@ -28,5 +28,3 @@ class ErrorButton extends React.Component {
     }
   }
 }
-
-export default ErrorButton;

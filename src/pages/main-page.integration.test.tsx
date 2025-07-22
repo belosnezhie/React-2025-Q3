@@ -1,9 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { DefaultSearchResp } from '../model/types-star-wars';
-import { ApiService } from '../services/api-service';
-import { searchQueryStorage } from '../services/local-storage';
+import { DefaultSearchResp } from '@/model/types-star-wars';
+import { ApiService } from '@/services/api-service';
+import { searchQueryStorage } from '@/services/local-storage';
+
 import MainPage from './main-page';
 
 describe('Integration Tests', () => {

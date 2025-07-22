@@ -1,7 +1,7 @@
 import {
   CharacterSearchResponse,
   SearchResponse,
-} from '../model/types-star-wars';
+} from '@/model/types-star-wars';
 
 export const testDataJane: CharacterSearchResponse = {
   birth_year: '1888',

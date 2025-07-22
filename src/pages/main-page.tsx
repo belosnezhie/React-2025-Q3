@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 
-import Header from '../components/header/header';
-import CardsWrapper from '../components/main/cards-wrapper';
-import { ApiService } from '../services/api-service';
-import { searchQueryStorage } from '../services/local-storage';
+import { Header } from '@/components';
+import { CardsWrapper } from '@/components';
+import { ApiService } from '@/services/api-service';
+import { searchQueryStorage } from '@/services/local-storage';
 
 const PAGE = 1;
 

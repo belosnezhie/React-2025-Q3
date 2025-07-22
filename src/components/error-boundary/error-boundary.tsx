@@ -1,6 +1,6 @@
 import React, { ErrorInfo, ReactNode } from 'react';
 
-import FallbackUIPage from './fallback-ui-page';
+import { FallbackUIPage } from '@/components';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface State {
   errorMessage: null | string;
 }
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
   state = {
     errorMessage: '',
   };
@@ -31,5 +31,3 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     return this.props.children;
   }
 }
-
-export default ErrorBoundary;

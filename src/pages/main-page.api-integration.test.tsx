@@ -3,9 +3,10 @@ import { delay, http, HttpResponse } from 'msw';
 import { setupServer, SetupServerApi } from 'msw/node';
 import { expect, it, vi } from 'vitest';
 
-import { ApiService } from '../services/api-service';
-import { testCharactersSearchArray as testCharactersSearchArray } from '../test-utils/test-data';
-import { setup } from '../test-utils/user-event-setup';
+import { ApiService } from '@/services/api-service';
+import { testCharactersSearchArray } from '@/test-utils/test-data';
+import { setup } from '@/test-utils/user-event-setup';
+
 import MainPage from './main-page';
 
 let server: SetupServerApi;

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
 
-import { partialTestData, testDataJane } from '../../test-utils/test-data';
-import Card from './card';
+import { Card } from '@/components';
+import { partialTestData, testDataJane } from '@/test-utils/test-data';
 
 describe('Card Component Tests', () => {
   test('Should display item name and description correctly', () => {

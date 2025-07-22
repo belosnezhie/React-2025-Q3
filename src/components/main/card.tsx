@@ -1,12 +1,12 @@
 import React, { JSX } from 'react';
 
-import { CharacterSearchResponse } from '../../model/types-star-wars';
+import { CharacterSearchResponse } from '@/model/types-star-wars';
 
 interface CardProps {
   cardData: CharacterSearchResponse;
 }
 
-class Card extends React.Component<CardProps> {
+export class Card extends React.Component<CardProps> {
   render(): JSX.Element {
     const {
       birth_year: birthYear,
@@ -33,5 +33,3 @@ class Card extends React.Component<CardProps> {
     );
   }
 }
-
-export default Card;
