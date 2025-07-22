@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { JSX } from 'react';
 
-import { CharacterSearchResp } from '../../model/types-star-wars';
+import { CharacterSearchResponse } from '../../model/types-star-wars';
 
 interface CardProps {
-  cardData: CharacterSearchResp;
+  cardData: CharacterSearchResponse;
 }
 
 class Card extends React.Component<CardProps> {
-  render() {
+  render(): JSX.Element {
     const {
-      name,
       birth_year: birthYear,
-      hair_color: hairColor,
-      skin_color: skinColor,
       eye_color: eyeColor,
       gender,
+      hair_color: hairColor,
+      name,
+      skin_color: skinColor,
     } = this.props.cardData;
 
     const placeholder = 'N/A';
@@ -22,7 +22,7 @@ class Card extends React.Component<CardProps> {
     return (
       <>
         <div className="card" data-testid="results_card">
-          <p>Name: {name ?? placeholder}</p>
+          <p>Name: {name}</p>
           <p>Birth year: {birthYear ?? placeholder}</p>
           <p>Hair color: {hairColor ?? placeholder}</p>
           <p>Skin color: {skinColor ?? placeholder}</p>

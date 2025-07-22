@@ -1,10 +1,17 @@
 import { render, screen } from '@testing-library/react';
+import { JSX } from 'react';
 import { expect, test, vi } from 'vitest';
 
 import { SearchQueryStorage } from '../../services/local-storage';
 import { setup } from '../../test-utils/user-event-setup';
+import SearchForm from './search-form';
 
-import SearchForm from './search-form.tsx';
+const renderHelper = (
+  storage: SearchQueryStorage,
+  callback: () => Promise<void>,
+): JSX.Element => {
+  return <SearchForm storage={storage} updateCartsCallback={callback} />;
+};
 
 describe('Rendering Tests', () => {
   let mockUpdateCartsCallback: () => Promise<void>;
@@ -18,12 +25,7 @@ describe('Rendering Tests', () => {
   });
 
   test('should render search inputs', () => {
-    render(
-      <SearchForm
-        updateCartsCallback={mockUpdateCartsCallback}
-        storage={new SearchQueryStorage()}
-      />,
-    );
+    render(renderHelper(new SearchQueryStorage(), mockUpdateCartsCallback));
 
     const searchInput = screen.getAllByRole('textbox');
     const submitInput = screen.getByRole('button', { name: /search/i });
@@ -40,12 +42,7 @@ describe('Rendering Tests', () => {
       .spyOn(searchQueryStorage, 'getSearchQuery')
       .mockReturnValue(savedSearchQuery);
 
-    render(
-      <SearchForm
-        updateCartsCallback={mockUpdateCartsCallback}
-        storage={searchQueryStorage}
-      />,
-    );
+    render(renderHelper(searchQueryStorage, mockUpdateCartsCallback));
 
     const searchInput = screen.getByRole('textbox');
 
@@ -54,12 +51,7 @@ describe('Rendering Tests', () => {
   });
 
   test('should show empty input when no saved term exists', () => {
-    render(
-      <SearchForm
-        updateCartsCallback={mockUpdateCartsCallback}
-        storage={new SearchQueryStorage()}
-      />,
-    );
+    render(renderHelper(new SearchQueryStorage(), mockUpdateCartsCallback));
 
     const searchInput = screen.getByRole('textbox');
 
@@ -68,26 +60,19 @@ describe('Rendering Tests', () => {
 });
 
 describe('User Interaction Tests', () => {
-  let mockUpdateCartsCallback: () => Promise<void>;
+  let mockCallback: () => Promise<void>;
 
   beforeEach(() => {
-    mockUpdateCartsCallback = vi.fn();
+    mockCallback = vi.fn();
     localStorage.clear();
   });
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
 
+  afterEach(() => vi.restoreAllMocks());
   test('should update input value when user types', async () => {
-    const { user, getByRole } = setup(
-      <SearchForm
-        updateCartsCallback={mockUpdateCartsCallback}
-        storage={new SearchQueryStorage()}
-      />,
-    );
+    const form = renderHelper(new SearchQueryStorage(), mockCallback);
 
+    const { getByRole, user } = setup(form);
     const searchInput = getByRole('textbox');
-
     await user.type(searchInput, 'test value');
 
     expect(searchInput).toHaveValue('test value');
@@ -98,12 +83,9 @@ describe('User Interaction Tests', () => {
 
     using setSearchQuerySpy = vi.spyOn(searchQueryStorage, 'setSearchQuery');
 
-    const { user, getByRole } = setup(
-      <SearchForm
-        updateCartsCallback={mockUpdateCartsCallback}
-        storage={searchQueryStorage}
-      />,
-    );
+    const form = renderHelper(searchQueryStorage, mockCallback);
+
+    const { getByRole, user } = setup(form);
 
     const searchInput = getByRole('textbox');
     const submitInput = getByRole('button', { name: /search/i });
@@ -115,17 +97,14 @@ describe('User Interaction Tests', () => {
     expect(setSearchQuerySpy).toHaveBeenCalledWith('test query');
   });
 
-  test('should trim whitespace from search input before saving', async () => {
+  test('should trim whitespace from search input before saving and trigger search callback with correct parameters', async () => {
     const searchQueryStorage = new SearchQueryStorage();
 
     using setSearchQuerySpy = vi.spyOn(searchQueryStorage, 'setSearchQuery');
 
-    const { user, getByRole } = setup(
-      <SearchForm
-        updateCartsCallback={mockUpdateCartsCallback}
-        storage={searchQueryStorage}
-      />,
-    );
+    const form = renderHelper(searchQueryStorage, mockCallback);
+
+    const { getByRole, user } = setup(form);
 
     const searchInput = getByRole('textbox');
     const submitInput = getByRole('button', { name: /search/i });
@@ -134,42 +113,18 @@ describe('User Interaction Tests', () => {
     await user.click(submitInput);
 
     expect(setSearchQuerySpy).toHaveBeenCalledWith('trim');
-    expect(mockUpdateCartsCallback).toHaveBeenCalledWith('trim');
-  });
-
-  test('should trigger search callback with correct parameters', async () => {
-    const searchQueryStorage = new SearchQueryStorage();
-
-    using setSearchQuerySpy = vi.spyOn(searchQueryStorage, 'setSearchQuery');
-
-    const { user, getByRole } = setup(
-      <SearchForm
-        updateCartsCallback={mockUpdateCartsCallback}
-        storage={searchQueryStorage}
-      />,
-    );
-
-    const searchInput = getByRole('textbox');
-    const submitInput = getByRole('button', { name: /search/i });
-
-    await user.type(searchInput, 'correct parameters');
-    await user.click(submitInput);
-
-    expect(setSearchQuerySpy).toHaveBeenCalledWith('correct parameters');
-    expect(mockUpdateCartsCallback).toHaveBeenCalledWith('correct parameters');
+    expect(mockCallback).toHaveBeenCalledWith('trim');
   });
 });
 
 describe('LocalStorage Integration', () => {
-  let mockUpdateCartsCallback: () => Promise<void>;
+  let mockCallback: () => Promise<void>;
 
   beforeEach(() => {
-    mockUpdateCartsCallback = vi.fn();
+    mockCallback = vi.fn();
     localStorage.clear();
   });
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
+  afterEach(() => vi.restoreAllMocks());
 
   test('should retrieve saved search term on component mount', () => {
     const searchQueryStorage = new SearchQueryStorage();
@@ -179,12 +134,7 @@ describe('LocalStorage Integration', () => {
       .spyOn(searchQueryStorage, 'getSearchQuery')
       .mockReturnValue(savedSearchQuery);
 
-    render(
-      <SearchForm
-        updateCartsCallback={mockUpdateCartsCallback}
-        storage={searchQueryStorage}
-      />,
-    );
+    render(renderHelper(searchQueryStorage, mockCallback));
 
     const searchInput = screen.getByRole('textbox');
 
@@ -201,12 +151,9 @@ describe('LocalStorage Integration', () => {
       .mockReturnValue(savedSearchQuery);
     using setSearchQuerySpy = vi.spyOn(searchQueryStorage, 'setSearchQuery');
 
-    const { user, getByRole } = setup(
-      <SearchForm
-        updateCartsCallback={mockUpdateCartsCallback}
-        storage={searchQueryStorage}
-      />,
-    );
+    const form = renderHelper(searchQueryStorage, mockCallback);
+
+    const { getByRole, user } = setup(form);
 
     const searchInput = getByRole('textbox');
     const submitInput = getByRole('button', { name: /search/i });

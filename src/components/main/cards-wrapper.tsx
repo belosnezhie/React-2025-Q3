@@ -1,13 +1,11 @@
 import React, { ReactNode } from 'react';
 
-import { CharacterSearchResp } from '../../model/types-star-wars';
-
-import Card from './card.tsx';
-
+import { CharacterSearchResponse } from '../../model/types-star-wars';
+import Card from './card';
 import './main.css';
 
 interface CardsWrapperProps {
-  cardCharacterData: CharacterSearchResp[];
+  cardCharacterData: CharacterSearchResponse[];
   error: Error | null;
 }
 
@@ -25,8 +23,8 @@ class CardsWrapper extends React.Component<CardsWrapperProps> {
 
     return (
       <>
-        {this.props.cardCharacterData.map((obj, index) => {
-          return <Card cardData={obj} key={index} />;
+        {this.props.cardCharacterData.map((object, index) => {
+          return <Card cardData={object} key={index} />;
         })}
       </>
     );

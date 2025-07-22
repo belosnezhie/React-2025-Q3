@@ -5,7 +5,7 @@ class ErrorButton extends React.Component {
     wasClicked: false,
   };
 
-  handleClick() {
+  handleClick(): void {
     this.setState({ wasClicked: true });
   }
 
@@ -16,11 +16,11 @@ class ErrorButton extends React.Component {
       return (
         <button
           className="throw_error_button"
-          type="button"
           data-testid="error_button"
           onClick={() => {
             this.handleClick();
           }}
+          type="button"
         >
           Generate error
         </button>

@@ -1,24 +1,22 @@
-export interface SearchResp {
-  count: number;
-  results: CharacterSearchResp[];
-}
-
-export interface CharacterSearchResp {
-  name: string;
+export interface CharacterSearchResponse {
+  birth_year?: string;
+  eye_color?: string;
+  gender?: string;
+  hair_color?: string;
   height?: string;
   mass?: string;
-  hair_color?: string;
+  name: string;
   skin_color?: string;
-  eye_color?: string;
-  birth_year?: string;
-  gender?: string;
 }
 
-export class DefaultSearchResp implements SearchResp {
-  count: number;
-  results: CharacterSearchResp[];
+export interface SearchResponse {
+  results: CharacterSearchResponse[];
+}
+
+export class DefaultSearchResp implements SearchResponse {
+  results: CharacterSearchResponse[];
+
   constructor() {
-    this.count = 0;
-    this.results = [{} as CharacterSearchResp];
+    this.results = [{ name: '' } satisfies CharacterSearchResponse];
   }
 }

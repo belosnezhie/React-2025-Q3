@@ -1,47 +1,47 @@
-import { CharacterSearchResp, SearchResp } from '../model/types-star-wars';
+import {
+  CharacterSearchResponse,
+  SearchResponse,
+} from '../model/types-star-wars';
 
-export const testDataJane: CharacterSearchResp = {
-  name: 'Jane Dow',
+export const testDataJane: CharacterSearchResponse = {
+  birth_year: '1888',
+  eye_color: 'Blue',
+  gender: 'woman',
+  hair_color: 'Orange',
   height: '188',
   mass: '60',
-  hair_color: 'Orange',
+  name: 'Jane Dow',
   skin_color: 'White',
-  eye_color: 'Blue',
-  birth_year: '1888',
-  gender: 'woman',
 };
 
-export const testDataJohn: CharacterSearchResp = {
-  name: 'John Dow',
+export const testDataJohn: CharacterSearchResponse = {
+  birth_year: '1888',
+  eye_color: 'Black',
+  gender: 'man',
+  hair_color: 'Black',
   height: '188',
   mass: '70',
-  hair_color: 'Black',
+  name: 'John Dow',
   skin_color: 'Black',
-  eye_color: 'Black',
-  birth_year: '1888',
-  gender: 'man',
 };
 
-export const partialTestData: CharacterSearchResp = {
+export const partialTestData: CharacterSearchResponse = {
   name: 'N/A',
 };
 
-export const testPeopleSearchArr: CharacterSearchResp[] = [
+export const testPeopleSearchArray: CharacterSearchResponse[] = [
   testDataJane,
   testDataJohn,
 ];
 
-export const testCharactersSearchArr: SearchResp = {
-  count: 2,
+export const testCharactersSearchArray: SearchResponse = {
   results: [testDataJane, testDataJane],
 };
 
-export const testCharactersSearch: SearchResp = {
-  count: 1,
+export const testCharactersSearch: SearchResponse = {
   results: [testDataJane],
 };
 
-export const partialTestSearchRes: SearchResp = {
-  count: 1,
+export const partialTestSearchResponse: SearchResponse = {
   results: [partialTestData],
 };

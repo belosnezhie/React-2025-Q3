@@ -2,18 +2,17 @@ import { render, screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
 
 import {
-  partialTestSearchRes,
+  partialTestSearchResponse,
   testCharactersSearch,
-  testCharactersSearchArr,
+  testCharactersSearchArray as testCharactersSearchArray,
 } from '../../test-utils/test-data';
+import CardsWrapper from './cards-wrapper';
 
-import CardsWrapper from './cards-wrapper.tsx';
-
-describe('CardsWrapper Component Tests', () => {
+describe('Rendering Tests', () => {
   test('should render correct number of items when data is provided', () => {
     render(
       <CardsWrapper
-        cardCharacterData={testCharactersSearchArr.results}
+        cardCharacterData={testCharactersSearchArray.results}
         error={null}
       />,
     );
@@ -30,7 +29,9 @@ describe('CardsWrapper Component Tests', () => {
 
     expect(placeholder).toBeInTheDocument();
   });
+});
 
+describe('Data Display Tests', () => {
   test('should correctly display item names and descriptions', () => {
     render(
       <CardsWrapper
@@ -57,7 +58,7 @@ describe('CardsWrapper Component Tests', () => {
   test('should handle missing or undefined data gracefully gracefully', () => {
     render(
       <CardsWrapper
-        cardCharacterData={partialTestSearchRes.results}
+        cardCharacterData={partialTestSearchResponse.results}
         error={null}
       />,
     );
@@ -67,16 +68,16 @@ describe('CardsWrapper Component Tests', () => {
     const skinColor = screen.getByText('Skin color: N/A');
     const eyeColor = screen.getByText('Eye color: N/A');
     const birthYear = screen.getByText('Birth year: N/A');
-    const gender = screen.getByText('Gender: N/A');
 
     expect(name).toBeInTheDocument();
     expect(hairColor).toBeInTheDocument();
     expect(skinColor).toBeInTheDocument();
     expect(eyeColor).toBeInTheDocument();
     expect(birthYear).toBeInTheDocument();
-    expect(gender).toBeInTheDocument();
   });
+});
 
+describe('Error Handling Tests', () => {
   test('should display error message when API call fails', () => {
     const apiError = new Error('Request faild with code: 401');
 

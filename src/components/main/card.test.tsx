@@ -2,8 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { expect, test } from 'vitest';
 
 import { partialTestData, testDataJane } from '../../test-utils/test-data';
-
-import Card from './card.tsx';
+import Card from './card';
 
 describe('Card Component Tests', () => {
   test('Should display item name and description correctly', () => {

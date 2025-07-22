@@ -4,8 +4,8 @@ import './search-form.css';
 import { SearchQueryStorage } from '../../services/local-storage';
 
 interface SearchFormProps {
-  updateCartsCallback: (searchQuery: string) => Promise<void>;
   storage: SearchQueryStorage;
+  updateCartsCallback: (searchQuery: string) => Promise<void>;
 }
 
 interface SearchFormState {
@@ -23,14 +23,18 @@ class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
     };
   }
 
-  async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    this.setState({ currentInputValue: event.target.value });
+  }
+
+  async handleSubmit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
     const data = formData.get('search');
 
     if (typeof data !== 'string') {
-      throw new Error('Invalid input');
+      throw new TypeError('Invalid input');
     }
 
     const searchQuery = data.trim();
@@ -38,10 +42,6 @@ class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
     this.storage.setSearchQuery(searchQuery);
 
     await this.props.updateCartsCallback(searchQuery);
-  }
-
-  handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ currentInputValue: event.target.value });
   }
 
   render(): ReactNode {
@@ -54,20 +54,20 @@ class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
           }}
         >
           <input
-            name="search"
             className="search_input"
-            type="text"
+            name="search"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               this.handleChange(event);
             }}
+            type="text"
             value={this.state.currentInputValue}
-          ></input>
+          />
           <input
             className="submit_input"
+            data-testid="submit_input"
             type="submit"
             value="Search"
-            data-testid="submit_input"
-          ></input>
+          />
         </form>
       </>
     );

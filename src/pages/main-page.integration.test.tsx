@@ -4,14 +4,14 @@ import { describe, expect, it, vi } from 'vitest';
 import { DefaultSearchResp } from '../model/types-star-wars';
 import { ApiService } from '../services/api-service';
 import { searchQueryStorage } from '../services/local-storage';
-
-import MainPage from './main-page.tsx';
+import MainPage from './main-page';
 
 describe('Integration Tests', () => {
   it('makes initial API call on component mount', async () => {
-    const mockService = {
+    const mockService: ApiService = {
       getDefaultData: vi.fn().mockResolvedValue(new DefaultSearchResp()),
-    } as unknown as ApiService;
+      getSeachedData: vi.fn(),
+    } satisfies ApiService;
 
     render(<MainPage service={mockService} />);
 

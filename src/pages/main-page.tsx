@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
-import Header from '../components/header/header.tsx';
-import CardsWrapper from '../components/main/cards-wrapper.tsx';
+import Header from '../components/header/header';
+import CardsWrapper from '../components/main/cards-wrapper';
 import { ApiService } from '../services/api-service';
 import { searchQueryStorage } from '../services/local-storage';
 
@@ -12,7 +12,13 @@ interface MainPageProps {
 }
 
 class MainPage extends React.Component<MainPageProps> {
+  state = {
+    charactersData: [],
+    error: null,
+    isLoading: false,
+  };
   private service: ApiService;
+
   private storage = searchQueryStorage;
 
   constructor(props: MainPageProps) {
@@ -20,47 +26,20 @@ class MainPage extends React.Component<MainPageProps> {
     this.service = this.props.service;
   }
 
-  state = {
-    charactersData: [],
-    isLoading: false,
-    error: null,
-  };
-
-  async searchData(searchQuery: string): Promise<void> {
-    this.setState({ isLoading: true, error: null });
-
-    try {
-      const res = await this.service.getSeachedData(searchQuery);
-
-      this.setState({ charactersData: res.results });
-    } catch (err) {
-      this.setState({
-        error: err instanceof Error ? err : 'Unknown error',
-        charactersData: [],
-      });
-    } finally {
-      this.setState({ isLoading: false });
-    }
-  }
-
   async componentDidMount(): Promise<void> {
     const searchQuery = this.storage.getSearchQuery();
 
-    this.setState({ isLoading: true, error: null });
+    this.setState({ error: null, isLoading: true });
 
     try {
-      let res;
-
-      if (searchQuery) {
-        res = await this.service.getSeachedData(searchQuery);
-      } else {
-        res = await this.service.getDefaultData(PAGE);
-      }
-      this.setState({ charactersData: res.results });
-    } catch (err) {
+      const response = await (searchQuery
+        ? this.service.getSeachedData(searchQuery)
+        : this.service.getDefaultData(PAGE));
+      this.setState({ charactersData: response.results });
+    } catch (error) {
       this.setState({
-        error: err instanceof Error ? err : 'Unknown error',
         charactersData: [],
+        error: error instanceof Error ? error : 'Unknown error',
       });
     } finally {
       this.setState({ isLoading: false });
@@ -68,7 +47,7 @@ class MainPage extends React.Component<MainPageProps> {
   }
 
   render(): ReactNode {
-    const { isLoading, charactersData, error } = this.state;
+    const { charactersData, error, isLoading } = this.state;
 
     return (
       <>
@@ -80,9 +59,9 @@ class MainPage extends React.Component<MainPageProps> {
         <main className="cards_wrapper">
           {isLoading ? (
             <div
+              aria-label="spinner"
               className="spinner"
               data-testid="spinner"
-              aria-label="spinner"
             />
           ) : (
             <CardsWrapper cardCharacterData={charactersData} error={error} />
@@ -91,6 +70,23 @@ class MainPage extends React.Component<MainPageProps> {
         </main>
       </>
     );
+  }
+
+  async searchData(searchQuery: string): Promise<void> {
+    this.setState({ error: null, isLoading: true });
+
+    try {
+      const response = await this.service.getSeachedData(searchQuery);
+
+      this.setState({ charactersData: response.results });
+    } catch (error) {
+      this.setState({
+        charactersData: [],
+        error: error instanceof Error ? error : 'Unknown error',
+      });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 }
 

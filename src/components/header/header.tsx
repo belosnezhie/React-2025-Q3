@@ -1,10 +1,8 @@
 import React, { ReactNode } from 'react';
 
 import { searchQueryStorage } from '../../services/local-storage';
-import SearchForm from '../search-form/search-form.tsx';
-
-import ErrorButton from './error-button.tsx';
-
+import SearchForm from '../search-form/search-form';
+import ErrorButton from './error-button';
 import './header.css';
 
 interface HeaderProps {
@@ -18,11 +16,11 @@ class Header extends React.Component<HeaderProps> {
         <header className="header">
           <h1 className="header_title">The Star Wars Сharacters</h1>
           <SearchForm
+            storage={searchQueryStorage}
             updateCartsCallback={async (searchQuery: string): Promise<void> => {
               await this.props.updateCartsCallback(searchQuery);
             }}
-            storage={searchQueryStorage}
-          ></SearchForm>
+          />
           <ErrorButton />
         </header>
       </>

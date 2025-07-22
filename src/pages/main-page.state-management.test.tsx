@@ -4,71 +4,69 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { HttpResponse, delay, http } from 'msw';
-import { SetupServerApi, setupServer } from 'msw/node';
-import { describe, expect, it } from 'vitest';
+import { delay, http, HttpResponse } from 'msw';
+import { setupServer, SetupServerApi } from 'msw/node';
+import { expect } from 'vitest';
 
 import { apiService } from '../services/api-service';
 import { searchQueryStorage } from '../services/local-storage';
-import { testCharactersSearchArr } from '../test-utils/test-data';
+import { testCharactersSearchArray as testCharactersSearchArray } from '../test-utils/test-data';
+import MainPage from './main-page';
 
-import MainPage from './main-page.tsx';
+let server: SetupServerApi;
+const DELAY = 150;
 
-describe('State Management Tests', () => {
-  let server: SetupServerApi;
+afterEach(() => {
+  if (server !== undefined) {
+    server.resetHandlers();
+    server.close();
+  }
+});
+afterAll(() => {
+  server.close();
+});
 
-  afterEach(() => {
-    if (server != undefined) {
-      server.resetHandlers();
-      server.close();
-    }
+test('should update component state based on API responses', async () => {
+  const handlers = [
+    http.get('https://swapi.py4e.com/api/people/', async () => {
+      await delay(DELAY);
+
+      return HttpResponse.json(testCharactersSearchArray);
+    }),
+  ];
+
+  server = setupServer(...handlers);
+  server.listen();
+
+  render(<MainPage service={apiService} />);
+
+  expect(await screen.findByLabelText('spinner')).toBeInTheDocument();
+  await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
+  await waitFor(() => {
+    const cards = screen.getAllByTestId('results_card');
+
+    expect(cards).toBeDefined();
+    expect(cards).lengthOf(2);
   });
-  afterAll(() => server.close());
+});
 
-  it('updates component state based on API responses', async () => {
-    const handlers = [
-      http.get('https://swapi.py4e.com/api/people/', async () => {
-        await delay(150);
+test('should manage search term state correctly', async () => {
+  vi.spyOn(searchQueryStorage, 'getSearchQuery').mockImplementationOnce(
+    () => 'test',
+  );
 
-        return HttpResponse.json(testCharactersSearchArr);
-      }),
-    ];
+  const handlers = [
+    http.get('https://swapi.py4e.com/api/people/', async () => {
+      await delay(DELAY);
 
-    server = setupServer(...handlers);
-    server.listen();
+      return HttpResponse.json(testCharactersSearchArray);
+    }),
+  ];
 
-    render(<MainPage service={apiService} />);
+  server = setupServer(...handlers);
+  server.listen();
 
-    expect(await screen.findByLabelText('spinner')).toBeInTheDocument();
-    await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
-    await waitFor(() => {
-      const cards = screen.getAllByTestId('results_card');
+  render(<MainPage service={apiService} />);
 
-      expect(cards).toBeDefined();
-      expect(cards).lengthOf(2);
-    });
-  });
-
-  describe('manages search term state correctly', () => {
-    it('makes a request to /test route if the "test" search query was previously stored in localStorage', async () => {
-      vi.spyOn(searchQueryStorage, 'getSearchQuery').mockImplementationOnce(
-        () => 'test',
-      );
-
-      const handlers = [
-        http.get('https://swapi.py4e.com/api/people/', async () => {
-          await delay(150);
-
-          return HttpResponse.json(testCharactersSearchArr);
-        }),
-      ];
-
-      server = setupServer(...handlers);
-      server.listen();
-
-      render(<MainPage service={apiService} />);
-
-      expect(await screen.findAllByTestId('results_card')).toBeDefined();
-    });
-  });
+  expect(await screen.findAllByTestId('results_card')).toBeDefined();
 });
