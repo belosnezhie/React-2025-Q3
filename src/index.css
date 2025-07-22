@@ -1,13 +1,13 @@
 @import '../node_modules/modern-normalize/modern-normalize.css';
 
 :root {
-  --border: #204ecf;
-  --background: #83a5f2;
-  --error: #f26749;
-  --main-background: #fcded6;
-  --header-background: #f9a197;
-  --card-background: rgba(131,165,242,0.6);
-  --title: rgba(248, 249, 244, 0.8);
+  --border: hsl(224, 73%, 47%);
+  --background: hsl(222, 81%, 73%);
+  --error: 	hsl(11, 87%, 62%);
+  --main-background: 	hsl(13, 86%, 91%);
+  --header-background: hwb(6 58% 2%);
+  --card-background: hsla(221.62, 81.02%, 73.14%, 60%);
+  --title: hsla(72, 29.41%, 96.67%, 80%);
 }
 
 body {
