@@ -7,7 +7,7 @@ import { ApiService } from '@/services/api-service';
 import { testCharactersSearchArray } from '@/test-utils/test-data';
 import { setup } from '@/test-utils/user-event-setup';
 
-import MainPage from './main-page';
+import { MainPageClass as MainPage } from './main-page';
 
 let server: SetupServerApi;
 const DELAY = 150;

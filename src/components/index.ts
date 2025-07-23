@@ -1,5 +1,4 @@
 export { ErrorBoundary } from './error-boundary/error-boundary';
-export { FallbackUIPage } from './error-boundary/fallback-ui-page';
 export { ErrorButton } from './header/error-button';
 export { Header } from './header/header';
 export { Card } from './main/card';

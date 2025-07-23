@@ -1,16 +1,24 @@
 import { Component, ReactNode } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router';
+
+import { ErrorBoundary } from '@/components';
+import { NotFoundPage } from '@/pages/404-page/404-page';
+import { MainPage } from '@/pages/main-page/main-page';
+// import { apiService } from '@/services/api-service';
 
 import './app.css';
-import { ErrorBoundary } from '@/components';
-import MainPage from '@/pages/main-page';
-import { apiService } from '@/services/api-service';
 
 class App extends Component {
   render(): ReactNode {
     return (
       <>
         <ErrorBoundary>
-          <MainPage service={apiService} />
+          <BrowserRouter>
+            <Routes>
+              <Route element={<MainPage />} path="/" />
+              <Route element={<NotFoundPage />} path="*" />
+            </Routes>
+          </BrowserRouter>
         </ErrorBoundary>
       </>
     );

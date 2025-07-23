@@ -11,7 +11,11 @@ interface MainPageProps {
   service: ApiService;
 }
 
-class MainPage extends React.Component<MainPageProps> {
+export const MainPage = (): ReactNode => {
+  return <div className="mainpage" />;
+};
+
+export class MainPageClass extends React.Component<MainPageProps> {
   state = {
     charactersData: [],
     error: null,
@@ -89,5 +93,3 @@ class MainPage extends React.Component<MainPageProps> {
     }
   }
 }
-
-export default MainPage;
