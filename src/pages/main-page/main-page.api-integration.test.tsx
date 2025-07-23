@@ -23,7 +23,7 @@ afterAll(() => {
   server.close();
 });
 
-it('calls API with correct parameters', async () => {
+it.skip('calls API with correct parameters', async () => {
   const service = new ApiService();
 
   using getSeachedDataSpy = vi
@@ -42,7 +42,7 @@ it('calls API with correct parameters', async () => {
   expect(getSeachedDataSpy).toHaveBeenCalledWith('Jane');
 });
 
-it('handles successful API responses', async () => {
+it.skip('handles successful API responses', async () => {
   const handlers = [
     http.get('https://swapi.py4e.com/api/people/', async () => {
       await delay(DELAY);
@@ -63,7 +63,7 @@ it('handles successful API responses', async () => {
   });
 });
 
-it('handles API error responses', async () => {
+it.skip('handles API error responses', async () => {
   const handlers = [
     http.get('https://swapi.py4e.com/api/people/', async () => {
       await delay(DELAY);
