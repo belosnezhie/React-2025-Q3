@@ -7,11 +7,11 @@ export const useLocalStorage = (
 
   const [query, setQuery] = useState<string>(() => {
     const stored = localStorage.getItem(key);
-    return stored ?? newQuery;
+    return stored === '' || stored === null ? newQuery : stored;
   });
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(query));
+    localStorage.setItem(key, query);
   }, [key, query]);
 
   return [query, setQuery] as const;

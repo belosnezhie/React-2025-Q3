@@ -25,6 +25,13 @@ const fetchData = async (
   return responce;
 };
 
+// const searchData = async (
+//   searchQuery: string,
+//   service: ApiService,
+// ): Promise<SearchResponse> => {
+//   return await service.getSeachedData(searchQuery);
+// };
+
 const validateError = (error: unknown): Error => {
   return error instanceof Error ? error : new Error('Unknown error');
 };
@@ -61,6 +68,13 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
   useEffect(() => {
     fetchCharacters();
   }, [fetchCharacters]);
+
+  // const searchCharacters = async (newSearchQuery: string): Promise<void> => {
+  //   const responce = await searchData(newSearchQuery);
+
+  //   setSearchQuery(newSearchQuery);
+  //   setCharactersData(responce.results);
+  // };
 
   return (
     <>

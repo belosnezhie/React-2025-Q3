@@ -1,6 +1,8 @@
-import React, { JSX } from 'react';
+import React, { JSX, useState } from 'react';
 
 import './search-form.css';
+import { useSearchParams } from 'react-router-dom';
+
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { SearchQueryStorage } from '@/services/local-storage';
 
@@ -13,9 +15,11 @@ export const SearchForm = ({
   updateCartsCallback,
 }: SearchFormProps): JSX.Element => {
   const [query, setQuery] = useLocalStorage('');
+  const [currentInputValue, setCurrentInputValue] = useState<string>(query);
+  const [_, setSearchParameters] = useSearchParams();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setQuery(event.target.value);
+    setCurrentInputValue(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -29,7 +33,7 @@ export const SearchForm = ({
     const searchQuery: string = data.trim();
 
     setQuery(searchQuery);
-
+    setSearchParameters({ page: '1' });
     updateCartsCallback(searchQuery);
   };
 
@@ -45,7 +49,7 @@ export const SearchForm = ({
           name="search"
           onChange={handleChange}
           type="text"
-          value={query}
+          value={currentInputValue}
         />
         <input className="submit_input" type="submit" value="Search" />
       </form>
