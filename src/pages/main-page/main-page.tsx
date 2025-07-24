@@ -20,7 +20,7 @@ const fetchData = async (
   const currentPage = page ? Number(page) : 1;
 
   const responce = searchQuery
-    ? await service.getSeachedData(searchQuery)
+    ? await service.getSeachedData(searchQuery, currentPage)
     : await service.getDefaultData(currentPage);
   return responce;
 };

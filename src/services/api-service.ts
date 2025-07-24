@@ -24,8 +24,11 @@ export class ApiService {
     return data;
   }
 
-  async getSeachedData(searchQuery: string): Promise<SearchResponse> {
-    const url = `${BASE_URL}/?search=${searchQuery}&format=json`;
+  async getSeachedData(
+    searchQuery: string,
+    pageNumber = 1,
+  ): Promise<SearchResponse> {
+    const url = `${BASE_URL}/?page=${pageNumber}&search=${searchQuery}&format=json`;
 
     const resp: Response = await fetch(url);
 
