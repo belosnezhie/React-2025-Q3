@@ -10,10 +10,12 @@ export interface CharacterSearchResponse {
 }
 
 export interface SearchResponse {
+  count: number;
   results: CharacterSearchResponse[];
 }
 
 export class DefaultSearchResp implements SearchResponse {
+  count = 1;
   results: CharacterSearchResponse[];
 
   constructor() {

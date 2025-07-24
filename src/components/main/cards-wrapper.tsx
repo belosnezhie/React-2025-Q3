@@ -1,9 +1,9 @@
 import { JSX } from 'react';
 
 import { Card } from '@/components';
-import { CharacterSearchResponse } from '@/model/types-star-wars';
 
 import './main.css';
+import { CharacterSearchResponse } from '@/model/types-star-wars';
 
 interface CardsWrapperProps {
   cardCharacterData: CharacterSearchResponse[];
@@ -23,10 +23,10 @@ export const CardsWrapper = ({
   }
 
   return (
-    <>
+    <div className="cards_wrapper">
       {cardCharacterData.map((object, index) => {
         return <Card cardData={object} key={index} />;
       })}
-    </>
+    </div>
   );
 };

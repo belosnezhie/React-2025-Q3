@@ -6,8 +6,6 @@ import { NotFoundPage } from '@/pages/404-page/404-page';
 import { MainPage } from '@/pages/main-page/main-page';
 import { apiService } from '@/services/api-service';
 
-import './app.css';
-
 const App = (): ReactNode => {
   return (
     <>
