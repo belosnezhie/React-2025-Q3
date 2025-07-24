@@ -12,6 +12,12 @@ if (!rootElement) {
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
+    {/* <Suspense
+      fallback={
+        <div aria-label="spinner" className="spinner" data-testid="spinner" />
+      }
+    > */}
     <App />
+    {/* </Suspense> */}
   </React.StrictMode>,
 );

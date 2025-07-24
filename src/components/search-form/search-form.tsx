@@ -5,7 +5,7 @@ import { SearchQueryStorage } from '@/services/local-storage';
 
 interface SearchFormProps {
   storage: SearchQueryStorage;
-  updateCartsCallback: (searchQuery: string) => Promise<void>;
+  updateCartsCallback: (searchQuery: string) => void;
 }
 
 export const SearchForm = ({
@@ -20,9 +20,7 @@ export const SearchForm = ({
     setCurrentInputValue(event.target.value);
   };
 
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-  ): Promise<void> => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget).get('search');
@@ -34,7 +32,7 @@ export const SearchForm = ({
 
     storage.setSearchQuery(searchQuery);
 
-    await updateCartsCallback(searchQuery);
+    updateCartsCallback(searchQuery);
   };
 
   return (
@@ -46,6 +44,7 @@ export const SearchForm = ({
       >
         <input
           className="search_input"
+          name="search"
           onChange={handleChange}
           type="text"
           value={currentInputValue}

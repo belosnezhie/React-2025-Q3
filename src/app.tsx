@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { ErrorBoundary } from '@/components';
 import { NotFoundPage } from '@/pages/404-page/404-page';
 import { MainPage } from '@/pages/main-page/main-page';
-// import { apiService } from '@/services/api-service';
+import { apiService } from '@/services/api-service';
 
 import './app.css';
 
@@ -15,7 +15,7 @@ class App extends Component {
         <ErrorBoundary>
           <BrowserRouter>
             <Routes>
-              <Route element={<MainPage />} path="/" />
+              <Route element={<MainPage service={apiService} />} path="/" />
               <Route element={<NotFoundPage />} path="*" />
             </Routes>
           </BrowserRouter>

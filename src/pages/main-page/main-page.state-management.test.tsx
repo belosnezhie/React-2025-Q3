@@ -12,7 +12,7 @@ import { apiService } from '@/services/api-service';
 import { searchQueryStorage } from '@/services/local-storage';
 import { testCharactersSearchArray } from '@/test-utils/test-data';
 
-import { MainPageClass as MainPage } from './main-page';
+import { MainPage } from './main-page';
 
 let server: SetupServerApi;
 const DELAY = 150;

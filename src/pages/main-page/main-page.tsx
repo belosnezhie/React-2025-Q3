@@ -1,95 +1,51 @@
-import React, { ReactNode } from 'react';
+import { JSX, Suspense, useCallback, useEffect, useState } from 'react';
 
 import { Header } from '@/components';
 import { CardsWrapper } from '@/components';
+import { CharacterSearchResponse } from '@/model/types-star-wars';
 import { ApiService } from '@/services/api-service';
 import { searchQueryStorage } from '@/services/local-storage';
 
 const PAGE = 1;
 
-interface MainPageProps {
-  service: ApiService;
-}
+export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
+  const [searchQuery, setSearchQuery] = useState<string>(
+    searchQueryStorage.getSearchQuery(),
+  );
+  const [characters, setCharacters] = useState<CharacterSearchResponse[]>([]);
 
-export const MainPage = (): ReactNode => {
-  return <div className="mainpage" />;
-};
+  const fetchCharacters = useCallback(async (): Promise<void> => {
+    const respornce = searchQuery
+      ? await service.getSeachedData(searchQuery)
+      : await service.getDefaultData(PAGE);
+    setCharacters(respornce.results);
+  }, [searchQuery, service]);
 
-export class MainPageClass extends React.Component<MainPageProps> {
-  state = {
-    charactersData: [],
-    error: null,
-    isLoading: false,
-  };
-  private service: ApiService;
+  useEffect(() => {
+    fetchCharacters();
+  }, [fetchCharacters]);
 
-  private storage = searchQueryStorage;
-
-  constructor(props: MainPageProps) {
-    super(props);
-    this.service = this.props.service;
-  }
-
-  async componentDidMount(): Promise<void> {
-    const searchQuery = this.storage.getSearchQuery();
-
-    this.setState({ error: null, isLoading: true });
-
-    try {
-      const response = await (searchQuery
-        ? this.service.getSeachedData(searchQuery)
-        : this.service.getDefaultData(PAGE));
-      this.setState({ charactersData: response.results });
-    } catch (error) {
-      this.setState({
-        charactersData: [],
-        error: error instanceof Error ? error : 'Unknown error',
-      });
-    } finally {
-      this.setState({ isLoading: false });
-    }
-  }
-
-  render(): ReactNode {
-    const { charactersData, error, isLoading } = this.state;
-
-    return (
-      <>
-        <Header
-          updateCartsCallback={async (searchQuery: string): Promise<void> => {
-            await this.searchData(searchQuery);
-          }}
-        />
-        <main className="cards_wrapper">
-          {isLoading ? (
+  return (
+    <>
+      <Header
+        updateCartsCallback={(newSearchQuery: string) => {
+          setSearchQuery(newSearchQuery);
+        }}
+      />
+      <main className="cards_wrapper">
+        <Suspense
+          fallback={
             <div
               aria-label="spinner"
               className="spinner"
               data-testid="spinner"
             />
-          ) : (
-            <CardsWrapper cardCharacterData={charactersData} error={error} />
-          )}
-          <div className="yoda" />
-        </main>
-      </>
-    );
-  }
-
-  async searchData(searchQuery: string): Promise<void> {
-    this.setState({ error: null, isLoading: true });
-
-    try {
-      const response = await this.service.getSeachedData(searchQuery);
-
-      this.setState({ charactersData: response.results });
-    } catch (error) {
-      this.setState({
-        charactersData: [],
-        error: error instanceof Error ? error : 'Unknown error',
-      });
-    } finally {
-      this.setState({ isLoading: false });
-    }
-  }
-}
+          }
+        >
+          <CardsWrapper cardCharacterData={characters} error={null} />
+        </Suspense>
+        <div className="yoda" />
+      </main>
+    </>
+  );
+};
