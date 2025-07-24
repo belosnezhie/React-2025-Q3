@@ -1,4 +1,4 @@
-import { JSX, useState } from 'react';
+import { JSX } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import './pagination.css';
@@ -8,11 +8,11 @@ export const Pagination = ({
 }: {
   pagesCount: number;
 }): JSX.Element => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [, setSearchParameters] = useSearchParams();
+  const [searchParameters, setSearchParameters] = useSearchParams();
+
+  const currentPage = Number(searchParameters.get('page')) || 1;
 
   const handlePageChange = (index: number): void => {
-    setCurrentPage(index);
     setSearchParameters({ page: String(index) });
   };
 
