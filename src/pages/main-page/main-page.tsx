@@ -2,9 +2,9 @@ import { JSX, useCallback, useEffect, useState } from 'react';
 
 import { Header } from '@/components';
 import { CardsWrapper } from '@/components';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 import { CharacterSearchResponse } from '@/model/types-star-wars';
 import { ApiService } from '@/services/api-service';
-import { searchQueryStorage } from '@/services/local-storage';
 
 const PAGE = 1;
 
@@ -23,9 +23,8 @@ const validateError = (error: unknown): Error => {
 };
 
 export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
-  const [searchQuery, setSearchQuery] = useState<string>(
-    searchQueryStorage.getSearchQuery(),
-  );
+  const [query] = useLocalStorage('');
+  const [searchQuery, setSearchQuery] = useState<string>(query);
   const [characters, setCharacters] = useState<CharacterSearchResponse[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<Error | null>(null);
