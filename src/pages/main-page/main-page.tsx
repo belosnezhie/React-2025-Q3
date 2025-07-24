@@ -1,4 +1,4 @@
-import { JSX, Suspense, useCallback, useEffect, useState } from 'react';
+import { JSX, useCallback, useEffect, useState } from 'react';
 
 import { Header } from '@/components';
 import { CardsWrapper } from '@/components';
@@ -8,17 +8,38 @@ import { searchQueryStorage } from '@/services/local-storage';
 
 const PAGE = 1;
 
+const fetchData = async (
+  searchQuery: null | string,
+  service: ApiService,
+): Promise<CharacterSearchResponse[]> => {
+  const responce = searchQuery
+    ? await service.getSeachedData(searchQuery)
+    : await service.getDefaultData(PAGE);
+  return responce.results;
+};
+
+const validateError = (error: unknown): Error => {
+  return error instanceof Error ? error : new Error('Unknown error');
+};
+
 export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState<string>(
     searchQueryStorage.getSearchQuery(),
   );
   const [characters, setCharacters] = useState<CharacterSearchResponse[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<Error | null>(null);
 
   const fetchCharacters = useCallback(async (): Promise<void> => {
-    const respornce = searchQuery
-      ? await service.getSeachedData(searchQuery)
-      : await service.getDefaultData(PAGE);
-    setCharacters(respornce.results);
+    setLoading(true);
+
+    try {
+      setCharacters(await fetchData(searchQuery, service));
+    } catch (error_) {
+      setErrorMessage(validateError(error_));
+    }
+
+    setLoading(false);
   }, [searchQuery, service]);
 
   useEffect(() => {
@@ -33,17 +54,11 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
         }}
       />
       <main className="cards_wrapper">
-        <Suspense
-          fallback={
-            <div
-              aria-label="spinner"
-              className="spinner"
-              data-testid="spinner"
-            />
-          }
-        >
-          <CardsWrapper cardCharacterData={characters} error={null} />
-        </Suspense>
+        {isLoading ? (
+          <div aria-label="spinner" className="spinner" data-testid="spinner" />
+        ) : (
+          <CardsWrapper cardCharacterData={characters} error={errorMessage} />
+        )}
         <div className="yoda" />
       </main>
     </>
