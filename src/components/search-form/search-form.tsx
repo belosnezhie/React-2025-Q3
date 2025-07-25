@@ -8,7 +8,7 @@ import { SearchQueryStorage } from '@/services/local-storage';
 
 interface SearchFormProps {
   storage: SearchQueryStorage;
-  updateCartsCallback: (searchQuery: string) => void;
+  updateCartsCallback: (searchQuery: string) => Promise<void>;
 }
 
 export const SearchForm = ({
@@ -22,8 +22,11 @@ export const SearchForm = ({
     setCurrentInputValue(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     event.preventDefault();
+    setSearchParameters({ page: '1' });
 
     const data = new FormData(event.currentTarget).get('search');
 
@@ -33,8 +36,7 @@ export const SearchForm = ({
     const searchQuery: string = data.trim();
 
     setQuery(searchQuery);
-    setSearchParameters({ page: '1' });
-    updateCartsCallback(searchQuery);
+    await updateCartsCallback(searchQuery);
   };
 
   return (
