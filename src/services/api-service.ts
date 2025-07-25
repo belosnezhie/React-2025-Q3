@@ -28,13 +28,10 @@ export class ApiService {
     pageNumber: number,
     searchQuery?: null | string,
   ): Promise<SearchResponse> {
-    let defaultUrl;
-
-    if (searchQuery !== '' && searchQuery !== 'null') {
-      defaultUrl = `/?search=${searchQuery}&format=json&page=${pageNumber}`;
-    }
-
-    defaultUrl = `/?page=${pageNumber}`;
+    const defaultUrl =
+      searchQuery !== '' && searchQuery !== 'null'
+        ? `${BASE_URL}/?search=${searchQuery}&format=json&page=${pageNumber}`
+        : `${BASE_URL}/?page=${pageNumber}`;
 
     const resp: Response = await fetch(defaultUrl);
 
