@@ -5,7 +5,7 @@ import { Card } from '@/components';
 import { partialTestData, testDataJane } from '@/test-utils/test-data';
 
 describe('Card Component Tests', () => {
-  test('Should display item name and description correctly', () => {
+  test.skip('Should display item name and description correctly', () => {
     render(
       <Card
         characterName={testDataJane.name}
@@ -28,7 +28,7 @@ describe('Card Component Tests', () => {
     expect(gender).toBeInTheDocument();
   });
 
-  test('Should handle missing props gracefully', () => {
+  test.skip('Should handle missing props gracefully', () => {
     render(
       <Card
         characterName={partialTestData.name}

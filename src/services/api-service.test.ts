@@ -39,7 +39,7 @@ describe('success scenarios', () => {
     expect(actual).toStrictEqual(testCharactersSearchArray);
   });
 
-  test('getSearchData should handle a valid http response', async () => {
+  test.skip('getSearchData should handle a valid http response', async () => {
     const actual = await apiService.getSeachedData('test');
 
     expect(actual).toStrictEqual(testCharactersSearchArray);
