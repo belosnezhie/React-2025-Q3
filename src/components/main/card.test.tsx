@@ -6,7 +6,12 @@ import { partialTestData, testDataJane } from '@/test-utils/test-data';
 
 describe('Card Component Tests', () => {
   test('Should display item name and description correctly', () => {
-    render(<Card cardData={testDataJane} />);
+    render(
+      <Card
+        characterName={testDataJane.name}
+        characterURL={testDataJane.url}
+      />,
+    );
 
     const name = screen.getByText('Name: Jane Dow');
     const hairColor = screen.getByText('Hair color: Orange');
@@ -24,7 +29,12 @@ describe('Card Component Tests', () => {
   });
 
   test('Should handle missing props gracefully', () => {
-    render(<Card cardData={partialTestData} />);
+    render(
+      <Card
+        characterName={partialTestData.name}
+        characterURL={partialTestData.url}
+      />,
+    );
 
     const name = screen.getByText('Name: N/A');
     const hairColor = screen.getByText('Hair color: N/A');
