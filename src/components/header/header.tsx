@@ -16,12 +16,12 @@ export const Header = ({
         {pageType === 'main' ? (
           <>
             <SearchForm />
-            <NavLink className={'link'} to={'/about'}>
+            <NavLink className="link" to={'/about'}>
               About
             </NavLink>
           </>
         ) : (
-          <NavLink className={'link'} to={'/'}>
+          <NavLink className="link" to={'/'}>
             Main page
           </NavLink>
         )}

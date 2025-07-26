@@ -15,21 +15,12 @@
   color: var(--title);
 }
 
-.throw_error_button {
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--error);
-  cursor: pointer;
-  border: none;
-  border-radius: 10px;
-  color: white;
+.link {
   transition: 0.3s;
 }
 
 @media (hover: hover) {
-  .throw_error_button:hover {
+  .link:hover {
     transform: scale(0.95);
   }
 }

@@ -41,6 +41,7 @@
   height: 60px;
   background-position: center center;
   background-size: cover;
+  transition: 0.3s;
 }
 
 .rss_link {
@@ -50,4 +51,11 @@
 
 .github_link {
   background-image: url('../../assets/github-mark.svg');
+}
+
+@media (hover: hover) {
+  .github_link:hover,
+  .rss_link:hover {
+    transform: scale(0.90);
+  }
 }
