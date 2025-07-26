@@ -1,10 +1,11 @@
 import { JSX, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
+import { Spinner } from '@/components';
 import { CharacterSearchResponse } from '@/model/types-star-wars';
-import { ApiService } from '@/services/api-service';
 
 import './detailes-section.css';
+import { ApiService } from '@/services/api-service';
 
 interface DetailedSectionProps {
   service: ApiService;
@@ -15,8 +16,7 @@ const DetailedSection = ({
 }: DetailedSectionProps): JSX.Element | null => {
   const [characterData, setCharacterData] = useState<CharacterSearchResponse>();
   const { characterID } = useParams();
-  const [searchParameters, setSearchParameters] = useSearchParams();
-  const [pageParameters] = useState(Number(searchParameters.get('page')));
+  const [searchParameters] = useSearchParams();
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -38,15 +38,15 @@ const DetailedSection = ({
   }, [getCharacterData, searchParameters]);
 
   const handleClick = (): void => {
-    setSearchParameters({ page: String(pageParameters) });
-    navigate('/');
+    const page = searchParameters.get('page') ?? 1;
+    navigate(`/?page=${page}`);
     setDestroyed(true);
   };
 
   return isDestroyed ? null : (
-    <main className="detailed_results">
+    <aside className="detailed_results">
       {isLoading ? (
-        <div className="spinner detailed" />
+        <Spinner />
       ) : (
         <>
           {characterData ? (
@@ -59,12 +59,12 @@ const DetailedSection = ({
               <p>Gender: {characterData.gender}</p>
             </>
           ) : null}
-          <button className="close_detailed" onClick={handleClick}>
+          <button className="close" onClick={handleClick}>
             X
           </button>
         </>
       )}
-    </main>
+    </aside>
   );
 };
 

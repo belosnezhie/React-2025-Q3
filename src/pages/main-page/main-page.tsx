@@ -4,11 +4,12 @@ import { Outlet, useSearchParams } from 'react-router-dom';
 import { Header } from '@/components';
 import { CardsWrapper } from '@/components';
 import { Pagination } from '@/components';
+import { Spinner } from '@/components';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { SearchResponse } from '@/model/types-star-wars';
-import { ApiService } from '@/services/api-service';
 
 import './main-page.css';
+import { ApiService } from '@/services/api-service';
 
 const MAX_PER_PAGE = 10;
 
@@ -61,27 +62,25 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
   return (
     <>
       <Header />
-      <main className="wrapper">
-        <section>
-          {isLoading ? (
-            <div
-              aria-label="spinner"
-              className="spinner"
-              data-testid="spinner"
-            />
-          ) : (
-            <>
-              <CardsWrapper
-                cardCharacterData={charactersData.results}
-                error={errorMessage}
-              />
-              <Pagination pagesCount={countPages(charactersData.count)} />
-            </>
-          )}
-          <div className="yoda" />
-        </section>
-      </main>
-      <Outlet />
+      <div className="container">
+        <main className="main">
+          <section>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <>
+                <CardsWrapper
+                  cardCharacterData={charactersData.results}
+                  error={errorMessage}
+                />
+                <Pagination pagesCount={countPages(charactersData.count)} />
+              </>
+            )}
+            <div className="yoda" />
+          </section>
+        </main>
+        <Outlet />
+      </div>
     </>
   );
 };

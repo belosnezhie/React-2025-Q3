@@ -19,12 +19,12 @@ export const Card = ({
   };
 
   return (
-    <>
-      <div className="card" data-testid="results_card">
-        <NavLink to={`/${getID()}?page=${currentPage}`}>
-          Name: {characterName}
-        </NavLink>
-      </div>
-    </>
+    <NavLink
+      className="card"
+      data-testid="results_card"
+      to={`/${getID()}?page=${currentPage}`}
+    >
+      Name: {characterName}
+    </NavLink>
   );
 };

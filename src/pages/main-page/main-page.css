@@ -1,4 +1,4 @@
-.wrapper {
+.main {
   min-height: 85vh;
   padding: 2%;
   display: flex;
@@ -6,4 +6,16 @@
   gap: 1em;
   flex-wrap: wrap;
   background-color: var(--main-background);
+}
+
+.container:has(.detailed_results) {
+  display: flex;
+
+  .main {
+    width: 60%;
+  }
+
+  .detailed_results {
+    width: 40%;
+  }
 }
