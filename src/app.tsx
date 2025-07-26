@@ -2,9 +2,10 @@ import { ReactNode } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
 import { ErrorBoundary } from '@/components';
-import DetailedSection from '@/components/detailes-section/detailes-section';
-import { NotFoundPage } from '@/pages/404-page/404-page';
-import { MainPage } from '@/pages/main-page/main-page';
+import { DetailedSection } from '@/components';
+import { AboutPage } from '@/pages';
+import { MainPage } from '@/pages';
+import { NotFoundPage } from '@/pages';
 import { apiService } from '@/services/api-service';
 
 const App = (): ReactNode => {
@@ -19,6 +20,7 @@ const App = (): ReactNode => {
                 path=":characterID"
               />
             </Route>
+            <Route element={<AboutPage />} path="/about" />
             <Route element={<NotFoundPage />} path="*" />
           </Routes>
         </BrowserRouter>

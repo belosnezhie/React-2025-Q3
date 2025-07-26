@@ -11,7 +11,7 @@ interface DetailedSectionProps {
   service: ApiService;
 }
 
-const DetailedSection = ({
+export const DetailedSection = ({
   service,
 }: DetailedSectionProps): JSX.Element | null => {
   const [characterData, setCharacterData] = useState<CharacterSearchResponse>();
@@ -67,5 +67,3 @@ const DetailedSection = ({
     </aside>
   );
 };
-
-export default DetailedSection;

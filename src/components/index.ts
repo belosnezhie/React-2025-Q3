@@ -1,3 +1,4 @@
+export { DetailedSection } from './detailes-section/detailes-section';
 export { ErrorBoundary } from './error-boundary/error-boundary';
 export { Header } from './header/header';
 export { Card } from './main/card';

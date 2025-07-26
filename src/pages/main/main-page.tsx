@@ -61,7 +61,7 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
 
   return (
     <>
-      <Header />
+      <Header pageType="main" />
       <div className="container">
         <main className="main">
           <section>
