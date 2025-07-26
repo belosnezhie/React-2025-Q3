@@ -1,4 +1,4 @@
-import React, { useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useSyncExternalStore } from 'react';
 
 let listeners: (() => void)[] = [];
 const subscribe = (listener: () => void): (() => void) => {
@@ -7,18 +7,16 @@ const subscribe = (listener: () => void): (() => void) => {
     listeners = listeners.filter((l) => l !== listener);
   };
 };
-const getSnapshot = (key: string): null | string => localStorage.getItem(key);
+const getSnapshot = (key: string): string => localStorage.getItem(key) ?? '';
 
 export const useLocalStorage = (
   initialValue: string,
-): [null | string, (nextState: string) => void] => {
+): [string, (nextState: string) => void] => {
   const key = 'User_JSFE2023Q4';
 
-  const store: null | string = useSyncExternalStore(subscribe, () =>
-    getSnapshot(key),
-  );
+  const store: string = useSyncExternalStore(subscribe, () => getSnapshot(key));
 
-  const setState = React.useCallback(
+  const setState = useCallback(
     (nextState: string) => {
       if (nextState === undefined || nextState === null) {
         localStorage.removeItem(key);
@@ -29,7 +27,7 @@ export const useLocalStorage = (
     [key, store],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (localStorage.getItem(key) === null && initialValue !== undefined) {
       localStorage.setItem(key, initialValue);
     }

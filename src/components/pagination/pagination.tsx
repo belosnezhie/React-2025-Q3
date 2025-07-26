@@ -9,13 +9,11 @@ export const Pagination = ({
   pagesCount: number;
 }): JSX.Element => {
   const [searchParameters, setSearchParameters] = useSearchParams();
-  // const navigate = useNavigate();
 
   const currentPage = Number(searchParameters.get('page')) || 1;
 
   const handlePageChange = (index: number): void => {
     setSearchParameters({ page: String(index) });
-    // navigate(`/?page=${index}`);
   };
 
   return (
