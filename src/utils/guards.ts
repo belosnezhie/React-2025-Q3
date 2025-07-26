@@ -3,7 +3,7 @@ import {
   SearchResponse,
 } from '@/model/types-star-wars';
 
-const validateCharacterSearchResponse = (
+export const validateCharacterSearchResponse = (
   object: unknown,
 ): object is CharacterSearchResponse => {
   if (typeof object !== 'object' || object === null) {
@@ -15,6 +15,10 @@ const validateCharacterSearchResponse = (
   const map = new Map(entries);
 
   if (typeof map.get('name') !== 'string') {
+    return false;
+  }
+
+  if (typeof map.get('url') !== 'string') {
     return false;
   }
 

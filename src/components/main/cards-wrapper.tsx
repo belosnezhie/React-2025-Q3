@@ -25,7 +25,13 @@ export const CardsWrapper = ({
   return (
     <div className="cards_wrapper">
       {cardCharacterData.map((object, index) => {
-        return <Card cardData={object} key={index} />;
+        return (
+          <Card
+            characterName={object.name}
+            characterURL={object.url}
+            key={index}
+          />
+        );
       })}
     </div>
   );

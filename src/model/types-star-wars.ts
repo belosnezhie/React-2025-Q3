@@ -7,6 +7,7 @@ export interface CharacterSearchResponse {
   mass?: string;
   name: string;
   skin_color?: string;
+  url: string;
 }
 
 export interface SearchResponse {
@@ -19,6 +20,6 @@ export class DefaultSearchResp implements SearchResponse {
   results: CharacterSearchResponse[];
 
   constructor() {
-    this.results = [{ name: '' } satisfies CharacterSearchResponse];
+    this.results = [{ name: '', url: '' } satisfies CharacterSearchResponse];
   }
 }

@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
 import { ErrorBoundary } from '@/components';
+import DetailedSection from '@/components/detailes-section/detailes-section';
 import { NotFoundPage } from '@/pages/404-page/404-page';
 import { MainPage } from '@/pages/main-page/main-page';
 import { apiService } from '@/services/api-service';
@@ -12,7 +13,12 @@ const App = (): ReactNode => {
       <ErrorBoundary>
         <BrowserRouter>
           <Routes>
-            <Route element={<MainPage service={apiService} />} path="/" />
+            <Route element={<MainPage service={apiService} />} path="/">
+              <Route
+                element={<DetailedSection service={apiService} />}
+                path=":characterID"
+              />
+            </Route>
             <Route element={<NotFoundPage />} path="*" />
           </Routes>
         </BrowserRouter>

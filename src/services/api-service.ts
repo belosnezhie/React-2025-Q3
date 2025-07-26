@@ -1,5 +1,11 @@
-import { SearchResponse } from '@/model/types-star-wars';
-import { validateSearchResponse } from '@/utils/guards';
+import {
+  CharacterSearchResponse,
+  SearchResponse,
+} from '@/model/types-star-wars';
+import {
+  validateCharacterSearchResponse,
+  validateSearchResponse,
+} from '@/utils/guards';
 
 const BASE_URL = 'https://swapi.py4e.com/api/people';
 
@@ -30,8 +36,8 @@ export class ApiService {
     return data;
   }
 
-  async getSeachedData(searchQuery: string): Promise<SearchResponse> {
-    const url = `${BASE_URL}/?search=${searchQuery}&format=json`;
+  async getSeachedData(searchID: string): Promise<CharacterSearchResponse> {
+    const url = `${BASE_URL}/${searchID}/`;
 
     const resp: Response = await fetch(url);
 
@@ -41,7 +47,7 @@ export class ApiService {
 
     const data: unknown = await resp.json();
 
-    if (!validateSearchResponse(data)) {
+    if (!validateCharacterSearchResponse(data)) {
       throw new Error('Wrong data.');
     }
 
