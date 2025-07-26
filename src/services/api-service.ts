@@ -6,8 +6,14 @@ const BASE_URL = 'https://swapi.py4e.com/api/people';
 const OK_STATUS_CODE = 200;
 
 export class ApiService {
-  async getDefaultData(pageNumber: number): Promise<SearchResponse> {
-    const defaultUrl = `${BASE_URL}/?page=${pageNumber}`;
+  async getDefaultData(
+    pageNumber: number,
+    searchQuery?: null | string,
+  ): Promise<SearchResponse> {
+    const defaultUrl =
+      searchQuery !== '' && searchQuery !== null
+        ? `${BASE_URL}/?search=${searchQuery}&format=json&page=${pageNumber}`
+        : `${BASE_URL}/?page=${pageNumber}`;
 
     const resp: Response = await fetch(defaultUrl);
 
@@ -24,11 +30,8 @@ export class ApiService {
     return data;
   }
 
-  async getSeachedData(
-    searchQuery: string,
-    pageNumber = 1,
-  ): Promise<SearchResponse> {
-    const url = `${BASE_URL}/?page=${pageNumber}&search=${searchQuery}&format=json`;
+  async getSeachedData(searchQuery: string): Promise<SearchResponse> {
+    const url = `${BASE_URL}/?search=${searchQuery}&format=json`;
 
     const resp: Response = await fetch(url);
 

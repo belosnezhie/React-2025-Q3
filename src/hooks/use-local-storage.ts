@@ -1,18 +1,37 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useCallback, useEffect, useSyncExternalStore } from 'react';
+
+let listeners: (() => void)[] = [];
+const subscribe = (listener: () => void): (() => void) => {
+  listeners = [...listeners, listener];
+  return (): void => {
+    listeners = listeners.filter((l) => l !== listener);
+  };
+};
+const getSnapshot = (key: string): string => localStorage.getItem(key) ?? '';
 
 export const useLocalStorage = (
-  newQuery: string,
-): [string, Dispatch<SetStateAction<string>>] => {
+  initialValue: string,
+): [string, (nextState: string) => void] => {
   const key = 'User_JSFE2023Q4';
 
-  const [query, setQuery] = useState<string>(() => {
-    const stored = localStorage.getItem(key);
-    return stored === '' || stored === null ? newQuery : stored;
-  });
+  const store: string = useSyncExternalStore(subscribe, () => getSnapshot(key));
+
+  const setState = useCallback(
+    (nextState: string) => {
+      if (nextState === undefined || nextState === null) {
+        localStorage.removeItem(key);
+      } else {
+        localStorage.setItem(key, nextState);
+      }
+    },
+    [key, store],
+  );
 
   useEffect(() => {
-    localStorage.setItem(key, query);
-  }, [key, query]);
+    if (localStorage.getItem(key) === null && initialValue !== undefined) {
+      localStorage.setItem(key, initialValue);
+    }
+  }, [key, initialValue]);
 
-  return [query, setQuery] as const;
+  return [store ?? initialValue, setState];
 };

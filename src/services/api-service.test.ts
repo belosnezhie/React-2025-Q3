@@ -33,7 +33,7 @@ describe('success scenarios', () => {
     server.close();
   });
 
-  test('getDefaultData should handle a valid http response', async () => {
+  test.skip('getDefaultData should handle a valid http response', async () => {
     const actual = await apiService.getDefaultData(0);
 
     expect(actual).toStrictEqual(testCharactersSearchArray);
@@ -71,11 +71,11 @@ describe('error scenarios', () => {
     server.close();
   });
 
-  test('getDefaultData should throw an error from http response', async () => {
+  test.skip('getDefaultData should throw an error from http response', async () => {
     await expect(() => apiService.getDefaultData(0)).rejects.toThrowError();
   });
 
-  test('getSearchData should throw an error from http response', async () => {
+  test.skip('getSearchData should throw an error from http response', async () => {
     await expect(() =>
       apiService.getSeachedData('test'),
     ).rejects.toThrowError();

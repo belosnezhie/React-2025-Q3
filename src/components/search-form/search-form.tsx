@@ -1,19 +1,10 @@
-import React, { JSX, useState } from 'react';
-
 import './search-form.css';
+import React, { JSX, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useLocalStorage } from '@/hooks/use-local-storage';
-import { SearchQueryStorage } from '@/services/local-storage';
 
-interface SearchFormProps {
-  storage: SearchQueryStorage;
-  updateCartsCallback: (searchQuery: string) => void;
-}
-
-export const SearchForm = ({
-  updateCartsCallback,
-}: SearchFormProps): JSX.Element => {
+export const SearchForm = (): JSX.Element => {
   const [query, setQuery] = useLocalStorage('');
   const [currentInputValue, setCurrentInputValue] = useState<string>(query);
   const [_, setSearchParameters] = useSearchParams();
@@ -30,11 +21,10 @@ export const SearchForm = ({
     if (typeof data !== 'string') {
       throw new TypeError('Invalid input');
     }
-    const searchQuery: string = data.trim();
+    const currentQuery: string = data.trim();
+    setQuery(currentQuery);
 
-    setQuery(searchQuery);
     setSearchParameters({ page: '1' });
-    updateCartsCallback(searchQuery);
   };
 
   return (

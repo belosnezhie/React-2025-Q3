@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { Header } from '@/components';
 import { CardsWrapper } from '@/components';
-import { Pagination } from '@/components/pagination/pagination';
+import { Pagination } from '@/components';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { SearchResponse } from '@/model/types-star-wars';
 import { ApiService } from '@/services/api-service';
@@ -11,26 +11,6 @@ import { ApiService } from '@/services/api-service';
 import './main-page.css';
 
 const MAX_PER_PAGE = 10;
-
-const fetchData = async (
-  searchQuery: null | string,
-  service: ApiService,
-  page: null | string,
-): Promise<SearchResponse> => {
-  const currentPage = page ? Number(page) : 1;
-
-  const responce = searchQuery
-    ? await service.getSeachedData(searchQuery, currentPage)
-    : await service.getDefaultData(currentPage);
-  return responce;
-};
-
-// const searchData = async (
-//   searchQuery: string,
-//   service: ApiService,
-// ): Promise<SearchResponse> => {
-//   return await service.getSeachedData(searchQuery);
-// };
 
 const validateError = (error: unknown): Error => {
   return error instanceof Error ? error : new Error('Unknown error');
@@ -42,7 +22,6 @@ const countPages = (resultsLength: number): number => {
 
 export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
   const [query] = useLocalStorage('');
-  const [searchQuery, setSearchQuery] = useState<string>(query);
   const [charactersData, setCharactersData] = useState<SearchResponse>({
     count: 0,
     results: [],
@@ -51,38 +30,37 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
   const [errorMessage, setErrorMessage] = useState<Error | null>(null);
   const [searchParameters] = useSearchParams();
 
-  const fetchCharacters = useCallback(async (): Promise<void> => {
-    setLoading(true);
+  const fetchCharacters = useCallback(
+    async (
+      currentQuery: string,
+      searchParameters: URLSearchParams,
+    ): Promise<void> => {
+      setLoading(true);
 
-    try {
-      setCharactersData(
-        await fetchData(searchQuery, service, searchParameters.get('page')),
-      );
-    } catch (error_) {
-      setErrorMessage(validateError(error_));
-    }
+      const page =
+        searchParameters.get('page') === null
+          ? '1'
+          : searchParameters.get('page');
 
-    setLoading(false);
-  }, [searchQuery, service, searchParameters]);
+      try {
+        const resp = await service.getDefaultData(Number(page), currentQuery);
+        setCharactersData(resp);
+      } catch (error_) {
+        setErrorMessage(validateError(error_));
+      }
+
+      setLoading(false);
+    },
+    [query, searchParameters],
+  );
 
   useEffect(() => {
-    fetchCharacters();
-  }, [fetchCharacters]);
-
-  // const searchCharacters = async (newSearchQuery: string): Promise<void> => {
-  //   const responce = await searchData(newSearchQuery);
-
-  //   setSearchQuery(newSearchQuery);
-  //   setCharactersData(responce.results);
-  // };
+    fetchCharacters(query, searchParameters);
+  }, [fetchCharacters, query, searchParameters]);
 
   return (
     <>
-      <Header
-        updateCartsCallback={(newSearchQuery: string) => {
-          setSearchQuery(newSearchQuery);
-        }}
-      />
+      <Header />
       <main className="wrapper">
         {isLoading ? (
           <div aria-label="spinner" className="spinner" data-testid="spinner" />
