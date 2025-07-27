@@ -1,1 +1,2 @@
-npm test
+bash ./husky_scripts/run-tests.sh
+

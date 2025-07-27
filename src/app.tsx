@@ -1,20 +1,32 @@
-import { Component, ReactNode } from 'react';
+import { ReactNode } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router';
 
-import './app.css';
-import ErrorBoundary from './components/error-boundary/error-boundary.tsx';
-import MainPage from './pages/main-page.tsx';
-import { apiService } from './services/api-service';
+import { ErrorBoundary } from '@/components';
+import { DetailedSection } from '@/components';
+import { AboutPage } from '@/pages';
+import { MainPage } from '@/pages';
+import { NotFoundPage } from '@/pages';
+import { apiService } from '@/services/api-service';
 
-class App extends Component {
-  render(): ReactNode {
-    return (
-      <>
-        <ErrorBoundary>
-          <MainPage service={apiService} />
-        </ErrorBoundary>
-      </>
-    );
-  }
-}
+const App = (): ReactNode => {
+  return (
+    <>
+      <ErrorBoundary>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<MainPage service={apiService} />} path="/">
+              <Route
+                element={<DetailedSection service={apiService} />}
+                path=":characterID"
+              />
+            </Route>
+            <Route element={<AboutPage />} path="/about" />
+            <Route element={<NotFoundPage />} path="*" />
+          </Routes>
+        </BrowserRouter>
+      </ErrorBoundary>
+    </>
+  );
+};
 
 export default App;

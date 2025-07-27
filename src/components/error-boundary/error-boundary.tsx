@@ -1,25 +1,29 @@
 import React, { ErrorInfo, ReactNode } from 'react';
 
-import FallbackUIPage from './fallbackUI-page.tsx';
+import { FallbackUIPage } from '@/pages';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
 }
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
+interface State {
+  errorMessage: null | string;
+}
+
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
   state = {
     errorMessage: '',
   };
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(error: Error): Partial<State> {
     return { errorMessage: error.toString() };
   }
 
-  componentDidCatch(error: Error, info: ErrorInfo) {
+  componentDidCatch(error: Error, info: ErrorInfo): void {
     console.error(error.toString(), info.componentStack);
   }
 
-  render() {
+  render(): ReactNode {
     if (this.state.errorMessage) {
       return <FallbackUIPage />;
     }
@@ -27,5 +31,3 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     return this.props.children;
   }
 }
-
-export default ErrorBoundary;

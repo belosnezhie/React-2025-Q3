@@ -1,77 +1,48 @@
-import React, { ReactNode } from 'react';
-
 import './search-form.css';
-import { SearchQueryStorage } from '../../services/local-storage';
+import React, { JSX, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-interface SearchFormProps {
-  updateCartsCallback: (searchQuery: string) => Promise<void>;
-  storage: SearchQueryStorage;
-}
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
-interface SearchFormState {
-  currentInputValue: string;
-}
+export const SearchForm = (): JSX.Element => {
+  const [query, setQuery] = useLocalStorage('');
+  const [currentInputValue, setCurrentInputValue] = useState<string>(query);
+  const [_, setSearchParameters] = useSearchParams();
 
-class SearchForm extends React.Component<SearchFormProps, SearchFormState> {
-  private storage: SearchQueryStorage;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setCurrentInputValue(event.target.value);
+  };
 
-  constructor(props: SearchFormProps) {
-    super(props);
-    this.storage = this.props.storage;
-    this.state = {
-      currentInputValue: this.storage.getSearchQuery(),
-    };
-  }
-
-  async handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
-    const data = formData.get('search');
+    const data = new FormData(event.currentTarget).get('search');
 
     if (typeof data !== 'string') {
-      throw new Error('Invalid input');
+      throw new TypeError('Invalid input');
     }
+    const currentQuery: string = data.trim();
+    setQuery(currentQuery);
 
-    const searchQuery = data.trim();
+    setSearchParameters({ page: '1' });
+  };
 
-    this.storage.setSearchQuery(searchQuery);
-
-    await this.props.updateCartsCallback(searchQuery);
-  }
-
-  handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ currentInputValue: event.target.value });
-  }
-
-  render(): ReactNode {
-    return (
-      <>
-        <form
-          className="search_form"
-          onSubmit={async (event: React.FormEvent<HTMLFormElement>) => {
-            await this.handleSubmit(event);
-          }}
-        >
-          <input
-            name="search"
-            className="search_input"
-            type="text"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              this.handleChange(event);
-            }}
-            value={this.state.currentInputValue}
-          ></input>
-          <input
-            className="submit_input"
-            type="submit"
-            value="Search"
-            data-testid="submit_input"
-          ></input>
-        </form>
-      </>
-    );
-  }
-}
-
-export default SearchForm;
+  return (
+    <>
+      <form
+        className="search_form"
+        data-testid="search_form"
+        onSubmit={handleSubmit}
+      >
+        <input
+          className="search_input"
+          name="search"
+          onChange={handleChange}
+          type="text"
+          value={currentInputValue}
+        />
+        <input className="submit_input" type="submit" value="Search" />
+      </form>
+    </>
+  );
+};

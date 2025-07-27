@@ -1,43 +1,88 @@
-## Available Scripts
+# ⭐ Star Wars Characters App
 
-In the project directory, you can run:
+This application fetches data from the public Star Wars API and displays a list of characters. It includes features such as search, pagination, character detail view, and an **About** page with information about the project creator.
 
-### `npm dev`
+## 🚀 Live Demo
 
-Runs the app in the development mode.\
-Open [http://localhost:5173/](http://localhost:5173/) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🧰 Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **React 19**
+- **React Router DOM** — declarative nested routing
+- **Vite** — fast build tool
+- **TypeScript** — static typing
+- **ESLint** — code linting
+- **Prettier** — code formatting
+- **Husky + lint-staged** — pre-commit hooks
+- **Vitest** — unit testing and code coverage
 
-### `npm run lint`
+---
 
-Runs ESLint to check syntax and code style in TypeScript files. It checks all files with the .ts or .tsx extension in the src folder.
+## 📦 Getting Started
 
-### `npm run lint:fix`
+1. Install dependencies:
 
-Runs ESLint with the --fix option to automatically fix any syntax and code style issues found.
+```bash
+npm install
+```
 
-### `npm run lint:staged`
+2. Start the development server:
 
-Runs lint-staged to check only the changed files in the Git index before committing. This helps maintain consistency in commits and prevents unchecked code from being added.
+```bash
+npm run dev
+```
 
-### `npm run format:fix`
+3. Build the project:
 
-Runs Prettier to automatically format files in the src folder according to defined standards.
+```bash
+npm run build
+```
 
-### `npm run prepare`
+4. Preview the production build:
 
-Runs Husky to initialize Git hooks from the .husky folder. Husky is used to add pre-commit hooks that can run scripts before committing, such as lint-staged.
+```bash
+npm run preview
+```
 
-### `npm run preview`
+---
 
-Locally preview the production build.
+## 🔍 Features
+
+- 🔎 **Search** characters by name
+- 📄 **Pagination** through API results
+- 👤 **Character detail** page
+- 🧑‍💻 **About** page with project creator info
+- 🧪 **Unit testing** with code coverage
+- ✅ Pre-commit linting & formatting checks
+
+---
+
+## 🧪 Available Scripts
+
+| Script          | Description                                           |
+|-----------------|-------------------------------------------------------|
+| `dev`           | Start the development server                         |
+| `build`         | Build the project (TypeScript + Vite)                |
+| `preview`       | Preview the production build                         |
+| `lint`          | Run ESLint against the project                       |
+| `lint:fix`      | Automatically fix lint issues                        |
+| `lint:staged`   | Lint only staged files before commit (via Husky)     |
+| `format:fix`    | Format files using Prettier                          |
+| `prepare`       | Run Husky setup hook                                 |
+| `test`          | Run unit tests with Vitest                           |
+| `coverage`      | Generate test coverage report                        |
+
+---
+
+## 🌐 API
+
+This project uses the public Star Wars API:  
+🔗 [https://swapi.py4e.com/api](https://swapi.py4e.com/api)
+
+Example endpoints:
+
+- Fetch characters: `https://swapi.py4e.com/api/people/`
+- Fetch individual character: `https://swapi.py4e.com/api/people/1/`

@@ -1,37 +1,30 @@
-import React from 'react';
-
-import { CharacterSearchResp } from '../../model/types-star-wars';
+import { JSX } from 'react';
+import { NavLink, useSearchParams } from 'react-router-dom';
 
 interface CardProps {
-  cardData: CharacterSearchResp;
+  characterName: string;
+  characterURL: string;
 }
 
-class Card extends React.Component<CardProps> {
-  render() {
-    const {
-      name,
-      birth_year: birthYear,
-      hair_color: hairColor,
-      skin_color: skinColor,
-      eye_color: eyeColor,
-      gender,
-    } = this.props.cardData;
+export const Card = ({
+  characterName,
+  characterURL,
+}: CardProps): JSX.Element => {
+  const [searchParameters] = useSearchParams();
+  const currentPage = searchParameters.get('page') ?? '1';
 
-    const placeholder = 'N/A';
+  const getID = (): string => {
+    const match = /\/people\/(\d+)\//.exec(characterURL);
+    return match ? match[1] : '';
+  };
 
-    return (
-      <>
-        <div className="card" data-testid="results_card">
-          <p>Name: {name ?? placeholder}</p>
-          <p>Birth year: {birthYear ?? placeholder}</p>
-          <p>Hair color: {hairColor ?? placeholder}</p>
-          <p>Skin color: {skinColor ?? placeholder}</p>
-          <p>Eye color: {eyeColor ?? placeholder}</p>
-          <p>Gender: {gender ?? placeholder}</p>
-        </div>
-      </>
-    );
-  }
-}
-
-export default Card;
+  return (
+    <NavLink
+      className="card"
+      data-testid="results_card"
+      to={`/${getID()}?page=${currentPage}`}
+    >
+      Name: {characterName}
+    </NavLink>
+  );
+};

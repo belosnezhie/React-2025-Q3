@@ -1,11 +1,14 @@
-import { HttpResponse, delay, http } from 'msw';
-import { SetupServerApi, setupServer } from 'msw/node';
+import { delay, http, HttpResponse } from 'msw';
+import { setupServer, SetupServerApi } from 'msw/node';
 import { expect } from 'vitest';
 
-import { testCharactersSearchArr } from '../test-utils/test-data';
+import {
+  testCharactersSearch,
+  testCharactersSearchArray,
+} from '@/__tests__/test-utils/test-data';
+import { ApiService } from '@/services/api-service';
 
-import { ApiService } from './api-service';
-
+const DELAY = 150;
 describe('success scenarios', () => {
   let server: SetupServerApi;
   let apiService: ApiService;
@@ -13,9 +16,14 @@ describe('success scenarios', () => {
   beforeEach(() => {
     const handlers = [
       http.get('https://swapi.py4e.com/api/people/', async () => {
-        await delay(150);
+        await delay(DELAY);
 
-        return HttpResponse.json(testCharactersSearchArr);
+        return HttpResponse.json(testCharactersSearchArray);
+      }),
+      http.get('https://swapi.py4e.com/api/people/1/', async () => {
+        await delay(DELAY);
+
+        return HttpResponse.json(testCharactersSearch);
       }),
     ];
 
@@ -28,18 +36,20 @@ describe('success scenarios', () => {
     server.resetHandlers();
     server.close();
   });
-  afterAll(() => server.close());
+  afterAll(() => {
+    server.close();
+  });
 
   test('getDefaultData should handle a valid http response', async () => {
     const actual = await apiService.getDefaultData(0);
 
-    expect(actual).toStrictEqual(testCharactersSearchArr);
+    expect(actual).toStrictEqual(testCharactersSearchArray);
   });
 
   test('getSearchData should handle a valid http response', async () => {
-    const actual = await apiService.getSeachedData('test');
+    const actual = await apiService.getSeachedData('1');
 
-    expect(actual).toStrictEqual(testCharactersSearchArr);
+    expect(actual).toStrictEqual(testCharactersSearch);
   });
 });
 
@@ -64,7 +74,9 @@ describe('error scenarios', () => {
     server.resetHandlers();
     server.close();
   });
-  afterAll(() => server.close());
+  afterAll(() => {
+    server.close();
+  });
 
   test('getDefaultData should throw an error from http response', async () => {
     await expect(() => apiService.getDefaultData(0)).rejects.toThrowError();

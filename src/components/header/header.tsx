@@ -1,33 +1,32 @@
-import React, { ReactNode } from 'react';
+import { JSX } from 'react';
+import { NavLink } from 'react-router-dom';
 
-import { searchQueryStorage } from '../../services/local-storage';
-import SearchForm from '../search-form/search-form.tsx';
-
-import ErrorButton from './error-button.tsx';
+import { SearchForm } from '@/components';
 
 import './header.css';
 
-interface HeaderProps {
-  updateCartsCallback: (searchQuery: string) => Promise<void>;
-}
-
-class Header extends React.Component<HeaderProps> {
-  render(): ReactNode {
-    return (
-      <>
-        <header className="header">
-          <h1 className="header_title">The Star Wars Сharacters</h1>
-          <SearchForm
-            updateCartsCallback={async (searchQuery: string): Promise<void> => {
-              await this.props.updateCartsCallback(searchQuery);
-            }}
-            storage={searchQueryStorage}
-          ></SearchForm>
-          <ErrorButton />
-        </header>
-      </>
-    );
-  }
-}
-
-export default Header;
+export const Header = ({
+  pageType,
+}: {
+  pageType: 'about' | 'main';
+}): JSX.Element => {
+  return (
+    <>
+      <header className="header">
+        <h1 className="header_title">The Star Wars Сharacters</h1>
+        {pageType === 'main' ? (
+          <>
+            <SearchForm />
+            <NavLink className="link" to={'/about'}>
+              About
+            </NavLink>
+          </>
+        ) : (
+          <NavLink className="link" to={'/'}>
+            Main page
+          </NavLink>
+        )}
+      </header>
+    </>
+  );
+};

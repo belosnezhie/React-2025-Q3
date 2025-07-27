@@ -1,36 +1,38 @@
-import React, { ReactNode } from 'react';
+import { JSX } from 'react';
 
-import { CharacterSearchResp } from '../../model/types-star-wars';
-
-import Card from './card.tsx';
+import { Card } from '@/components';
 
 import './main.css';
+import { CharacterSearchResponse } from '@/model/types-star-wars';
 
 interface CardsWrapperProps {
-  cardCharacterData: CharacterSearchResp[];
+  cardCharacterData: CharacterSearchResponse[];
   error: Error | null;
 }
 
-class CardsWrapper extends React.Component<CardsWrapperProps> {
-  render(): ReactNode {
-    const { cardCharacterData, error } = this.props;
-
-    if (error) {
-      return <p>Something went wrong: {error.message}</p>;
-    }
-
-    if (!cardCharacterData.length) {
-      return <p>Oops! there is no such character.</p>;
-    }
-
-    return (
-      <>
-        {this.props.cardCharacterData.map((obj, index) => {
-          return <Card cardData={obj} key={index} />;
-        })}
-      </>
-    );
+export const CardsWrapper = ({
+  cardCharacterData,
+  error,
+}: CardsWrapperProps): JSX.Element => {
+  if (error) {
+    return <p>Something went wrong: {error.message}</p>;
   }
-}
 
-export default CardsWrapper;
+  if (!cardCharacterData.length) {
+    return <p>Oops! there is no such character.</p>;
+  }
+
+  return (
+    <div className="cards_wrapper">
+      {cardCharacterData.map((object, index) => {
+        return (
+          <Card
+            characterName={object.name}
+            characterURL={object.url}
+            key={index}
+          />
+        );
+      })}
+    </div>
+  );
+};

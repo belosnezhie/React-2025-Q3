@@ -14,6 +14,8 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true
   },
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
   "typescript.tsdk": "<workspace>\\node_modules\\typescript\\lib",
   "todohighlight.isEnable": true,
   "todohighlight.isCaseSensitive": true,
