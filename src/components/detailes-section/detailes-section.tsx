@@ -21,20 +21,18 @@ export const DetailedSection = ({
   const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const getCharacterData =
-    useCallback(async (): Promise<CharacterSearchResponse> => {
-      setLoading(true);
-      const resp: CharacterSearchResponse = await service.getSeachedData(
-        String(characterID),
-      );
-      setCharacterData(resp);
-      setLoading(false);
+  const getCharacterData = useCallback(async (): Promise<void> => {
+    setLoading(true);
+    const resp: CharacterSearchResponse = await service.getSeachedData(
+      String(characterID),
+    );
+    setCharacterData(resp);
 
-      return resp;
-    }, [service, characterID]);
+    setLoading(false);
+  }, [service, characterID]);
 
   useEffect(() => {
-    void getCharacterData();
+    getCharacterData();
   }, [getCharacterData, searchParameters]);
 
   const handleClick = (): void => {
@@ -58,7 +56,9 @@ export const DetailedSection = ({
               <p>Eye color: {characterData.eye_color}</p>
               <p>Gender: {characterData.gender}</p>
             </div>
-          ) : null}
+          ) : (
+            <p>Something went wrong</p>
+          )}
           <button className="close" data-testid="close" onClick={handleClick}>
             X
           </button>
