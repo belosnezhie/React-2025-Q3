@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { JSX } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { expect, MockedFunction, MockInstance, test, vi } from 'vitest';
+import { expect, MockedFunction, MockInstance, vi } from 'vitest';
 
 import { setup } from '@/__tests__/test-utils/user-event-setup';
 import { SearchForm } from '@/components';
@@ -57,7 +57,7 @@ describe('Rendering Tests', () => {
     expect(searchInput).toHaveValue(savedSearchQuery);
   });
 
-  test('should show empty input when no saved term exists', () => {
+  it('shows empty input when no saved term exists', () => {
     mock = vi.mocked(hooks.useLocalStorage).mockReturnValue([
       '',
       (_: string): void => {

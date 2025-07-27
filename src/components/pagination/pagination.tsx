@@ -23,6 +23,7 @@ export const Pagination = ({
           className={`pagination_button ${currentPage === index + 1 ? 'active' : ''}`}
           data-testid={`page_button_${index + 1}`}
           key={index}
+          name={index.toString()}
           onClick={() => {
             handlePageChange(index + 1);
           }}
