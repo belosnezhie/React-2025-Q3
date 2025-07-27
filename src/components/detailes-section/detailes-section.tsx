@@ -50,16 +50,16 @@ export const DetailedSection = ({
       ) : (
         <>
           {characterData ? (
-            <>
+            <div data-testid="character_data">
               <p>Name: {characterData.name}</p>
               <p>Birth year: {characterData.birth_year}</p>
               <p>Hair color: {characterData.hair_color}</p>
               <p>Skin color: {characterData.skin_color}</p>
               <p>Eye color: {characterData.eye_color}</p>
               <p>Gender: {characterData.gender}</p>
-            </>
+            </div>
           ) : null}
-          <button className="close" onClick={handleClick}>
+          <button className="close" data-testid="close" onClick={handleClick}>
             X
           </button>
         </>

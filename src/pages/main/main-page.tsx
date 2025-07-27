@@ -52,7 +52,7 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
 
       setLoading(false);
     },
-    [query, searchParameters],
+    [service],
   );
 
   useEffect(() => {
