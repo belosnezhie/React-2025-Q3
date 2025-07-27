@@ -7,9 +7,9 @@ import { Pagination } from '@/components';
 import { Spinner } from '@/components';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { SearchResponse } from '@/model/types-star-wars';
+import { ApiService } from '@/services/api-service';
 
 import './main-page.css';
-import { ApiService } from '@/services/api-service';
 
 const MAX_PER_PAGE = 10;
 

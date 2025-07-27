@@ -1,8 +1,9 @@
 import { JSX } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import './header.css';
 import { SearchForm } from '@/components';
+
+import './header.css';
 
 export const Header = ({
   pageType,

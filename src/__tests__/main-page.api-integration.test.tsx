@@ -3,11 +3,11 @@ import { delay, http, HttpResponse } from 'msw';
 import { setupServer, SetupServerApi } from 'msw/node';
 import { expect, it, vi } from 'vitest';
 
+import { testCharactersSearchArray } from '@/__tests__/test-utils/test-data';
+import { setup } from '@/__tests__/test-utils/user-event-setup';
 import { ApiService } from '@/services/api-service';
-import { testCharactersSearchArray } from '@/test-utils/test-data';
-import { setup } from '@/test-utils/user-event-setup';
 
-import { MainPage } from './main-page';
+import { MainPage } from '../pages/main/main-page';
 
 let server: SetupServerApi;
 const DELAY = 150;

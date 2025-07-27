@@ -2,9 +2,8 @@ import { delay, http, HttpResponse } from 'msw';
 import { setupServer, SetupServerApi } from 'msw/node';
 import { expect } from 'vitest';
 
-import { testCharactersSearchArray } from '@/test-utils/test-data';
-
-import { ApiService } from './api-service';
+import { testCharactersSearchArray } from '@/__tests__/test-utils/test-data';
+import { ApiService } from '@/services/api-service';
 
 const DELAY = 150;
 describe('success scenarios', () => {

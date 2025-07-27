@@ -3,9 +3,9 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { Spinner } from '@/components';
 import { CharacterSearchResponse } from '@/model/types-star-wars';
+import { ApiService } from '@/services/api-service';
 
 import './detailes-section.css';
-import { ApiService } from '@/services/api-service';
 
 interface DetailedSectionProps {
   service: ApiService;

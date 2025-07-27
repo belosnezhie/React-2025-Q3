@@ -5,7 +5,7 @@ import { DefaultSearchResp } from '@/model/types-star-wars';
 import { ApiService } from '@/services/api-service';
 import { searchQueryStorage } from '@/services/local-storage';
 
-import { MainPage } from './main-page';
+import { MainPage } from '../pages/main/main-page';
 
 describe('Integration Tests', () => {
   it.skip('makes initial API call on component mount', async () => {
