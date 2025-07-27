@@ -6,6 +6,7 @@ import {
 } from '@testing-library/react';
 import { delay, http, HttpResponse } from 'msw';
 import { setupServer, SetupServerApi } from 'msw/node';
+import { BrowserRouter } from 'react-router-dom';
 import { expect } from 'vitest';
 
 import { testCharactersSearchArray } from '@/__tests__/test-utils/test-data';
@@ -27,7 +28,7 @@ afterAll(() => {
   server.close();
 });
 
-test.skip('should update component state based on API responses', async () => {
+test('should update component state based on API responses', async () => {
   const handlers = [
     http.get('https://swapi.py4e.com/api/people/', async () => {
       await delay(DELAY);
@@ -39,7 +40,11 @@ test.skip('should update component state based on API responses', async () => {
   server = setupServer(...handlers);
   server.listen();
 
-  render(<MainPage service={apiService} />);
+  render(
+    <BrowserRouter>
+      <MainPage service={apiService} />
+    </BrowserRouter>,
+  );
 
   expect(await screen.findByLabelText('spinner')).toBeInTheDocument();
   await waitForElementToBeRemoved(screen.queryByTestId('spinner'));
@@ -51,7 +56,7 @@ test.skip('should update component state based on API responses', async () => {
   });
 });
 
-test.skip('should manage search term state correctly', async () => {
+test('should manage search term state correctly', async () => {
   vi.spyOn(searchQueryStorage, 'getSearchQuery').mockImplementationOnce(
     () => 'test',
   );
@@ -67,7 +72,11 @@ test.skip('should manage search term state correctly', async () => {
   server = setupServer(...handlers);
   server.listen();
 
-  render(<MainPage service={apiService} />);
+  render(
+    <BrowserRouter>
+      <MainPage service={apiService} />
+    </BrowserRouter>,
+  );
 
   expect(await screen.findAllByTestId('results_card')).toBeDefined();
 });

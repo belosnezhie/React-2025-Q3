@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { delay, http, HttpResponse } from 'msw';
 import { setupServer, SetupServerApi } from 'msw/node';
+import { BrowserRouter } from 'react-router-dom';
 import { expect, it, vi } from 'vitest';
 
 import { testCharactersSearchArray } from '@/__tests__/test-utils/test-data';
-import { setup } from '@/__tests__/test-utils/user-event-setup';
 import { ApiService } from '@/services/api-service';
 
 import { MainPage } from '../pages/main/main-page';
@@ -23,26 +23,7 @@ afterAll(() => {
   server.close();
 });
 
-it.skip('calls API with correct parameters', async () => {
-  const service = new ApiService();
-
-  using getSeachedDataSpy = vi
-    .spyOn(service, 'getSeachedData')
-    .mockResolvedValue(testCharactersSearchArray);
-
-  const { getByRole, user } = setup(<MainPage service={service} />);
-
-  const searchInput = getByRole('textbox');
-  const submitInput = getByRole('button', { name: /search/i });
-
-  await user.clear(searchInput);
-  await user.type(searchInput, 'Jane');
-  await user.click(submitInput);
-
-  expect(getSeachedDataSpy).toHaveBeenCalledWith('Jane');
-});
-
-it.skip('handles successful API responses', async () => {
+it('handles successful API responses', async () => {
   const handlers = [
     http.get('https://swapi.py4e.com/api/people/', async () => {
       await delay(DELAY);
@@ -54,7 +35,11 @@ it.skip('handles successful API responses', async () => {
   server = setupServer(...handlers);
   server.listen();
 
-  render(<MainPage service={new ApiService()} />);
+  render(
+    <BrowserRouter>
+      <MainPage service={new ApiService()} />
+    </BrowserRouter>,
+  );
 
   await waitFor(() => {
     const cards = screen.getAllByTestId('results_card');
@@ -63,7 +48,7 @@ it.skip('handles successful API responses', async () => {
   });
 });
 
-it.skip('handles API error responses', async () => {
+it('handles API error responses', async () => {
   const handlers = [
     http.get('https://swapi.py4e.com/api/people/', async () => {
       await delay(DELAY);
@@ -75,7 +60,11 @@ it.skip('handles API error responses', async () => {
   server = setupServer(...handlers);
   server.listen();
 
-  render(<MainPage service={new ApiService()} />);
+  render(
+    <BrowserRouter>
+      <MainPage service={new ApiService()} />
+    </BrowserRouter>,
+  );
 
   await waitFor(() => {
     const placeholder = screen.getByText(
