@@ -1,5 +1,10 @@
 import { JSX, useCallback, useEffect, useState } from 'react';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import {
+  Outlet,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 
 import { Header } from '@/components';
 import { CardsWrapper } from '@/components';
@@ -30,6 +35,22 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<Error | null>(null);
   const [searchParameters] = useSearchParams();
+  const navigate = useNavigate();
+  const { characterID } = useParams();
+
+  const handleMainClick = (event: React.MouseEvent<HTMLDivElement>): void => {
+    const target = event.target instanceof HTMLElement ? event.target : null;
+    const isCard = target?.closest('.card') !== null;
+
+    const page =
+      searchParameters.get('page') === null
+        ? '1'
+        : searchParameters.get('page');
+
+    if (characterID && !isCard) {
+      navigate(`/?page=${page}`);
+    }
+  };
 
   const fetchCharacters = useCallback(
     async (
@@ -61,7 +82,7 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
 
   return (
     <>
-      <div className="container">
+      <div className="container" onClick={handleMainClick}>
         <Header pageType="main" />
         <main className="main">
           <section>
