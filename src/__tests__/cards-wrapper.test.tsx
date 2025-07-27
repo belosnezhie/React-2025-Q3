@@ -42,10 +42,7 @@ describe('Data Display Tests', () => {
   it('correctly displays item names and descriptions', () => {
     render(
       <BrowserRouter>
-        <CardsWrapper
-          cardCharacterData={testCharactersSearch.results}
-          error={null}
-        />
+        <CardsWrapper cardCharacterData={[testCharactersSearch]} error={null} />
       </BrowserRouter>,
     );
 

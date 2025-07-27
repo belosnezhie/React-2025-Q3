@@ -12,6 +12,7 @@ export const testDataJane: CharacterSearchResponse = {
   mass: '60',
   name: 'Jane Dow',
   skin_color: 'White',
+  url: 'http://localhost',
 };
 
 export const testDataJohn: CharacterSearchResponse = {
@@ -23,10 +24,12 @@ export const testDataJohn: CharacterSearchResponse = {
   mass: '70',
   name: 'John Dow',
   skin_color: 'Black',
+  url: 'http://localhost',
 };
 
 export const partialTestData: CharacterSearchResponse = {
   name: 'N/A',
+  url: 'http://localhost',
 };
 
 export const testPeopleSearchArray: CharacterSearchResponse[] = [
@@ -35,13 +38,13 @@ export const testPeopleSearchArray: CharacterSearchResponse[] = [
 ];
 
 export const testCharactersSearchArray: SearchResponse = {
+  count: 2,
   results: [testDataJane, testDataJane],
 };
 
-export const testCharactersSearch: SearchResponse = {
-  results: [testDataJane],
-};
+export const testCharactersSearch: CharacterSearchResponse = testDataJane;
 
 export const partialTestSearchResponse: SearchResponse = {
+  count: 1,
   results: [partialTestData],
 };
