@@ -21,6 +21,7 @@ export const Pagination = ({
       {Array.from({ length: pagesCount }, (_, index) => (
         <button
           className={`pagination_button ${currentPage === index + 1 ? 'active' : ''}`}
+          data-testid={`page_button_${index + 1}`}
           key={index}
           onClick={() => {
             handlePageChange(index + 1);
