@@ -1,13 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { JSX } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { expect, test, vi } from 'vitest';
+import { expect, MockedFunction, MockInstance, test, vi } from 'vitest';
 
 import { setup } from '@/__tests__/test-utils/user-event-setup';
 import { SearchForm } from '@/components';
 import * as hooks from '@/hooks/use-local-storage';
-
-vi.mock('@/hooks/use-local-storage');
 
 const renderHelper = (): JSX.Element => {
   return (
@@ -18,14 +16,25 @@ const renderHelper = (): JSX.Element => {
 };
 
 describe('Rendering Tests', () => {
+  const savedSearchQuery = 'Jane Doe';
+  let mock: MockedFunction<
+    (initialValue: string) => [string, (nextState: string) => void]
+  >;
   beforeEach(() => {
     localStorage.clear();
+    vi.mock('@/hooks/use-local-storage');
   });
   afterEach(() => {
-    vi.restoreAllMocks();
+    mock.mockReset();
   });
 
   it('renders search inputs', () => {
+    mock = vi.mocked(hooks.useLocalStorage).mockReturnValue([
+      savedSearchQuery,
+      (_: string): void => {
+        // do nothing
+      },
+    ]);
     render(renderHelper());
 
     const searchInput = screen.getAllByRole('textbox');
@@ -36,22 +45,25 @@ describe('Rendering Tests', () => {
   });
 
   it('displays previously saved search term from localStorage on mount', () => {
-    const savedSearchQuery = 'Jane Doe';
-
-    vi.mocked(hooks.useLocalStorage).mockReturnValue([
+    mock = vi.mocked(hooks.useLocalStorage).mockReturnValue([
       savedSearchQuery,
       (_: string): void => {
         // do nothing
       },
     ]);
-
     render(renderHelper());
 
     const searchInput = screen.getByRole('textbox');
     expect(searchInput).toHaveValue(savedSearchQuery);
   });
 
-  test.skip('should show empty input when no saved term exists', () => {
+  test('should show empty input when no saved term exists', () => {
+    mock = vi.mocked(hooks.useLocalStorage).mockReturnValue([
+      '',
+      (_: string): void => {
+        // do nothing
+      },
+    ]);
     render(renderHelper());
 
     const searchInput = screen.getByRole('textbox');
@@ -61,11 +73,28 @@ describe('Rendering Tests', () => {
 });
 
 describe('User Interaction Tests', () => {
+  let storage = '';
+  let useLocalStorageSpy: MockInstance<
+    (initialValue: string) => [string, (nextState: string) => void]
+  >;
   beforeEach(() => {
     localStorage.clear();
+    vi.mock('@/hooks/use-local-storage');
+    storage = '';
+    useLocalStorageSpy = vi
+      .spyOn(hooks, 'useLocalStorage')
+      .mockImplementation(() => [
+        '',
+        (query: string): void => {
+          storage = query;
+        },
+      ]);
   });
 
-  afterEach(() => vi.restoreAllMocks());
+  afterEach(() => {
+    useLocalStorageSpy.mockReset();
+  });
+
   it('updates input value when user types', async () => {
     const form = renderHelper();
 
@@ -77,14 +106,6 @@ describe('User Interaction Tests', () => {
   });
 
   it('saves search term to localStorage when search button is clicked', async () => {
-    let storage = '';
-    vi.spyOn(hooks, 'useLocalStorage').mockImplementation(() => [
-      '',
-      (query: string): void => {
-        storage = query;
-      },
-    ]);
-
     const form = renderHelper();
 
     const { getByRole, user } = setup(form);
@@ -101,12 +122,14 @@ describe('User Interaction Tests', () => {
 
   it('trims whitespace from search input before saving and trigger search callback with correct parameters', async () => {
     let storage = '';
-    vi.spyOn(hooks, 'useLocalStorage').mockImplementation(() => [
-      '',
-      (query: string): void => {
-        storage = query;
-      },
-    ]);
+    useLocalStorageSpy = vi
+      .spyOn(hooks, 'useLocalStorage')
+      .mockImplementation(() => [
+        '',
+        (query: string): void => {
+          storage = query;
+        },
+      ]);
 
     const form = renderHelper();
 
@@ -123,22 +146,35 @@ describe('User Interaction Tests', () => {
 });
 
 describe('LocalStorage Integration', () => {
+  let getSearchQueryMock: MockedFunction<
+    (initialValue: string) => [string, (nextState: string) => void]
+  >;
+  let useLocalStorageSpy: MockInstance<
+    (initialValue: string) => [string, (nextState: string) => void]
+  >;
+  beforeAll(() => {
+    vi.mock('@/hooks/use-local-storage');
+  });
   beforeEach(() => {
     localStorage.clear();
   });
-  afterEach(() => vi.restoreAllMocks());
+  afterEach(() => {
+    if (getSearchQueryMock !== undefined) {
+      getSearchQueryMock.mockReset();
+    }
+    if (useLocalStorageSpy !== undefined) {
+      useLocalStorageSpy.mockReset();
+    }
+  });
 
   it('retrieves saved search term on component mount', () => {
     const savedSearchQuery = 'Jane Doe';
-
-    const getSearchQueryMock = vi
-      .mocked(hooks.useLocalStorage)
-      .mockReturnValue([
-        savedSearchQuery,
-        (_: string): void => {
-          // do nothing
-        },
-      ]);
+    getSearchQueryMock = vi.mocked(hooks.useLocalStorage).mockReturnValue([
+      savedSearchQuery,
+      (_: string): void => {
+        // do nothing
+      },
+    ]);
 
     render(renderHelper());
 
@@ -150,7 +186,7 @@ describe('LocalStorage Integration', () => {
 
   it('overwrites existing localStorage value when new search is performed', async () => {
     let storage = '';
-    const useLocalStorageSpy = vi
+    useLocalStorageSpy = vi
       .spyOn(hooks, 'useLocalStorage')
       .mockImplementation(() => [
         'Old Jane Doe',
