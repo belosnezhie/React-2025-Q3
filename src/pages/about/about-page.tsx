@@ -8,7 +8,7 @@ export const AboutPage = (): JSX.Element => {
   return (
     <>
       <Header pageType="about" />
-      <main className="about_page">
+      <main className="about_page" data-testid="about_page">
         <div className="about_container">
           <img
             alt="photo"
