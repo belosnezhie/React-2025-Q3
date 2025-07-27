@@ -8,10 +8,10 @@
   background-color: var(--main-background);
 }
 
-.container:has(.detailed_results) {
+#root:has(.detailed_results) {
   display: flex;
 
-  .main {
+  .container {
     width: 60%;
   }
 

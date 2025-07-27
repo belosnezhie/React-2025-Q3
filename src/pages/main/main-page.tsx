@@ -61,8 +61,8 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
 
   return (
     <>
-      <Header pageType="main" />
       <div className="container">
+        <Header pageType="main" />
         <main className="main">
           <section>
             {isLoading ? (
@@ -79,8 +79,8 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
             <div className="yoda" />
           </section>
         </main>
-        <Outlet />
       </div>
+      <Outlet />
     </>
   );
 };
