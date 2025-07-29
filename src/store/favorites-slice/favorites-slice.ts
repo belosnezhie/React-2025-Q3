@@ -14,19 +14,21 @@ export const initialState: FavoritesCharactersState = {
 
 export const favoritesSlice = createSlice({
   initialState,
-  name: ' ',
+  name: 'favorites',
   reducers: {
     addToFavorites: (state, action: PayloadAction<CharacterSearchResponse>) => {
       state.favorites.push(action.payload);
+    },
+    clearFavorites: (state) => {
+      return {
+        ...state,
+        favorites: [],
+      };
     },
     removeFromFavorites: (
       state,
       action: PayloadAction<CharacterSearchResponse>,
     ) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
       return {
         ...state,
         favorites: state.favorites.filter(
@@ -37,7 +39,7 @@ export const favoritesSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { addToFavorites, removeFromFavorites } = favoritesSlice.actions;
+export const { addToFavorites, clearFavorites, removeFromFavorites } =
+  favoritesSlice.actions;
 
 export default favoritesSlice.reducer;
