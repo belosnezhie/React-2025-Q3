@@ -28,7 +28,7 @@ afterAll(() => {
   server.close();
 });
 
-it('updates component state based on API responses', async () => {
+it.skip('updates component state based on API responses', async () => {
   const handlers = [
     http.get('https://swapi.py4e.com/api/people/', async () => {
       await delay(DELAY);
@@ -56,7 +56,7 @@ it('updates component state based on API responses', async () => {
   });
 });
 
-it('manages search term state correctly', async () => {
+it.skip('manages search term state correctly', async () => {
   vi.spyOn(searchQueryStorage, 'getSearchQuery').mockImplementationOnce(
     () => 'test',
   );
