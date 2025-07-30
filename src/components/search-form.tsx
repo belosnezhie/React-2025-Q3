@@ -1,4 +1,3 @@
-import './search-form.css';
 import React, { JSX, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
@@ -30,18 +29,36 @@ export const SearchForm = (): JSX.Element => {
   return (
     <>
       <form
-        className="search_form"
+        className="w-min flex justify-center items-center gap-1"
         data-testid="search_form"
         onSubmit={handleSubmit}
       >
         <input
-          className="search_input"
+          className="
+          block h-[40px]
+          max-w-[180px] pl-[2%]
+          border-2
+          border-background
+          rounded-lg"
           name="search"
           onChange={handleChange}
           type="text"
           value={currentInputValue}
         />
-        <input className="submit_input" type="submit" value="Search" />
+        <input
+          className="
+          h-[40px] block
+          p-[2%]
+          bg-background
+          cursor-pointer
+          border-0
+          rounded-lg
+          transition-transform
+          duration-300
+          hover:scale-[0.95]"
+          type="submit"
+          value="Search"
+        />
       </form>
     </>
   );

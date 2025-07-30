@@ -1,8 +1,6 @@
 import { JSX } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import './pagination.css';
-
 export const Pagination = ({
   pagesCount,
 }: {
@@ -17,10 +15,20 @@ export const Pagination = ({
   };
 
   return (
-    <div className="pagination">
+    <div className="flex gap-4 z-20000 flex-wrap justify-center">
       {Array.from({ length: pagesCount }, (_, index) => (
         <button
-          className={`pagination_button ${currentPage === index + 1 ? 'active' : ''}`}
+          className={`
+            w-[50px]
+            h-[50px]
+            rounded-full
+            bg-background
+            border-0
+            cursor-pointer
+            transition-transform
+            duration-300
+            hover:scale-[0.95]
+            ${currentPage === index + 1 ? 'bg-border' : ''}`}
           data-testid={`page_button_${index + 1}`}
           key={index}
           name={index.toString()}

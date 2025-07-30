@@ -1,8 +1,6 @@
 import { JSX } from 'react';
 
 import { Card } from '@/components';
-
-import './main.css';
 import { CharacterSearchResponse } from '@/model/types-star-wars';
 
 interface CardsWrapperProps {

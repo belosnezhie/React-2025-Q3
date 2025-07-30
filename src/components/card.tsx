@@ -20,15 +20,28 @@ export const Card = ({ characterData }: CardProps): JSX.Element => {
   };
 
   return (
-    <>
+    <div
+      className="
+    w-[250px]
+    p-[2%]
+    flex
+    justify-between
+    items-center
+    gap-1
+    border-2
+  border-border
+  bg-card-background
+    rounded-lg
+    card"
+    >
       <NavLink
-        className="w-[250px] p-[2%] border-2 border-border bg-card-background rounded-lg text-white cursor-pointer transition-all duration-300 z-1000"
+        className="transition-transform duration-300 hover:scale-[0.95]"
         data-testid="results_card"
         to={`/${getID()}?page=${currentPage}`}
       >
-        Name: {characterName}
+        {characterName}
       </NavLink>
       <FavButton characterData={characterData} />
-    </>
+    </div>
   );
 };

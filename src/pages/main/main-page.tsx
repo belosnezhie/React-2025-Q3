@@ -13,9 +13,9 @@ import { Spinner } from '@/components';
 import { Flyout } from '@/components';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { SearchResponse } from '@/model/types-star-wars';
+import { ApiService } from '@/services/api-service';
 
 import './main-page.css';
-import { ApiService } from '@/services/api-service';
 
 const MAX_PER_PAGE = 10;
 
@@ -83,7 +83,7 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
 
   return (
     <>
-      <div className="container" onClick={handleMainClick}>
+      <div onClick={handleMainClick}>
         <Header pageType="main" />
         <main className="min-h-[85vh] p-[2%] flex justify-center gap-[1em] flex-wrap bg-main-background">
           <section className="flex flex-col justify-evenly items-center">

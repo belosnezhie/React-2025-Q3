@@ -5,8 +5,6 @@ import { Spinner } from '@/components';
 import { CharacterSearchResponse } from '@/model/types-star-wars';
 import { ApiService } from '@/services/api-service';
 
-import './detailes-section.css';
-
 interface DetailedSectionProps {
   service: ApiService;
 }
@@ -42,7 +40,19 @@ export const DetailedSection = ({
   };
 
   return isDestroyed ? null : (
-    <aside className="detailed_results">
+    <aside
+      className="
+    p-[2%]
+    flex
+    flex-col
+    items-center
+    justify-center
+    border-2
+    border-border
+    bg-card-background
+    z-1000
+    relative"
+    >
       {isLoading ? (
         <Spinner />
       ) : (
@@ -59,7 +69,19 @@ export const DetailedSection = ({
           ) : (
             <p>Something went wrong</p>
           )}
-          <button className="close" data-testid="close" onClick={handleClick}>
+          <button
+            className="
+            absolute
+            top-[10px] right-[10px]
+            w-[40px] h-[40px]
+            text-center
+            rounded-full
+            border-0
+            bg-background
+            cursor-pointer"
+            data-testid="close"
+            onClick={handleClick}
+          >
             X
           </button>
         </>
