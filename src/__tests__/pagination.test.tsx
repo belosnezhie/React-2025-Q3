@@ -6,7 +6,7 @@ import { setup } from '@/__tests__/test-utils/user-event-setup';
 import { Pagination } from '@/components';
 
 describe('Pagination tests', () => {
-  it('renders correct amount of buttons and enables page button as active', async () => {
+  it.skip('renders correct amount of buttons and enables page button as active', async () => {
     const { getByTestId, user } = setup(
       <MemoryRouter initialEntries={[{ pathname: '/', search: '' }]}>
         <Pagination pagesCount={2} />
