@@ -1,4 +1,16 @@
+@import "tailwindcss";
 @import '../node_modules/modern-normalize/modern-normalize.css';
+
+@theme {
+  --color-border: hsl(224, 73%, 47%);
+  --color-background: hsl(222, 81%, 73%);
+  --color-error: 	hsl(11, 87%, 62%);
+  --color-main-background: 	hsl(13, 86%, 91%);
+  --color-header-background: hwb(6 58% 2%);
+  --color-card-background: hsla(221.62, 81.02%, 73.14%, 60%);
+  --color-title: hsla(72, 29.41%, 96.67%, 80%);
+}
+
 
 :root {
   --border: hsl(224, 73%, 47%);
@@ -42,10 +54,10 @@ a {
   color: white;
   text-align: center;
 }
-
+/*
 section {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-}
+} */

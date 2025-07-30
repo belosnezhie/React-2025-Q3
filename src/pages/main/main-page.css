@@ -1,4 +1,4 @@
-.main {
+/* .main {
   min-height: 85vh;
   padding: 2%;
   display: flex;
@@ -6,7 +6,7 @@
   gap: 1em;
   flex-wrap: wrap;
   background-color: var(--main-background);
-}
+} */
 
 #root:has(.detailed_results) {
   display: flex;

@@ -85,8 +85,8 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
     <>
       <div className="container" onClick={handleMainClick}>
         <Header pageType="main" />
-        <main className="main">
-          <section>
+        <main className="min-h-[85vh] p-[2%] flex justify-center gap-[1em] flex-wrap bg-main-background">
+          <section className="flex flex-col justify-evenly items-center">
             {isLoading ? (
               <Spinner />
             ) : (
@@ -98,7 +98,7 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
                 <Pagination pagesCount={countPages(charactersData.count)} />
               </>
             )}
-            <div className="yoda" />
+            <div className="w-[300px] h-[300px] fixed bottom-0 right-0 bg-[url('/src/assets/yoda.png')] bg-contain bg-no-repeat" />
           </section>
         </main>
         <Flyout />

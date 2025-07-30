@@ -23,7 +23,7 @@ export const CardsWrapper = ({
   }
 
   return (
-    <div className="cards_wrapper">
+    <div className="flex justify-center gap-[1em] flex-wrap">
       {cardCharacterData.map((object, index) => {
         return <Card characterData={object} key={index} />;
       })}

@@ -22,7 +22,7 @@ export const Card = ({ characterData }: CardProps): JSX.Element => {
   return (
     <>
       <NavLink
-        className="card"
+        className="w-[250px] p-[2%] border-2 border-border bg-card-background rounded-lg text-white cursor-pointer transition-all duration-300 z-1000"
         data-testid="results_card"
         to={`/${getID()}?page=${currentPage}`}
       >
