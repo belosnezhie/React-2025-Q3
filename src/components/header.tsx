@@ -1,5 +1,10 @@
 import { JSX } from 'react';
-import { NavLink } from 'react-router-dom';
+import {
+  NavLink,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 
 import { SearchForm } from '@/components';
 
@@ -8,6 +13,21 @@ export const Header = ({
 }: {
   pageType: 'about' | 'main';
 }): JSX.Element => {
+  const [searchParameters] = useSearchParams();
+  const { characterID } = useParams();
+  const navigate = useNavigate();
+
+  const handleMainClick = (): void => {
+    const page =
+      searchParameters.get('page') === null
+        ? '1'
+        : searchParameters.get('page');
+
+    if (characterID) {
+      navigate(`/?page=${page}`);
+    }
+  };
+
   return (
     <>
       <header
@@ -21,6 +41,7 @@ export const Header = ({
       border-b-4
     border-border
       bg-header-background"
+        onClick={handleMainClick}
       >
         <h1 className="m-0 text-title">The Star Wars Сharacters</h1>
         {pageType === 'main' ? (

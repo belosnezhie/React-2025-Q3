@@ -7,7 +7,7 @@ import { expect, it, vi } from 'vitest';
 import { testCharactersSearchArray } from '@/__tests__/test-utils/test-data';
 import { ApiService } from '@/services/api-service';
 
-import { MainPage } from '../pages/main/main-page';
+import { MainPage } from '../pages/main-page';
 
 let server: SetupServerApi;
 const DELAY = 150;

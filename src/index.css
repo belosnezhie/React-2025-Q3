@@ -1,7 +1,8 @@
 @import "tailwindcss";
-@import '../node_modules/modern-normalize/modern-normalize.css';
 
 @theme {
+  --font-display: "Orbitron", "sans-serif";
+
   --color-border: hsl(224, 73%, 47%);
   --color-background: hsl(222, 81%, 73%);
   --color-error: 	hsl(11, 87%, 62%);
@@ -12,7 +13,7 @@
 }
 
 
-:root {
+/* :root {
   --border: hsl(224, 73%, 47%);
   --background: hsl(222, 81%, 73%);
   --error: 	hsl(11, 87%, 62%);
@@ -20,6 +21,23 @@
   --header-background: hwb(6 58% 2%);
   --card-background: hsla(221.62, 81.02%, 73.14%, 60%);
   --title: hsla(72, 29.41%, 96.67%, 80%);
+} */
+
+@layer utilities {
+  .spinner {
+    --_m:
+      conic-gradient(#0000 10%, #000),
+      linear-gradient(#000 0 0) content-box;
+    mask: var(--_m);
+    mask-composite: subtract;
+    animation: spin-conic 1s linear infinite;
+  }
+
+  @keyframes spin-conic {
+    to {
+      transform: rotate(1turn);
+    }
+  }
 }
 
 body {
@@ -39,26 +57,3 @@ h1 {
 p {
   font-size: 1rem;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-#root {
-  min-width: 100%;
-  min-height: 100vh;
-}
-
-/* a {
-  text-decoration: none;
-  color: white;
-  text-align: center;
-} */
-/*
-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-} */

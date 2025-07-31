@@ -42,12 +42,14 @@ export const DetailedSection = ({
   return isDestroyed ? null : (
     <aside
       className="
+    w-[50%]
     p-[2%]
     flex
     flex-col
     items-center
     justify-center
     border-2
+    border-t-0
     border-border
     bg-card-background
     z-1000

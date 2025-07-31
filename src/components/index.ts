@@ -7,4 +7,4 @@ export { Flyout } from './flyout';
 export { Header } from './header';
 export { Pagination } from './pagination';
 export { SearchForm } from './search-form';
-export { Spinner } from './spinner/spinner';
+export { Spinner } from './spinner';

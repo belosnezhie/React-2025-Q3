@@ -37,6 +37,8 @@ export const SearchForm = (): JSX.Element => {
           className="
           block h-[40px]
           max-w-[180px] pl-[2%]
+          bg-title
+          text-border
           border-2
           border-background
           rounded-lg"

@@ -6,7 +6,7 @@ import * as hooks from '@/hooks/use-local-storage';
 import { DefaultSearchResp } from '@/model/types-star-wars';
 import { ApiService } from '@/services/api-service';
 
-import { MainPage } from '../pages/main/main-page';
+import { MainPage } from '../pages/main-page';
 
 describe('Integration Tests', () => {
   beforeAll(() => {
