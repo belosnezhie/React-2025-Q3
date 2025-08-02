@@ -1,9 +1,9 @@
 import { JSX } from 'react';
 
-import type { RootState } from '@/store/store';
+import type { RootState } from '@/state/store/store';
 
 import { useAppDispatch, useAppSelector } from '@/hooks/state-hooks';
-import { clearFavorites } from '@/store/favorites-slice/favorites-slice';
+import { clearFavorites } from '@/state/store/favorites-slice/favorites-slice';
 
 export const Flyout = (): JSX.Element | null => {
   const favorites = useAppSelector(

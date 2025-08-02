@@ -24,7 +24,7 @@ export const useLocalStorage = (
         localStorage.setItem(key, nextState);
       }
     },
-    [key, store],
+    [key],
   );
 
   useEffect(() => {

@@ -1,19 +1,8 @@
 @import "tailwindcss";
 
-@theme {
-  --font-display: "Orbitron", "sans-serif";
+@custom-variant dark (&:where(.dark, .dark *));
 
-  --color-border: hsl(224, 73%, 47%);
-  --color-background: hsl(222, 81%, 73%);
-  --color-error: 	hsl(11, 87%, 62%);
-  --color-main-background: 	hsl(13, 86%, 91%);
-  --color-header-background: hwb(6 58% 2%);
-  --color-card-background: hsla(221.62, 81.02%, 73.14%, 60%);
-  --color-title: hsla(72, 29.41%, 96.67%, 80%);
-}
-
-
-/* :root {
+:root {
   --border: hsl(224, 73%, 47%);
   --background: hsl(222, 81%, 73%);
   --error: 	hsl(11, 87%, 62%);
@@ -21,7 +10,30 @@
   --header-background: hwb(6 58% 2%);
   --card-background: hsla(221.62, 81.02%, 73.14%, 60%);
   --title: hsla(72, 29.41%, 96.67%, 80%);
-} */
+}
+
+@theme inline {
+  --font-display: "Orbitron", "sans-serif";
+
+  --color-border: var(--border);
+  --color-background: var(--background);
+  --color-error: 	var(--error);
+  --color-main-background: 	var(--main-background);
+  --color-header-background: var(--header-background);
+  --color-card-background: var(--card-background);
+  --color-title: var(--title);
+}
+
+.dark {
+    --border: hsl(224, 73%, 47%);
+    --main-background: hsl(226, 60%, 10%);
+    --header-background: hsl(218, 100%, 16%);
+    --detailes-background: hsla(209, 95%, 24%, 0.6);
+    --background: hsl(222, 100%, 61%);
+    --error: hsl(351, 71%, 38%);
+    --card-background: hsla(221.62, 81.02%, 73.14%, 60%);
+    --title: hsla(72, 29.41%, 96.67%, 80%);
+}
 
 @layer utilities {
   .spinner {

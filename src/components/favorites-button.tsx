@@ -5,8 +5,8 @@ import { CharacterSearchResponse } from '@/model/types-star-wars';
 import {
   addToFavorites,
   removeFromFavorites,
-} from '@/store/favorites-slice/favorites-slice';
-import { RootState } from '@/store/store';
+} from '@/state/store/favorites-slice/favorites-slice';
+import { RootState } from '@/state/store/store';
 
 export const FavButton = ({
   characterData,

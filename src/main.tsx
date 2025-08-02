@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
-import { store } from '@/store/store';
+import { ThemeProvider } from '@/state/context/theme-provider';
+import { store } from '@/state/store/store';
 
-import App from './app';
 import './index.css';
+import App from './app';
 
 const rootElement = document.getElementById('root');
 
@@ -16,7 +17,9 @@ if (!rootElement) {
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
 );
