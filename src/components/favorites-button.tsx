@@ -1,12 +1,8 @@
 import { JSX } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/hooks/state-hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { CharacterSearchResponse } from '@/model/types-star-wars';
-import {
-  addToFavorites,
-  removeFromFavorites,
-} from '@/state/store/favorites-slice/favorites-slice';
-import { RootState } from '@/state/store/store';
+import { addToFavorites, removeFromFavorites, RootState } from '@/state';
 
 export const FavButton = ({
   characterData,

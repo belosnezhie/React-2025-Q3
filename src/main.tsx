@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
-import { ThemeProvider } from '@/state/context/theme-provider';
-import { store } from '@/state/store/store';
+import { ThemeProvider } from '@/state';
+import { store } from '@/state';
 
 import './index.css';
 import App from './app';

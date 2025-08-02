@@ -84,7 +84,7 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
       <Header pageType="main" />
       <div className="flex">
         <main
-          className="min-h-[85vh] p-[2%] flex justify-center gap-[1em] flex-wrap bg-main-background"
+          className="min-h-[85vh] w-full p-[2%] flex justify-center gap-[1em] flex-wrap bg-main-background"
           onClick={handleMainClick}
         >
           <section className="flex flex-col justify-evenly items-center">

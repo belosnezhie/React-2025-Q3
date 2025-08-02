@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import { SearchForm } from '@/components';
-import { useTheme } from '@/hooks/context-hooks';
+import { useTheme } from '@/hooks';
 
 export const Header = ({
   pageType,

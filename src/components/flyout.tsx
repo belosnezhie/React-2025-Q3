@@ -1,9 +1,10 @@
 import { JSX } from 'react';
 
-import type { RootState } from '@/state/store/store';
+import type { RootState } from '@/state';
 
-import { useAppDispatch, useAppSelector } from '@/hooks/state-hooks';
-import { clearFavorites } from '@/state/store/favorites-slice/favorites-slice';
+import { DownloadButton } from '@/components/download-button';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { clearFavorites } from '@/state';
 
 export const Flyout = (): JSX.Element | null => {
   const favorites = useAppSelector(
@@ -28,6 +29,7 @@ export const Flyout = (): JSX.Element | null => {
           Unselect all
         </button>
         <p>{favorites.length} items are selected</p>
+        <DownloadButton />
       </footer>
     </>
   );
