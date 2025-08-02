@@ -3,11 +3,14 @@ import { expect, it } from 'vitest';
 
 import { setup } from '@/__tests__/test-utils/user-event-setup';
 import { AboutPage } from '@/pages';
+import { ThemeProvider } from '@/state/context/theme-provider';
 
 it('can be rendered', () => {
   const { getByTestId } = setup(
     <MemoryRouter initialEntries={[{ pathname: '/', search: '' }]}>
-      <AboutPage />
+      <ThemeProvider>
+        <AboutPage />
+      </ThemeProvider>{' '}
     </MemoryRouter>,
   );
 
