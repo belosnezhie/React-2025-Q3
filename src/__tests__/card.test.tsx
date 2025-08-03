@@ -22,7 +22,7 @@ describe('Card Component Tests', () => {
     expect(name).toBeInTheDocument();
   });
 
-  it('displays flyout with correct amount of items', async () => {
+  it('displays flyout with correct amount of items after item was checked', async () => {
     store.dispatch(addToFavorites(testDataJane));
     global.URL.createObjectURL = vi.fn();
 
