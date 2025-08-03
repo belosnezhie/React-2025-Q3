@@ -1,11 +1,13 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { expect } from 'vitest';
 
-import { renderWithProviders } from '@/__tests__/test-utils/provider';
 import { Card } from '@/components';
+import { addToFavorites, store } from '@/state';
 
+import { renderWithProviders } from './test-utils/provider';
 import { testDataJane } from './test-utils/test-data';
+import { setupWithTestStore } from './test-utils/user-event-setup';
 
 describe('Card Component Tests', () => {
   it('displays item name and description correctly', () => {
@@ -18,5 +20,24 @@ describe('Card Component Tests', () => {
     const name = screen.getByText('Jane Dow');
 
     expect(name).toBeInTheDocument();
+  });
+
+  it('displays flyout with correct amount of items', async () => {
+    store.dispatch(addToFavorites(testDataJane));
+    global.URL.createObjectURL = vi.fn();
+
+    const { getByRole, user } = setupWithTestStore(
+      <BrowserRouter>
+        <Card characterData={testDataJane} />
+      </BrowserRouter>,
+      store,
+    );
+
+    const checkbox = getByRole('checkbox');
+    user.click(checkbox);
+
+    await waitFor(() => {
+      expect(screen.findByText('1 items are selected')).toBeDefined();
+    });
   });
 });
