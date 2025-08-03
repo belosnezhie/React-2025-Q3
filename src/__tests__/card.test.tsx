@@ -26,14 +26,14 @@ describe('Card Component Tests', () => {
     store.dispatch(addToFavorites(testDataJane));
     global.URL.createObjectURL = vi.fn();
 
-    const { getByTestId, user } = setupWithTestStore(
+    const { getByRole, user } = setupWithTestStore(
       <BrowserRouter>
         <FavButton characterData={testDataJane} />
       </BrowserRouter>,
       store,
     );
 
-    const checkbox = getByTestId('fav_checkbox');
+    const checkbox = getByRole('checkbox');
     user.click(checkbox);
 
     await waitFor(() => {
