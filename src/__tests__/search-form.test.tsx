@@ -3,9 +3,10 @@ import { JSX } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { expect, MockedFunction, MockInstance, vi } from 'vitest';
 
-import { setup } from '@/__tests__/test-utils/user-event-setup';
 import { SearchForm } from '@/components';
 import * as hooks from '@/hooks/use-local-storage';
+
+import { setup } from './test-utils/user-event-setup';
 
 const renderHelper = (): JSX.Element => {
   return (

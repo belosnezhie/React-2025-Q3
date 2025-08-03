@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { expect } from 'vitest';
 
-import { Card } from '@/components';
+import { Card, FavButton } from '@/components';
 import { addToFavorites, store } from '@/state';
 
 import { renderWithProviders } from './test-utils/provider';
@@ -26,18 +26,25 @@ describe('Card Component Tests', () => {
     store.dispatch(addToFavorites(testDataJane));
     global.URL.createObjectURL = vi.fn();
 
-    const { getByRole, user } = setupWithTestStore(
+    const { getByTestId, user } = setupWithTestStore(
       <BrowserRouter>
-        <Card characterData={testDataJane} />
+        <FavButton characterData={testDataJane} />
       </BrowserRouter>,
       store,
     );
 
-    const checkbox = getByRole('checkbox');
+    const checkbox = getByTestId('fav_checkbox');
     user.click(checkbox);
 
     await waitFor(() => {
+      expect(checkbox).toBeChecked();
       expect(screen.findByText('1 items are selected')).toBeDefined();
+    });
+
+    const actions = store.getState();
+
+    expect(actions).toHaveProperty('favorites', {
+      favorites: [testDataJane],
     });
   });
 });
