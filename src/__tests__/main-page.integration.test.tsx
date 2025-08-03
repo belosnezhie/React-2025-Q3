@@ -1,12 +1,13 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, expect, it, MockedFunction, vi } from 'vitest';
 
-import * as hooks from '@/hooks/use-local-storage';
+import { renderWithProviders } from '@/__tests__/test-utils/provider';
+import { useLocalStorage } from '@/hooks';
 import { DefaultSearchResp } from '@/model/types-star-wars';
+import { MainPage } from '@/pages';
 import { ApiService } from '@/services/api-service';
-
-import { MainPage } from '../pages/main-page';
+import { ThemeProvider } from '@/state';
 
 describe('Integration Tests', () => {
   beforeAll(() => {
@@ -16,7 +17,7 @@ describe('Integration Tests', () => {
     (initialValue: string) => [string, (nextState: string) => void]
   >;
   beforeEach(() => {
-    mock = vi.mocked(hooks.useLocalStorage).mockReturnValue([
+    mock = vi.mocked(useLocalStorage).mockReturnValue([
       'Jane Doe',
       (_: string): void => {
         // do nothing
@@ -27,15 +28,17 @@ describe('Integration Tests', () => {
     mock.mockReset();
   });
 
-  it.skip('makes initial API call on component mount', async () => {
+  it('makes initial API call on component mount', async () => {
     const mockService: ApiService = {
       getDefaultData: vi.fn().mockResolvedValue(new DefaultSearchResp()),
       getSeachedData: vi.fn(),
     } satisfies ApiService;
 
-    render(
+    renderWithProviders(
       <BrowserRouter>
-        <MainPage service={mockService} />
+        <ThemeProvider>
+          <MainPage service={mockService} />
+        </ThemeProvider>
       </BrowserRouter>,
     );
 
@@ -44,10 +47,12 @@ describe('Integration Tests', () => {
     });
   });
 
-  it.skip('handles search term from localStorage on initial load', async () => {
-    render(
+  it('handles search term from localStorage on initial load', async () => {
+    renderWithProviders(
       <BrowserRouter>
-        <MainPage service={new ApiService()} />
+        <ThemeProvider>
+          <MainPage service={new ApiService()} />
+        </ThemeProvider>
       </BrowserRouter>,
     );
 
@@ -56,10 +61,12 @@ describe('Integration Tests', () => {
     });
   });
 
-  it.skip('manages loading states during API calls', async () => {
-    render(
+  it('manages loading states during API calls', async () => {
+    renderWithProviders(
       <BrowserRouter>
-        <MainPage service={new ApiService()} />
+        <ThemeProvider>
+          <MainPage service={new ApiService()} />
+        </ThemeProvider>
       </BrowserRouter>,
     );
 

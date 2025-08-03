@@ -1,6 +1,7 @@
 export { Card } from './card';
 export { CardsWrapper } from './cards-wrapper';
 export { DetailedSection } from './detailes-section';
+export { DownloadButton } from './download-button';
 export { ErrorBoundary } from './error-boundary';
 export { FavButton } from './favorites-button';
 export { Flyout } from './flyout';

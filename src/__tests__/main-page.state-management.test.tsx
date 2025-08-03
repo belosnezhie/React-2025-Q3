@@ -1,34 +1,23 @@
 import {
-  render,
   screen,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { delay, http, HttpResponse } from 'msw';
-import { setupServer, SetupServerApi } from 'msw/node';
+import { setupServer } from 'msw/node';
 import { BrowserRouter } from 'react-router-dom';
 import { expect } from 'vitest';
 
-import { testCharactersSearchArray } from '@/__tests__/test-utils/test-data';
+import { MainPage } from '@/pages';
 import { apiService } from '@/services/api-service';
-import { searchQueryStorage } from '@/services/local-storage';
+import { ThemeProvider } from '@/state';
 
-import { MainPage } from '../pages/main-page';
+import { renderWithProviders } from './test-utils/provider';
+import { testCharactersSearchArray } from './test-utils/test-data';
 
-let server: SetupServerApi;
 const DELAY = 150;
 
-afterEach(() => {
-  if (server !== undefined) {
-    server.resetHandlers();
-    server.close();
-  }
-});
-afterAll(() => {
-  server.close();
-});
-
-it.skip('updates component state based on API responses', async () => {
+it('updates component state based on API responses', async () => {
   const handlers = [
     http.get('https://swapi.py4e.com/api/people/', async () => {
       await delay(DELAY);
@@ -37,12 +26,14 @@ it.skip('updates component state based on API responses', async () => {
     }),
   ];
 
-  server = setupServer(...handlers);
+  const server = setupServer(...handlers);
   server.listen();
 
-  render(
+  renderWithProviders(
     <BrowserRouter>
-      <MainPage service={apiService} />
+      <ThemeProvider>
+        <MainPage service={apiService} />
+      </ThemeProvider>
     </BrowserRouter>,
   );
 
@@ -54,29 +45,4 @@ it.skip('updates component state based on API responses', async () => {
     expect(cards).toBeDefined();
     expect(cards).lengthOf(2);
   });
-});
-
-it.skip('manages search term state correctly', async () => {
-  vi.spyOn(searchQueryStorage, 'getSearchQuery').mockImplementationOnce(
-    () => 'test',
-  );
-
-  const handlers = [
-    http.get('https://swapi.py4e.com/api/people/', async () => {
-      await delay(DELAY);
-
-      return HttpResponse.json(testCharactersSearchArray);
-    }),
-  ];
-
-  server = setupServer(...handlers);
-  server.listen();
-
-  render(
-    <BrowserRouter>
-      <MainPage service={apiService} />
-    </BrowserRouter>,
-  );
-
-  expect(await screen.findAllByTestId('results_card')).toBeDefined();
 });

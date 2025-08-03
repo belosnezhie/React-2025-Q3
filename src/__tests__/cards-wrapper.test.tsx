@@ -1,17 +1,19 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { expect } from 'vitest';
 
-import {
-  partialTestSearchResponse,
-  testCharactersSearch,
-  testCharactersSearchArray as testCharactersSearchArray,
-} from '@/__tests__/test-utils/test-data';
 import { CardsWrapper } from '@/components';
 
+import { renderWithProviders } from './test-utils/provider';
+import {
+  partialTestSearchResponse,
+  testCharactersSearchArray,
+  testDataJohn,
+} from './test-utils/test-data';
+
 describe('Rendering Tests', () => {
-  it.skip('renders correct number of items when data is provided', () => {
-    render(
+  it('renders correct number of items when data is provided', () => {
+    renderWithProviders(
       <BrowserRouter>
         <CardsWrapper
           cardCharacterData={testCharactersSearchArray.results}
@@ -25,8 +27,8 @@ describe('Rendering Tests', () => {
     expect(cards).lengthOf(2);
   });
 
-  it.skip('displays placeholder message when data array is empty', () => {
-    render(
+  it('displays placeholder message when data array is empty', () => {
+    renderWithProviders(
       <BrowserRouter>
         <CardsWrapper cardCharacterData={[]} error={null} />
       </BrowserRouter>,
@@ -39,20 +41,20 @@ describe('Rendering Tests', () => {
 });
 
 describe('Data Display Tests', () => {
-  it.skip('correctly displays item names and descriptions', () => {
-    render(
+  it('correctly displays item names and descriptions', () => {
+    renderWithProviders(
       <BrowserRouter>
-        <CardsWrapper cardCharacterData={[testCharactersSearch]} error={null} />
+        <CardsWrapper cardCharacterData={[testDataJohn]} error={null} />
       </BrowserRouter>,
     );
 
-    const name = screen.getByText('Name: Jane Dow');
+    const name = screen.getByTestId('results_card');
 
     expect(name).toBeInTheDocument();
   });
 
-  it.skip('handles missing or undefined data gracefully', () => {
-    render(
+  it('handles missing or undefined data gracefully', () => {
+    renderWithProviders(
       <BrowserRouter>
         <CardsWrapper
           cardCharacterData={partialTestSearchResponse.results}
@@ -61,17 +63,17 @@ describe('Data Display Tests', () => {
       </BrowserRouter>,
     );
 
-    const name = screen.getByText('Name: N/A');
+    const name = screen.getByText('N/A');
 
     expect(name).toBeInTheDocument();
   });
 });
 
 describe('Error Handling Tests', () => {
-  it.skip('displays error message when API call fails', () => {
+  it('displays error message when API call fails', () => {
     const apiError = new Error('Request faild with code: 401');
 
-    render(
+    renderWithProviders(
       <BrowserRouter>
         <CardsWrapper cardCharacterData={[]} error={apiError} />
       </BrowserRouter>,

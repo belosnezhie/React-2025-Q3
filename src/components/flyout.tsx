@@ -2,7 +2,7 @@ import { JSX } from 'react';
 
 import type { RootState } from '@/state';
 
-import { DownloadButton } from '@/components/download-button';
+import { DownloadButton } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { clearFavorites } from '@/state';
 

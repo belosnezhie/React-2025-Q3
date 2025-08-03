@@ -52,6 +52,7 @@ export const DownloadButton = (): JSX.Element => {
       className="download_button"
       download={`${favCharacters.length}_characters`}
       href={formData()}
+      role="link"
     >
       Download
     </a>

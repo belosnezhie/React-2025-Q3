@@ -2,11 +2,12 @@ import { waitFor } from '@testing-library/dom';
 import { MemoryRouter } from 'react-router-dom';
 import { expect } from 'vitest';
 
-import { setup } from '@/__tests__/test-utils/user-event-setup';
 import { Pagination } from '@/components';
 
+import { setup } from './test-utils/user-event-setup';
+
 describe('Pagination tests', () => {
-  it.skip('renders correct amount of buttons and enables page button as active', async () => {
+  it('renders correct amount of buttons and enables page button as active', async () => {
     const { getByTestId, user } = setup(
       <MemoryRouter initialEntries={[{ pathname: '/', search: '' }]}>
         <Pagination pagesCount={2} />
@@ -19,7 +20,7 @@ describe('Pagination tests', () => {
     user.click(paginationButton2);
 
     await waitFor(() => {
-      expect(paginationButton2).toHaveClass('active');
+      expect(paginationButton2).toHaveClass('bg-border');
     });
   });
 });

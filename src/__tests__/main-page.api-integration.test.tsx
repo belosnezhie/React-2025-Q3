@@ -1,13 +1,15 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { delay, http, HttpResponse } from 'msw';
 import { setupServer, SetupServerApi } from 'msw/node';
 import { BrowserRouter } from 'react-router-dom';
 import { expect, it, vi } from 'vitest';
 
-import { testCharactersSearchArray } from '@/__tests__/test-utils/test-data';
+import { MainPage } from '@/pages';
 import { ApiService } from '@/services/api-service';
+import { ThemeProvider } from '@/state';
 
-import { MainPage } from '../pages/main-page';
+import { renderWithProviders } from './test-utils/provider';
+import { testCharactersSearchArray } from './test-utils/test-data';
 
 let server: SetupServerApi;
 const DELAY = 150;
@@ -19,11 +21,12 @@ afterEach(() => {
   }
   vi.resetAllMocks();
 });
+
 afterAll(() => {
   server.close();
 });
 
-it.skip('handles successful API responses', async () => {
+it('handles successful API responses', async () => {
   const handlers = [
     http.get('https://swapi.py4e.com/api/people/', async () => {
       await delay(DELAY);
@@ -35,9 +38,11 @@ it.skip('handles successful API responses', async () => {
   server = setupServer(...handlers);
   server.listen();
 
-  render(
+  renderWithProviders(
     <BrowserRouter>
-      <MainPage service={new ApiService()} />
+      <ThemeProvider>
+        <MainPage service={new ApiService()} />
+      </ThemeProvider>
     </BrowserRouter>,
   );
 
@@ -48,7 +53,7 @@ it.skip('handles successful API responses', async () => {
   });
 });
 
-it.skip('handles API error responses', async () => {
+it('handles API error responses', async () => {
   const handlers = [
     http.get('https://swapi.py4e.com/api/people/', async () => {
       await delay(DELAY);
@@ -60,9 +65,11 @@ it.skip('handles API error responses', async () => {
   server = setupServer(...handlers);
   server.listen();
 
-  render(
+  renderWithProviders(
     <BrowserRouter>
-      <MainPage service={new ApiService()} />
+      <ThemeProvider>
+        <MainPage service={new ApiService()} />
+      </ThemeProvider>
     </BrowserRouter>,
   );
 

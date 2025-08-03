@@ -76,8 +76,8 @@ export const Header = ({
             hover:scale-[0.95]
             ${
               theme === 'dark'
-                ? "bg-[url('/src/assets/moon.png')]"
-                : "bg-[url('/src/assets/sun.png')]"
+                ? "bg-[url('/src/assets/sun.png')]"
+                : "bg-[url('/src/assets/moon.png')]"
             }`}
           onClick={updateTheme}
         />
