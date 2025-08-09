@@ -15,10 +15,7 @@ describe('Rendering Tests', () => {
   it('renders correct number of items when data is provided', () => {
     renderWithProviders(
       <BrowserRouter>
-        <CardsWrapper
-          cardCharacterData={testCharactersSearchArray.results}
-          error={null}
-        />
+        <CardsWrapper cardCharacterData={testCharactersSearchArray.results} />
       </BrowserRouter>,
     );
 
@@ -30,7 +27,7 @@ describe('Rendering Tests', () => {
   it('displays placeholder message when data array is empty', () => {
     renderWithProviders(
       <BrowserRouter>
-        <CardsWrapper cardCharacterData={[]} error={null} />
+        <CardsWrapper cardCharacterData={[]} />
       </BrowserRouter>,
     );
 
@@ -44,7 +41,7 @@ describe('Data Display Tests', () => {
   it('correctly displays item names and descriptions', () => {
     renderWithProviders(
       <BrowserRouter>
-        <CardsWrapper cardCharacterData={[testDataJohn]} error={null} />
+        <CardsWrapper cardCharacterData={[testDataJohn]} />
       </BrowserRouter>,
     );
 
@@ -56,33 +53,12 @@ describe('Data Display Tests', () => {
   it('handles missing or undefined data gracefully', () => {
     renderWithProviders(
       <BrowserRouter>
-        <CardsWrapper
-          cardCharacterData={partialTestSearchResponse.results}
-          error={null}
-        />
+        <CardsWrapper cardCharacterData={partialTestSearchResponse.results} />
       </BrowserRouter>,
     );
 
     const name = screen.getByText('N/A');
 
     expect(name).toBeInTheDocument();
-  });
-});
-
-describe('Error Handling Tests', () => {
-  it('displays error message when API call fails', () => {
-    const apiError = new Error('Request faild with code: 401');
-
-    renderWithProviders(
-      <BrowserRouter>
-        <CardsWrapper cardCharacterData={[]} error={apiError} />
-      </BrowserRouter>,
-    );
-
-    const placeholder = screen.getByText(
-      'Something went wrong: Request faild with code: 401',
-    );
-
-    expect(placeholder).toBeInTheDocument();
   });
 });
