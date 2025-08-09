@@ -71,7 +71,15 @@ export const MainPage = (): React.ReactElement => {
               <Spinner />
             ) : (
               <>
-                <button onClick={handleRefetch}>Refetch</button>
+                <button
+                  className="group text-border cursor-pointer transition-transform duration-300 hover:scale-[0.90]"
+                  onClick={handleRefetch}
+                >
+                  Refetch{' '}
+                  <span className="inline-block text-2xl transition-transform duration-500 delay-150 group-hover:rotate-360">
+                    &#10226;
+                  </span>
+                </button>
                 <CardsWrapper cardCharacterData={data?.results ?? []} />
                 <Pagination pagesCount={countPages(data?.count ?? 0)} />
               </>
