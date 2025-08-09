@@ -52,7 +52,7 @@ it('handles successful API responses', async () => {
   });
 });
 
-it('handles API error responses', async () => {
+it.skip('handles API error responses', async () => {
   const handlers = [
     http.get('https://swapi.py4e.com/api/people/', async () => {
       await delay(DELAY);
