@@ -13,8 +13,8 @@ import {
   Pagination,
   Spinner,
 } from '@/components';
-import { useLocalStorage } from '@/hooks/use-local-storage';
-import { useFetchCharactersQuery } from '@/services/api-service';
+import { useAppDispatch, useLocalStorage } from '@/hooks';
+import { starWarsApi, useFetchCharactersQuery } from '@/services/api-service';
 
 const MAX_PER_PAGE = 10;
 
@@ -27,6 +27,7 @@ export const MainPage = (): React.ReactElement => {
   const [searchParameters] = useSearchParams();
   const navigate = useNavigate();
   const { characterID } = useParams();
+  const dispatch = useAppDispatch();
   const { data, error, isFetching } = useFetchCharactersQuery({
     pageNumber:
       searchParameters.get('page') === null
@@ -49,6 +50,10 @@ export const MainPage = (): React.ReactElement => {
     }
   };
 
+  const handleRefetch = (): void => {
+    dispatch(starWarsApi.util.invalidateTags(['Characters']));
+  };
+
   if (error) {
     return <p>Something went wrong.</p>;
   }
@@ -66,6 +71,7 @@ export const MainPage = (): React.ReactElement => {
               <Spinner />
             ) : (
               <>
+                <button onClick={handleRefetch}>Refetch</button>
                 <CardsWrapper cardCharacterData={data?.results ?? []} />
                 <Pagination pagesCount={countPages(data?.count ?? 0)} />
               </>

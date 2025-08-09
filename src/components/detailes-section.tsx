@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { Spinner } from '@/components';
-import { useFetchSearchedCharactersQuery } from '@/services/api-service';
+import { useAppDispatch } from '@/hooks';
+import {
+  starWarsApi,
+  useFetchSearchedCharactersQuery,
+} from '@/services/api-service';
 
 export const DetailedSection = (): null | React.ReactElement => {
   const { characterID } = useParams();
   const [searchParameters] = useSearchParams();
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { data, error, isFetching } = useFetchSearchedCharactersQuery(
     characterID ?? '',
   );
@@ -22,6 +27,10 @@ export const DetailedSection = (): null | React.ReactElement => {
   if (error) {
     return <p>Something went wrong.</p>;
   }
+
+  const handleRefetch = (): void => {
+    dispatch(starWarsApi.util.invalidateTags(['Details']));
+  };
 
   return isDestroyed ? null : (
     <aside
@@ -51,6 +60,7 @@ export const DetailedSection = (): null | React.ReactElement => {
               <p>Skin color: {data.skin_color}</p>
               <p>Eye color: {data.eye_color}</p>
               <p>Gender: {data.gender}</p>
+              <button onClick={handleRefetch}>Refetch</button>
             </div>
           ) : (
             <p>There is no such character</p>
