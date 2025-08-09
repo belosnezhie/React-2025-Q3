@@ -1,43 +1,27 @@
-import { JSX, useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { Spinner } from '@/components';
-import { CharacterSearchResponse } from '@/model/types-star-wars';
-import { ApiService } from '@/services/api-service';
+import { useFetchSearchedCharactersQuery } from '@/services/api-service';
 
-interface DetailedSectionProps {
-  service: ApiService;
-}
-
-export const DetailedSection = ({
-  service,
-}: DetailedSectionProps): JSX.Element | null => {
-  const [characterData, setCharacterData] = useState<CharacterSearchResponse>();
+export const DetailedSection = (): null | React.ReactElement => {
   const { characterID } = useParams();
   const [searchParameters] = useSearchParams();
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
-  const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-
-  const getCharacterData = useCallback(async (): Promise<void> => {
-    setLoading(true);
-    const resp: CharacterSearchResponse = await service.getSeachedData(
-      String(characterID),
-    );
-    setCharacterData(resp);
-
-    setLoading(false);
-  }, [service, characterID]);
-
-  useEffect(() => {
-    getCharacterData();
-  }, [getCharacterData, searchParameters]);
+  const { data, error, isFetching } = useFetchSearchedCharactersQuery(
+    characterID ?? '',
+  );
 
   const handleClick = (): void => {
     const page = searchParameters.get('page') ?? 1;
     navigate(`/?page=${page}`);
     setDestroyed(true);
   };
+
+  if (error) {
+    return <p>Something went wrong.</p>;
+  }
 
   return isDestroyed ? null : (
     <aside
@@ -55,21 +39,21 @@ export const DetailedSection = ({
     z-1000
     relative"
     >
-      {isLoading ? (
+      {isFetching ? (
         <Spinner />
       ) : (
         <>
-          {characterData ? (
+          {data ? (
             <div data-testid="character_data">
-              <p>Name: {characterData.name}</p>
-              <p>Birth year: {characterData.birth_year}</p>
-              <p>Hair color: {characterData.hair_color}</p>
-              <p>Skin color: {characterData.skin_color}</p>
-              <p>Eye color: {characterData.eye_color}</p>
-              <p>Gender: {characterData.gender}</p>
+              <p>Name: {data.name}</p>
+              <p>Birth year: {data.birth_year}</p>
+              <p>Hair color: {data.hair_color}</p>
+              <p>Skin color: {data.skin_color}</p>
+              <p>Eye color: {data.eye_color}</p>
+              <p>Gender: {data.gender}</p>
             </div>
           ) : (
-            <p>Something went wrong</p>
+            <p>There is no such character</p>
           )}
           <button
             className="
