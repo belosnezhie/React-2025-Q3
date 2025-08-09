@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import React from 'react';
 
 import { Card } from '@/components';
 import { CharacterSearchResponse } from '@/model/types-star-wars';
@@ -9,7 +9,7 @@ interface CardsWrapperProps {
 
 export const CardsWrapper = ({
   cardCharacterData,
-}: CardsWrapperProps): JSX.Element => {
+}: CardsWrapperProps): React.ReactElement => {
   if (!cardCharacterData.length) {
     return <p>Oops! there is no such character.</p>;
   }

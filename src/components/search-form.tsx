@@ -1,9 +1,9 @@
-import React, { JSX, useState } from 'react';
+import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useLocalStorage } from '@/hooks/use-local-storage';
 
-export const SearchForm = (): JSX.Element => {
+export const SearchForm = (): React.ReactElement => {
   const [query, setQuery] = useLocalStorage('');
   const [currentInputValue, setCurrentInputValue] = useState<string>(query);
   const [_, setSearchParameters] = useSearchParams();

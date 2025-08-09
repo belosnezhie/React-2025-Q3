@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import React from 'react';
 
 import type { RootState } from '@/state';
 
@@ -6,7 +6,7 @@ import { DownloadButton } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { clearFavorites } from '@/state';
 
-export const Flyout = (): JSX.Element | null => {
+export const Flyout = (): null | React.ReactElement => {
   const favorites = useAppSelector(
     (state: RootState) => state.favorites.favorites,
   );

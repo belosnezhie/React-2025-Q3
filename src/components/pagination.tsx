@@ -1,11 +1,11 @@
-import { JSX } from 'react';
+import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 export const Pagination = ({
   pagesCount,
 }: {
   pagesCount: number;
-}): JSX.Element => {
+}): React.ReactElement => {
   const [searchParameters, setSearchParameters] = useSearchParams();
 
   const currentPage = Number(searchParameters.get('page')) || 1;

@@ -1,10 +1,10 @@
-import { JSX } from 'react';
+import React from 'react';
 
 import type { RootState } from '@/state';
 
 import { useAppSelector } from '@/hooks';
 
-export const DownloadButton = (): JSX.Element => {
+export const DownloadButton = (): React.ReactElement => {
   const favCharacters = useAppSelector(
     (state: RootState) => state.favorites.favorites,
   );
@@ -49,7 +49,6 @@ export const DownloadButton = (): JSX.Element => {
 
   return (
     <a
-      className="download_button"
       download={`${favCharacters.length}_characters`}
       href={formData()}
       role="link"

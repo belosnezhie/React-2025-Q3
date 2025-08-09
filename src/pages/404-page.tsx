@@ -1,7 +1,7 @@
-import { JSX } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const NotFoundPage = (): JSX.Element => {
+export const NotFoundPage = (): React.ReactElement => {
   return (
     <div
       className='"min-w-full min-h-screen flex flex-col justify-center gap-4 items-center bg-error'
@@ -13,7 +13,7 @@ export const NotFoundPage = (): JSX.Element => {
         className="mt-[20px] no-underline text-border transition-all duration-300 hover:scale-[1.08]"
         to="/"
       >
-        &larr; Go to Main Page
+        &larr; Go to Main
       </Link>
     </div>
   );

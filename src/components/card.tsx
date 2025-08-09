@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import React from 'react';
 import { NavLink, useSearchParams } from 'react-router-dom';
 
 import { FavButton } from '@/components';
@@ -8,7 +8,7 @@ interface CardProps {
   characterData: CharacterSearchResponse;
 }
 
-export const Card = ({ characterData }: CardProps): JSX.Element => {
+export const Card = ({ characterData }: CardProps): React.ReactElement => {
   const [searchParameters] = useSearchParams();
   const currentPage = searchParameters.get('page') ?? '1';
 

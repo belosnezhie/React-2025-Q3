@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import React from 'react';
 import {
   NavLink,
   useNavigate,
@@ -13,7 +13,7 @@ export const Header = ({
   pageType,
 }: {
   pageType: 'about' | 'main';
-}): JSX.Element => {
+}): React.ReactElement => {
   const [searchParameters] = useSearchParams();
   const { characterID } = useParams();
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ export const Header = ({
             className="transition-transform duration-300 hover:scale-[0.90]"
             to={'/'}
           >
-            Main page
+            Main
           </NavLink>
         )}
         <button

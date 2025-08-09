@@ -1,4 +1,4 @@
-import { JSX, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Theme, ThemeContext } from './theme-context';
 
@@ -6,7 +6,7 @@ export const ThemeProvider = ({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element => {
+}): React.ReactElement => {
   const [theme, setTheme] = useState<Theme>('light');
 
   const updateTheme = useCallback(() => {

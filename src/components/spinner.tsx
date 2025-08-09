@@ -1,6 +1,6 @@
-import { JSX } from 'react';
+import React from 'react';
 
-export const Spinner = (): JSX.Element => {
+export const Spinner = (): React.ReactElement => {
   return (
     <div
       aria-label="spinner"
