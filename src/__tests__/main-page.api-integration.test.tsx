@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { expect, it, vi } from 'vitest';
 
 import { MainPage } from '@/pages';
-import { ApiService } from '@/services/api-service';
 import { ThemeProvider } from '@/state';
 
 import { renderWithProviders } from './test-utils/provider';
@@ -41,7 +40,7 @@ it('handles successful API responses', async () => {
   renderWithProviders(
     <BrowserRouter>
       <ThemeProvider>
-        <MainPage service={new ApiService()} />
+        <MainPage />
       </ThemeProvider>
     </BrowserRouter>,
   );
@@ -68,15 +67,13 @@ it('handles API error responses', async () => {
   renderWithProviders(
     <BrowserRouter>
       <ThemeProvider>
-        <MainPage service={new ApiService()} />
+        <MainPage />
       </ThemeProvider>
     </BrowserRouter>,
   );
 
   await waitFor(() => {
-    const placeholder = screen.getByText(
-      'Something went wrong: Request faild with code: 401',
-    );
+    const placeholder = screen.getByText('Something went wrong.');
 
     expect(placeholder).toBeInTheDocument();
   });
