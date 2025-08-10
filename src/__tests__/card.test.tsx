@@ -23,7 +23,6 @@ describe('Card Component Tests', () => {
   });
 
   it('displays flyout with correct amount of items after item was checked', async () => {
-    store.dispatch(addToFavorites(testDataJane));
     global.URL.createObjectURL = vi.fn();
 
     const { getByRole, user } = setupWithTestStore(
@@ -45,6 +44,31 @@ describe('Card Component Tests', () => {
 
     expect(actions).toHaveProperty('favorites', {
       favorites: [testDataJane],
+    });
+  });
+
+  it('removes flyout after selected item was unchecked', async () => {
+    store.dispatch(addToFavorites(testDataJane));
+    global.URL.createObjectURL = vi.fn();
+
+    const { getByRole, user } = setupWithTestStore(
+      <BrowserRouter>
+        <FavButton characterData={testDataJane} />
+      </BrowserRouter>,
+      store,
+    );
+
+    const checkbox = getByRole('checkbox');
+    await user.click(checkbox);
+
+    await waitFor(() => {
+      expect(screen.queryByText('1 items are selected')).toBeNull();
+    });
+
+    const actions = store.getState();
+
+    expect(actions).toHaveProperty('favorites', {
+      favorites: [],
     });
   });
 });
