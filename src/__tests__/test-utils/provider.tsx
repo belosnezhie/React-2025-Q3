@@ -1,6 +1,6 @@
 import { EnhancedStore } from '@reduxjs/toolkit';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
-import React, { JSX, PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
 
 import { store } from '@/state';
@@ -15,7 +15,7 @@ export function renderWithProviders(
 ): RenderResult & { testStore: typeof store } {
   const { testStore = store, ...renderOptions } = extendedRenderOptions;
 
-  const Wrapper = ({ children }: PropsWithChildren): JSX.Element => (
+  const Wrapper = ({ children }: PropsWithChildren): React.ReactElement => (
     <Provider store={testStore}>{children}</Provider>
   );
 

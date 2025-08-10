@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { JSX } from 'react';
+import React from 'react';
 import { expect, vi } from 'vitest';
 
 import { ErrorBoundary } from '@/components';
@@ -8,7 +8,7 @@ const ErrorChild = (): never => {
   throw new Error('test error');
 };
 
-const NormalChild = (): JSX.Element => {
+const NormalChild = (): React.ReactElement => {
   return <div>I am a normal component.</div>;
 };
 describe('Error Catching Tests', () => {

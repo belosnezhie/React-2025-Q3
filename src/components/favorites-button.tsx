@@ -1,4 +1,5 @@
-import { JSX } from 'react';
+import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { CharacterSearchResponse } from '@/model/types-star-wars';
@@ -8,14 +9,14 @@ export const FavButton = ({
   characterData,
 }: {
   characterData: CharacterSearchResponse;
-}): JSX.Element => {
-  const favotites = useAppSelector(
+}): React.ReactElement => {
+  const favorites = useAppSelector(
     (state: RootState) => state.favorites.favorites,
   );
   const dispatch = useAppDispatch();
 
   const handleChange = (): void => {
-    if (favotites.includes(characterData)) {
+    if (favorites.includes(characterData)) {
       dispatch(removeFromFavorites(characterData));
     } else {
       dispatch(addToFavorites(characterData));
@@ -24,20 +25,15 @@ export const FavButton = ({
 
   return (
     <input
-      checked={favotites.includes(characterData)}
-      className="
-      w-[35px] h-[35px]
-      appearance-none
-      cursor-pointer
-      bg-background
-      mask-[url('/src/assets/star.svg')]
-      mask-no-repeat
-      mask-center
-      mask-cover
-      transition-transform
-      duration-300
-      checked:bg-border
-      hover:scale-[0.90]"
+      checked={favorites.includes(characterData)}
+      className={twMerge(
+        'w-[35px] h-[35px] appearance-none',
+        'cursor-pointer bg-background',
+        "mask-[url('/src/assets/star.svg')]",
+        'mask-no-repeat mask-center mask-cover',
+        'transition-transform duration-300',
+        'checked:bg-border hover:scale-[0.90]',
+      )}
       name="fav_checkbox"
       onChange={handleChange}
       type="checkbox"

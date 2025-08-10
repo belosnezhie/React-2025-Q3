@@ -1,11 +1,12 @@
-import { JSX } from 'react';
+import React from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
 
 export const Pagination = ({
   pagesCount,
 }: {
   pagesCount: number;
-}): JSX.Element => {
+}): React.ReactElement => {
   const [searchParameters, setSearchParameters] = useSearchParams();
 
   const currentPage = Number(searchParameters.get('page')) || 1;
@@ -18,17 +19,12 @@ export const Pagination = ({
     <div className="flex gap-4 z-20000 flex-wrap justify-center">
       {Array.from({ length: pagesCount }, (_, index) => (
         <button
-          className={`
-            w-[50px]
-            h-[50px]
-            rounded-full
-            bg-background
-            border-0
-            cursor-pointer
-            transition-transform
-            duration-300
-            hover:scale-[0.95]
-            ${currentPage === index + 1 ? 'bg-border' : ''}`}
+          className={`${twMerge(
+            'w-[50px] h-[50px] rounded-full',
+            'bg-background border-0 cursor-pointer',
+            'transition-transform duration-300',
+            'hover:scale-[0.95]',
+          )} ${currentPage === index + 1 ? 'bg-border' : ''}`}
           data-testid={`page_button_${index + 1}`}
           key={index}
           name={index.toString()}

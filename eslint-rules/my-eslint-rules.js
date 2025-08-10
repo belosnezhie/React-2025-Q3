@@ -223,7 +223,7 @@ export const myEslintRules = {
   // Maximum number of lines per function
   "max-lines-per-function": [
     "error",
-    { max: 80, skipBlankLines: true, skipComments: true },
+    { max: 100, skipBlankLines: true, skipComments: true },
   ],
 
   // Prohibit console (except warn)

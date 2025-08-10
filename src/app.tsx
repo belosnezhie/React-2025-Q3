@@ -6,7 +6,6 @@ import { DetailedSection } from '@/components';
 import { AboutPage } from '@/pages';
 import { MainPage } from '@/pages';
 import { NotFoundPage } from '@/pages';
-import { apiService } from '@/services/api-service';
 
 const App = (): ReactNode => {
   return (
@@ -14,11 +13,8 @@ const App = (): ReactNode => {
       <ErrorBoundary>
         <BrowserRouter>
           <Routes>
-            <Route element={<MainPage service={apiService} />} path="/">
-              <Route
-                element={<DetailedSection service={apiService} />}
-                path=":characterID"
-              />
+            <Route element={<MainPage />} path="/">
+              <Route element={<DetailedSection />} path=":characterID" />
             </Route>
             <Route element={<AboutPage />} path="/about" />
             <Route element={<NotFoundPage />} path="*" />

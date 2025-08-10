@@ -9,7 +9,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { expect } from 'vitest';
 
 import { MainPage } from '@/pages';
-import { apiService } from '@/services/api-service';
 import { ThemeProvider } from '@/state';
 
 import { renderWithProviders } from './test-utils/provider';
@@ -32,7 +31,7 @@ it('updates component state based on API responses', async () => {
   renderWithProviders(
     <BrowserRouter>
       <ThemeProvider>
-        <MainPage service={apiService} />
+        <MainPage />
       </ThemeProvider>
     </BrowserRouter>,
   );

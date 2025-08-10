@@ -1,19 +1,17 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { expect } from 'vitest';
 
-import { testDataJane } from '@/__tests__/test-utils/test-data';
-import { setup } from '@/__tests__/test-utils/user-event-setup';
+import { renderWithProviders } from '@/__tests__/test-utils/provider';
 import { DetailedSection } from '@/components';
-import { ApiService } from '@/services/api-service';
+
+import { setup } from './test-utils/user-event-setup';
 
 describe('Detailed Section Tests', () => {
   it('checks that a loading indicator is displayed while fetching data', () => {
-    const service = new ApiService();
-
-    render(
+    renderWithProviders(
       <BrowserRouter>
-        <DetailedSection service={service} />
+        <DetailedSection />
       </BrowserRouter>,
     );
 
@@ -23,11 +21,9 @@ describe('Detailed Section Tests', () => {
   });
 
   it('closes component after click on button', async () => {
-    const service = new ApiService();
-    vi.spyOn(service, 'getSeachedData').mockResolvedValueOnce(testDataJane);
     const { getByTestId, queryAllByTestId, user } = setup(
       <BrowserRouter>
-        <DetailedSection service={service} />
+        <DetailedSection />
       </BrowserRouter>,
     );
 
@@ -45,11 +41,9 @@ describe('Detailed Section Tests', () => {
   });
 
   it('correctly displays detailed card data', async () => {
-    const service = new ApiService();
-    vi.spyOn(service, 'getSeachedData').mockResolvedValueOnce(testDataJane);
     const { queryAllByTestId } = setup(
       <BrowserRouter>
-        <DetailedSection service={service} />
+        <DetailedSection />
       </BrowserRouter>,
     );
 

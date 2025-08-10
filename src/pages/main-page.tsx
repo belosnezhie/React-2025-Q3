@@ -1,41 +1,41 @@
-import { JSX, useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import {
   Outlet,
   useNavigate,
   useParams,
   useSearchParams,
 } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
 
-import { Header } from '@/components';
-import { CardsWrapper } from '@/components';
-import { Pagination } from '@/components';
-import { Spinner } from '@/components';
-import { Flyout } from '@/components';
-import { useLocalStorage } from '@/hooks/use-local-storage';
-import { SearchResponse } from '@/model/types-star-wars';
-import { ApiService } from '@/services/api-service';
+import {
+  CardsWrapper,
+  Flyout,
+  Header,
+  Pagination,
+  Spinner,
+} from '@/components';
+import { useAppDispatch, useLocalStorage } from '@/hooks';
+import { starWarsApi, useFetchCharactersQuery } from '@/services/api-service';
 
 const MAX_PER_PAGE = 10;
-
-const validateError = (error: unknown): Error => {
-  return error instanceof Error ? error : new Error('Unknown error');
-};
 
 const countPages = (resultsLength: number): number => {
   return Math.ceil(resultsLength / MAX_PER_PAGE);
 };
 
-export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
+export const MainPage = (): React.ReactElement => {
   const [query] = useLocalStorage('');
-  const [charactersData, setCharactersData] = useState<SearchResponse>({
-    count: 0,
-    results: [],
-  });
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<Error | null>(null);
   const [searchParameters] = useSearchParams();
   const navigate = useNavigate();
   const { characterID } = useParams();
+  const dispatch = useAppDispatch();
+  const { data, error, isError, isFetching } = useFetchCharactersQuery({
+    pageNumber:
+      searchParameters.get('page') === null
+        ? 1
+        : Number(searchParameters.get('page')),
+    searchQuery: query,
+  });
 
   const handleMainClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     const target = event.target instanceof HTMLElement ? event.target : null;
@@ -51,55 +51,64 @@ export const MainPage = ({ service }: { service: ApiService }): JSX.Element => {
     }
   };
 
-  const fetchCharacters = useCallback(
-    async (
-      currentQuery: string,
-      searchParameters: URLSearchParams,
-    ): Promise<void> => {
-      setLoading(true);
+  const handleRefetch = (): void => {
+    dispatch(starWarsApi.util.invalidateTags(['Characters']));
+  };
 
-      const page =
-        searchParameters.get('page') === null
-          ? '1'
-          : searchParameters.get('page');
-
-      try {
-        const resp = await service.getDefaultData(Number(page), currentQuery);
-        setCharactersData(resp);
-      } catch (error_) {
-        setErrorMessage(validateError(error_));
-      }
-
-      setLoading(false);
-    },
-    [service],
-  );
-
-  useEffect(() => {
-    fetchCharacters(query, searchParameters);
-  }, [fetchCharacters, query, searchParameters]);
+  if (isError) {
+    return (
+      <p data-testid="error-main-page">{`Something went wrong: ${JSON.stringify(error)}.`}</p>
+    );
+  }
 
   return (
     <>
       <Header pageType="main" />
       <div className="flex">
         <main
-          className="min-h-[85vh] w-full p-[2%] flex justify-center gap-[1em] flex-wrap bg-main-background"
+          className={twMerge(
+            'min-h-[85vh] w-full p-[2%]',
+            'flex justify-center gap-[1em]',
+            'flex-wrap bg-main-background',
+          )}
           onClick={handleMainClick}
         >
           <section className="flex flex-col justify-evenly items-center">
-            {isLoading ? (
+            {isFetching ? (
               <Spinner />
             ) : (
               <>
-                <CardsWrapper
-                  cardCharacterData={charactersData.results}
-                  error={errorMessage}
-                />
-                <Pagination pagesCount={countPages(charactersData.count)} />
+                <CardsWrapper cardCharacterData={data?.results ?? []} />
+                <button
+                  className={twMerge(
+                    'group text-border cursor-pointer',
+                    'transition-transform duration-300',
+                    'hover:scale-[0.90]',
+                  )}
+                  onClick={handleRefetch}
+                >
+                  Refetch{' '}
+                  <span
+                    className={twMerge(
+                      'inline-block text-2xl',
+                      'transition-transform duration-500',
+                      'group-hover:rotate-360',
+                    )}
+                  >
+                    &#10226;
+                  </span>
+                </button>
+                <Pagination pagesCount={countPages(data?.count ?? 0)} />
               </>
             )}
-            <div className="w-[300px] h-[300px] fixed bottom-0 right-0 bg-[url('/src/assets/yoda.png')] bg-contain bg-no-repeat" />
+            <div
+              className={twMerge(
+                'w-[300px] h-[300px]',
+                'fixed bottom-0 right-0',
+                "bg-[url('/src/assets/yoda.png')]",
+                'bg-contain bg-no-repeat',
+              )}
+            />
           </section>
         </main>
         <Outlet />

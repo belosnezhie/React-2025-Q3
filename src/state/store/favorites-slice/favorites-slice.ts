@@ -32,7 +32,7 @@ export const favoritesSlice = createSlice({
       return {
         ...state,
         favorites: state.favorites.filter(
-          (item) => item.name !== action.payload.name,
+          (item) => item.url !== action.payload.url,
         ),
       };
     },

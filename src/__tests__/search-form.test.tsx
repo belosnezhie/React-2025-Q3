@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { JSX } from 'react';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { expect, MockedFunction, MockInstance, vi } from 'vitest';
 
@@ -8,7 +8,7 @@ import * as hooks from '@/hooks/use-local-storage';
 
 import { setup } from './test-utils/user-event-setup';
 
-const renderHelper = (): JSX.Element => {
+const renderHelper = (): React.ReactElement => {
   return (
     <BrowserRouter>
       <SearchForm />

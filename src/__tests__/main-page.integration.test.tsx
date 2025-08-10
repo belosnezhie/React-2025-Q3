@@ -4,9 +4,7 @@ import { describe, expect, it, MockedFunction, vi } from 'vitest';
 
 import { renderWithProviders } from '@/__tests__/test-utils/provider';
 import { useLocalStorage } from '@/hooks';
-import { DefaultSearchResp } from '@/model/types-star-wars';
 import { MainPage } from '@/pages';
-import { ApiService } from '@/services/api-service';
 import { ThemeProvider } from '@/state';
 
 describe('Integration Tests', () => {
@@ -29,15 +27,10 @@ describe('Integration Tests', () => {
   });
 
   it('makes initial API call on component mount', async () => {
-    const mockService: ApiService = {
-      getDefaultData: vi.fn().mockResolvedValue(new DefaultSearchResp()),
-      getSeachedData: vi.fn(),
-    } satisfies ApiService;
-
     renderWithProviders(
       <BrowserRouter>
         <ThemeProvider>
-          <MainPage service={mockService} />
+          <MainPage />
         </ThemeProvider>
       </BrowserRouter>,
     );
@@ -51,7 +44,7 @@ describe('Integration Tests', () => {
     renderWithProviders(
       <BrowserRouter>
         <ThemeProvider>
-          <MainPage service={new ApiService()} />
+          <MainPage />
         </ThemeProvider>
       </BrowserRouter>,
     );
@@ -65,7 +58,7 @@ describe('Integration Tests', () => {
     renderWithProviders(
       <BrowserRouter>
         <ThemeProvider>
-          <MainPage service={new ApiService()} />
+          <MainPage />
         </ThemeProvider>
       </BrowserRouter>,
     );
