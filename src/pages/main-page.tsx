@@ -28,7 +28,7 @@ export const MainPage = (): React.ReactElement => {
   const navigate = useNavigate();
   const { characterID } = useParams();
   const dispatch = useAppDispatch();
-  const { data, error, isFetching } = useFetchCharactersQuery({
+  const { data, error, isError, isFetching } = useFetchCharactersQuery({
     pageNumber:
       searchParameters.get('page') === null
         ? 1
@@ -54,8 +54,10 @@ export const MainPage = (): React.ReactElement => {
     dispatch(starWarsApi.util.invalidateTags(['Characters']));
   };
 
-  if (error) {
-    return <p>Something went wrong.</p>;
+  if (isError) {
+    return (
+      <p data-testid="error-main-page">{`Something went wrong: ${JSON.stringify(error)}.`}</p>
+    );
   }
 
   return (

@@ -14,7 +14,7 @@ export const DetailedSection = (): null | React.ReactElement => {
   const [isDestroyed, setDestroyed] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { data, error, isFetching } = useFetchSearchedCharactersQuery(
+  const { data, error, isError, isFetching } = useFetchSearchedCharactersQuery(
     characterID ?? '',
   );
 
@@ -24,8 +24,8 @@ export const DetailedSection = (): null | React.ReactElement => {
     setDestroyed(true);
   };
 
-  if (error) {
-    return <p>Something went wrong.</p>;
+  if (isError) {
+    return <p>{`Something went wrong: ${JSON.stringify(error)}.`}</p>;
   }
 
   const handleRefetch = (): void => {
