@@ -5,6 +5,7 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
 
 import {
   CardsWrapper,
@@ -65,7 +66,11 @@ export const MainPage = (): React.ReactElement => {
       <Header pageType="main" />
       <div className="flex">
         <main
-          className="min-h-[85vh] w-full p-[2%] flex justify-center gap-[1em] flex-wrap bg-main-background"
+          className={twMerge(
+            'min-h-[85vh] w-full p-[2%]',
+            'flex justify-center gap-[1em]',
+            'flex-wrap bg-main-background',
+          )}
           onClick={handleMainClick}
         >
           <section className="flex flex-col justify-evenly items-center">
@@ -75,18 +80,35 @@ export const MainPage = (): React.ReactElement => {
               <>
                 <CardsWrapper cardCharacterData={data?.results ?? []} />
                 <button
-                  className="group text-border cursor-pointer transition-transform duration-300 hover:scale-[0.90]"
+                  className={twMerge(
+                    'group text-border cursor-pointer',
+                    'transition-transform duration-300',
+                    'hover:scale-[0.90]',
+                  )}
                   onClick={handleRefetch}
                 >
                   Refetch{' '}
-                  <span className="inline-block text-2xl transition-transform duration-500 delay-150 group-hover:rotate-360">
+                  <span
+                    className={twMerge(
+                      'inline-block text-2xl',
+                      'transition-transform duration-500',
+                      'group-hover:rotate-360',
+                    )}
+                  >
                     &#10226;
                   </span>
                 </button>
                 <Pagination pagesCount={countPages(data?.count ?? 0)} />
               </>
             )}
-            <div className="w-[300px] h-[300px] fixed bottom-0 right-0 bg-[url('/src/assets/yoda.png')] bg-contain bg-no-repeat" />
+            <div
+              className={twMerge(
+                'w-[300px] h-[300px]',
+                'fixed bottom-0 right-0',
+                "bg-[url('/src/assets/yoda.png')]",
+                'bg-contain bg-no-repeat',
+              )}
+            />
           </section>
         </main>
         <Outlet />

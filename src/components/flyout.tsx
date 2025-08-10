@@ -1,4 +1,5 @@
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import type { RootState } from '@/state';
 
@@ -19,11 +20,20 @@ export const Flyout = (): null | React.ReactElement => {
   return (
     <>
       <footer
-        className="sticky bottom-0 w-full flex items-center justify-between bg-header-background z-60000 p-[2%]"
+        className={twMerge(
+          'sticky bottom-0 w-full p-[2%]',
+          'flex items-center justify-between',
+          'bg-header-background z-60000',
+        )}
         data-testid="flyout"
       >
         <button
-          className="h-[40px] flex items-center justify-center p-[2%] bg-background cursor-pointer rounded-lg no-underline transition-all duration-300"
+          className={twMerge(
+            'h-[40px] flex items-center justify-center',
+            'p-[2%] bg-background cursor-pointer',
+            'rounded-lg no-underline transition-all',
+            'duration-300 hover:scale-[0.95]',
+          )}
           onClick={() => dispatch(clearFavorites())}
         >
           Unselect all

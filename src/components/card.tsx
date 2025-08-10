@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, useSearchParams } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
 
 import { FavButton } from '@/components';
 import { CharacterSearchResponse } from '@/model/types-star-wars';
@@ -18,21 +19,14 @@ export const Card = ({ characterData }: CardProps): React.ReactElement => {
     const match = /\/people\/(\d+)\//.exec(characterURL);
     return match ? match[1] : '';
   };
-
   return (
     <div
-      className="
-    w-[250px]
-    p-[2%]
-    flex
-    justify-between
-    items-center
-    gap-1
-    border-2
-  border-border
-  bg-card-background
-    rounded-lg
-    card"
+      className={twMerge(
+        'w-[250px] p-[2%] flex',
+        'justify-between items-center gap-1',
+        'border-2 border-border',
+        'bg-card-background rounded-lg card',
+      )}
     >
       <NavLink
         className="transition-transform duration-300 hover:scale-[0.95]"

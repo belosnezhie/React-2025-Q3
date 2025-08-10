@@ -49,6 +49,7 @@ export const DownloadButton = (): React.ReactElement => {
 
   return (
     <a
+      className="transition-all duration-300 hover:scale-[0.95]"
       download={`${favCharacters.length}_characters`}
       href={formData()}
       role="link"

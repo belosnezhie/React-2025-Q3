@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
 
 import { useLocalStorage } from '@/hooks/use-local-storage';
 
@@ -34,30 +35,23 @@ export const SearchForm = (): React.ReactElement => {
         onSubmit={handleSubmit}
       >
         <input
-          className="
-          block h-[40px]
-          max-w-[180px] pl-[2%]
-          bg-title
-          text-border
-          border-2
-          border-background
-          rounded-lg"
+          className={twMerge(
+            'block h-[40px] max-w-[180px]',
+            'pl-[2%] bg-title text-border',
+            'border-2 border-background rounded-lg',
+          )}
           name="search"
           onChange={handleChange}
           type="text"
           value={currentInputValue}
         />
         <input
-          className="
-          h-[40px] block
-          p-[2%]
-          bg-background
-          cursor-pointer
-          border-0
-          rounded-lg
-          transition-transform
-          duration-300
-          hover:scale-[0.95]"
+          className={twMerge(
+            'h-[40px] block p-[2%] bg-background',
+            'cursor-pointer border-0 rounded-lg',
+            'transition-transform duration-300',
+            'hover:scale-[0.95]',
+          )}
           type="submit"
           value="Search"
         />

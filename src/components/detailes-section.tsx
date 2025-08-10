@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
 
 import { Spinner } from '@/components';
 import { useAppDispatch } from '@/hooks';
@@ -33,7 +34,14 @@ export const DetailedSection = (): null | React.ReactElement => {
   };
 
   return isDestroyed ? null : (
-    <aside className="w-[50%] p-[2%] flex flex-col items-center justify-center border-2 border-t-0 border-border bg-card-background z-1000 relative">
+    <aside
+      className={twMerge(
+        'w-[50%] p-[2%] flex flex-col',
+        'items-center justify-center',
+        'border-2 border-t-0 border-border',
+        'bg-card-background z-1000 relative',
+      )}
+    >
       {isFetching ? (
         <Spinner />
       ) : (
@@ -47,11 +55,21 @@ export const DetailedSection = (): null | React.ReactElement => {
               <p>Eye color: {data.eye_color}</p>
               <p>Gender: {data.gender}</p>
               <button
-                className="group text-border cursor-pointer transition-transform duration-300 hover:scale-[0.90]"
+                className={twMerge(
+                  'group text-border cursor-pointer',
+                  'transition-transform duration-300',
+                  'hover:scale-[0.90]',
+                )}
                 onClick={handleRefetch}
               >
                 Refetch{' '}
-                <span className="inline-block text-2xl transition-transform duration-500 delay-150 group-hover:rotate-360">
+                <span
+                  className={twMerge(
+                    'inline-block text-2xl',
+                    'transition-transform duration-500',
+                    'delay-150 group-hover:rotate-360',
+                  )}
+                >
                   &#10226;
                 </span>
               </button>
@@ -60,7 +78,12 @@ export const DetailedSection = (): null | React.ReactElement => {
             <p>There is no such character</p>
           )}
           <button
-            className="absolute top-[10px] right-[10px] w-[40px] h-[40px] text-center rounded-full border-0 bg-background cursor-pointer"
+            className={twMerge(
+              'absolute top-[20px] right-[20px]',
+              'w-[40px] h-[40px] text-center',
+              'rounded-full border-0 bg-background',
+              'cursor-pointer',
+            )}
             data-testid="close"
             onClick={handleClick}
           >
