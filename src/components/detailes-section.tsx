@@ -79,7 +79,7 @@ export const DetailedSection = (): null | React.ReactElement => {
           )}
           <button
             className={twMerge(
-              'absolute top-[20px] right-[20px]',
+              'absolute top-[10px] right-[10px]',
               'w-[40px] h-[40px] text-center',
               'rounded-full border-0 bg-background',
               'cursor-pointer',
