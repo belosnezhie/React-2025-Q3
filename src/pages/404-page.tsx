@@ -17,7 +17,7 @@ export const NotFoundPage = (): React.ReactElement => {
       <Link
         className={twMerge(
           'mt-[20px] no-underline',
-          'text-border transition-al',
+          'text-border transition-all',
           'duration-300 hover:scale-[1.08]',
         )}
         to="/"
